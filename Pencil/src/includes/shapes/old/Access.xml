@@ -1,0 +1,4 @@
+<Shortcut displayName="Access" icon="icons/access.png" to="AccessRW" system="true">
+    <PropertyValue name="hasArrowStart">false</PropertyValue>
+</Shortcut>
+

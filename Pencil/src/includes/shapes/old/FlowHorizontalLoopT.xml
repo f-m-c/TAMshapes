@@ -1,0 +1,11 @@
+<Shortcut displayName="Loop Flow top" icon="icons/flowLoopT.png" to="Flow" system="true">
+    <PropertyValue name="isHorizontal">true</PropertyValue>
+    <PropertyValue name="arrowStyleStart">none</PropertyValue>
+    <PropertyValue name="arrowStyleEnd">full</PropertyValue>
+    <PropertyValue name="hasExtensionA">true</PropertyValue>
+    <PropertyValue name="isExtADiagonal">true</PropertyValue>
+    <PropertyValue name="hasExtensionB">true</PropertyValue>
+    <PropertyValue name="p1">0,40</PropertyValue>
+    <PropertyValue name="p2">50,20</PropertyValue>
+    <PropertyValue name="c3">25,0</PropertyValue>
+</Shortcut>

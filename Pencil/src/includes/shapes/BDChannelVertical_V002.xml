@@ -1,0 +1,5 @@
+<Shortcut displayName="vert. Channel" icon="icons/channelV.png" to="BDChannelHorVert_V002">
+    <PropertyValue name="BOOLisHorizontal">false</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleStart">none</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleEnd">none</PropertyValue>
+</Shortcut>

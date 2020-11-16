@@ -1,0 +1,126 @@
+<Shape id="AllDDirectLine_V001" displayName="direct Line" icon="icons/arrowDirect.png" system="true">
+      <Properties>
+          <PropertyGroup name="Line">
+              <Property name="p1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+              <Property name="p2" p:connectTo="*" displayName="End" type="Handle">30,50</Property>
+              <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+              <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+              <Property name="arrowStyleStart"  displayName="Arrow Style Start"
+                  p:enumValues="['none|None', 'full|Full', 'open|Open']"
+                  type="Enum">none</Property>
+              <Property name="arrowStyleEnd"  displayName="Arrow Style End"
+                  p:enumValues="['none|None', 'full|Full', 'open|Open']"
+                  type="Enum">full</Property>
+          </PropertyGroup>
+          <PropertyGroup name="Text">
+              <Property name="textPos" p:disabled="$textContent.value.length == 0" displayName="Text Position" type="Handle">40,25</Property>
+              <Property name="textContent" displayName="Content"
+                p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $textAlignment, multi: true})"
+                type="PlainText" />
+              <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+              <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+              <Property name="textAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+          </PropertyGroup>
+      </Properties>
+      <Behaviors>
+        <For ref="line">
+          <D>[M($p1.x, $p1.y), L($p2.x, $p2.y)]</D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="lineGrip">
+          <D>[M($p1.x, $p1.y), L($p2.x, $p2.y)]</D>
+        </For>
+        <For ref="ArrowStartPath">
+          <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill($arrowStyleStart.value, $strokeColor);
+            arrowHeadFill;
+          ]]></Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG($arrowStyleStart.value);
+              arrowHead;
+          ]]></D>
+            <Visibility>$arrowStyleStart.value != 'none'</Visibility>
+        </For>
+        <For ref="ArrowEndPath">
+            <Fill><![CDATA[
+              var arrowHeadFill = collection.arrowheadDetermineFill($arrowStyleEnd.value, $strokeColor);
+              arrowHeadFill;
+            ]]></Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG($arrowStyleEnd.value);
+              arrowHead;
+            ]]></D>
+
+            <Visibility>$arrowStyleEnd.value != 'none'</Visibility>
+        </For>
+
+
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $textContent.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($textPos.x) - $textAlignment.h * 150, $textPos.y)]</Transform>
+        </For>
+      </Behaviors>
+      <Actions>
+          <Action id="centerTextPos" displayName="Move text block to center">
+              <Impl>
+                  var p1 = this.getProperty("p1");
+                  var p2 = this.getProperty("p2");
+                  var textPos = this.getProperty("textPos");
+                  textPos.x = (p1.x + p2.x) / 2;
+                  textPos.y = (p1.y + p2.y) / 2;
+                  this.setProperty("textPos", textPos);
+              </Impl>
+          </Action>
+      </Actions>
+      <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+                 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                 xmlns="http://www.w3.org/2000/svg">
+          <defs>
+              <marker
+                 id="ArrowEnd"
+                 orient="auto"
+                 refY="0.0"
+                 refX="0.0"
+                 style="overflow:visible;">
+
+                 <path
+                    id="ArrowEndPath"
+                    transform="rotate(180) translate(1,0)"
+                    style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                    />
+              </marker>
+              <marker
+                 id="ArrowStart"
+                 orient="auto"
+                 refY="0.0"
+                 refX="0.0"
+                 style="overflow:visible;">
+
+                 <path
+                    id="ArrowStartPath"
+                    transform="translate(1,0)"
+                    style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                    />
+              </marker>
+
+           </defs>
+
+          <path
+             id="line"
+             style="stroke-linejoin: round; "
+             fill="none"
+             marker-start = "url(#ArrowStart)"
+             marker-end   = "url(#ArrowEnd)"
+              />
+
+          <path id="lineGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+          <text id="text" xml:space="preserve"  />
+
+      </p:Content>
+  </Shape>

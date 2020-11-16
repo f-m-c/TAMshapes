@@ -1,0 +1,7 @@
+<Shortcut displayName="Use Case" icon="icons/ellipse.png" to="AllDRoundedRectangle_V002">
+  <PropertyValue name="box">100,50</PropertyValue>
+  <PropertyValue name="BOOLallowRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLhasRoundedCorners">true</PropertyValue>
+  <PropertyValue name="BOOLallowMultiple">false</PropertyValue>
+  <PropertyValue name="HNDLcornerRadius">50,0</PropertyValue>
+</Shortcut>

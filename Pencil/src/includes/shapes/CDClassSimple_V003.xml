@@ -1,0 +1,3 @@
+<Shortcut displayName="Class w/o compartments" icon="icons/rectangle.png" to="CDClass_V003">
+    <PropertyValue name="ENUMshowCompartments">none</PropertyValue>
+</Shortcut>

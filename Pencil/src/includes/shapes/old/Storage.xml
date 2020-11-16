@@ -1,0 +1,4 @@
+<Shortcut displayName="Storage" icon="icons/storage.png" to="Agent" system="true">
+  <PropertyValue name="hasRoundedCorners">true</PropertyValue>
+  <PropertyValue name="allowHuman">false</PropertyValue>
+</Shortcut>

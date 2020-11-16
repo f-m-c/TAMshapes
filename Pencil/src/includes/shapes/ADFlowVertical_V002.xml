@@ -1,0 +1,10 @@
+<Shortcut displayName="vert. Flow" icon="icons/arrowV.png" to="AllDHorVertLine_V002">
+    <PropertyValue name="BOOLisHorizontal">false</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleStart">none</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleEnd">full</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionA">false</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionB">false</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">0,50</PropertyValue>
+    <PropertyValue name="HNDLc3">0,25</PropertyValue>
+</Shortcut>

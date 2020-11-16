@@ -1,0 +1,162 @@
+<Shape id="SyncSelfMessageExchange" displayName="Self Call" icon="icons/selfCall.png" system="true">
+    <Properties>
+        <PropertyGroup name="Properties">
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+            <Property name="startHandle"  displayName="Start" p:connectTo="*" 
+              type="Handle">5,0</Property>
+            <Property name="endHandle"  displayName="End" p:connectTo="*" 
+              type="Handle"
+              p:lockX="true" p:expressionX="$startHandle.x"
+              p:minY="$startHandle.y">5,40</Property>            
+            <Property name="isSync" displayName="Synchronous" type="Bool">true</Property>
+            <Property name="messageStrokeColor" displayName="Message Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="activeStrokeColor" displayName="Activation Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="activeFillColor" displayName="Activation Fill Color" type="Color">#CCCCCCFF</Property>
+            <Property name="activationSize"  displayName="Activation Size" type="Dimension">10,150</Property>
+            <Property name="selfSize"  displayName="Self Size" type="Dimension">30,10</Property>
+            <Property name="callLabelHandle"  displayName="Call" 
+              type="Handle"
+              p:minX="$selfSize.w" 
+              p:minY="$startHandle.y - 20" p:maxY="$startHandle.y + 20" 
+              >30,-5</Property>
+            <Property displayName="Call Label" name="callLabel" 
+              p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText" />
+            <Property name="responseLabelHandle" displayName="Response" 
+              type="Handle"
+              p:minX="$selfSize.w"
+              p:minY="$endHandle.y - 20" p:maxY="$endHandle.y + 20" 
+              >30,45</Property>
+            <Property displayName="Response Label" name="responseLabel" 
+              p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText" />
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="callMessage">
+            <StrokeColor>$messageStrokeColor</StrokeColor>
+            <D>[M($startHandle.x + $activationSize.w / 2, $startHandle.y), 
+                L($startHandle.x + $activationSize.w / 2 + $selfSize.w, $startHandle.y),
+                Q($startHandle.x + $activationSize.w / 2 + $selfSize.w +  $selfSize.h, $startHandle.y + 0.5 * $selfSize.h, $startHandle.x + $activationSize.w / 2 + $selfSize.w, $startHandle.y + $selfSize.h),
+                L($startHandle.x + $activationSize.w, $startHandle.y + $selfSize.h)]</D>
+        </For>
+        <For ref="responseMessage">
+            <StrokeColor>$messageStrokeColor</StrokeColor>
+            <D>[M($startHandle.x + $activationSize.w, $endHandle.y - $selfSize.h), 
+                L($startHandle.x + $activationSize.w / 2 + $selfSize.w, $endHandle.y - $selfSize.h),
+                Q($startHandle.x + $activationSize.w / 2 + $selfSize.w + $selfSize.h, $endHandle.y - 0.5 * $selfSize.h, $startHandle.x + $activationSize.w / 2 + $selfSize.w, $endHandle.y),
+                L($startHandle.x + $activationSize.w / 2, $endHandle.y)]</D>
+        </For>
+        <For ref="inActiveRect">
+            <Box>new Dimension($activationSize.w, Math.abs($startHandle.y - $endHandle.y))</Box>
+            <Fill>Color.fromString("#ffffffff")</Fill>
+            <StrokeColor>$activeStrokeColor</StrokeColor>
+            <Transform>[translate($startHandle.x - $activationSize.w / 2, $startHandle.y)]</Transform>
+        </For>
+        <For ref="activeRect">
+            <Box>new Dimension($activationSize.w, Math.abs($startHandle.y - $endHandle.y) - 2 * $selfSize.h)</Box>
+            <Fill>$activeFillColor</Fill>
+            <StrokeColor>$activeStrokeColor</StrokeColor>
+            <Transform>[translate($startHandle.x, $startHandle.y + $selfSize.h)]</Transform>
+        </For>
+        <For ref="callText">
+            <DomContent>F.buildTextWrapDomContent(F._target, $callLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($callLabelHandle.x) - $textAlignment.h * 150, $callLabelHandle.y)]</Transform>
+        </For>
+        <For ref="responseText">
+            <DomContent>F.buildTextWrapDomContent(F._target, $responseLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($responseLabelHandle.x) - $textAlignment.h * 150, $responseLabelHandle.y)]</Transform>
+        </For>
+        <For ref="arrowCallPath">
+            <StrokeColor>$messageStrokeColor</StrokeColor>
+            <Fill>$messageStrokeColor</Fill>
+            <D><![CDATA[            
+                var arrowHead = collection.arrowheadCreateSVG("full");
+                arrowHead;
+            ]]></D>
+
+        </For>
+        <For ref="arrowResponsePath">
+            <StrokeColor>$messageStrokeColor</StrokeColor>
+            <Fill>Color.fromString("transparent")</Fill>
+            <D><![CDATA[
+                var arrowHead = collection.arrowheadCreateSVG("open");
+                arrowHead;
+            ]]></D>
+
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                    var dist = 5;                  
+                    var outlets = [ ];
+                  
+                    var startHandle = this.getProperty("startHandle");
+                    var endHandle = this.getProperty("endHandle");
+                    var activationSize = this.getProperty("activationSize");
+
+                    if (endHandle.y > startHandle.y) {
+                        for (var i = startHandle.y ; i < endHandle.y; i = i + dist) {
+                            outlets.push( new Outlet("SelfActivation" + i.toString(), "Bounding", startHandle.x +  activationSize.w/2, i) );
+                        }
+                    }
+                  
+                  
+                    return outlets;
+                ]]>
+            </Impl>
+        </Action>        
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="arrowCall"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="arrowCallPath"
+                  transform="rotate(180) translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.8;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+            <marker
+               id="arrowResponse"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="arrowResponsePath"
+                  transform="rotate(180) translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+        </defs>
+
+        <path id="callMessage"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1"            
+               marker-end   = "url(#arrowCall)"
+        />
+        <path id="responseMessage"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4;stroke-opacity:1"        
+               marker-end   = "url(#arrowResponse)"
+        />
+        <rect id="inActiveRect" x="0" y="0" />        
+        <rect id="activeRect" x="0" y="0" />        
+        <text id="callText" xml:space="preserve" />
+        <text id="responseText" xml:space="preserve" />
+    </p:Content>
+</Shape>

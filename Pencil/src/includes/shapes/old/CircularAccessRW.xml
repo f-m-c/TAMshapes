@@ -1,0 +1,121 @@
+<Shape id="CircularAccessRW" displayName="Modifying Access Read/Write" icon="icons/circular-access-rw.png" system="true">
+    <Properties>
+        <PropertyGroup name="Access Properties">
+            <Property name="distance" p:minX="0" p:maxX="100" p:lockY="true" displayName="Arrow distance" type="Handle">20,0</Property>
+            <Property name="p2" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+            <Property name="p3" p:connectTo="*" displayName="End" type="Handle">0,50</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="read">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($p2, $p3);
+                var pFrom = collection.getPerpendicularPointDistance($p2, $p3, 0, gap, true);
+                var pTo = collection.getPerpendicularPointDistance($p2, $p3, distance, gap, true);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $distance.x /*targetDistance*/, true);
+                var line = collection.createSVGLineThroughPoints([pTo, middlePerpPoint, pFrom], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="readGrip">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($p2, $p3);
+                var pFrom = collection.getPerpendicularPointDistance($p2, $p3, 0, gap, true);
+                var pTo = collection.getPerpendicularPointDistance($p2, $p3, distance, gap, true);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $distance.x /*targetDistance*/, true);
+                var line = collection.createSVGLineThroughPoints([pTo, middlePerpPoint, pFrom], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+        </For>
+        <For ref="write">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($p2, $p3);
+                var pFrom = collection.getPerpendicularPointDistance($p2, $p3, 0, gap, false);
+                var pTo = collection.getPerpendicularPointDistance($p2, $p3, distance, gap, false);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $distance.x /* targetDistance*/, false);
+                var line = collection.createSVGLineThroughPoints([pFrom, middlePerpPoint, pTo], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="writeGrip">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($p2, $p3);
+                var pFrom = collection.getPerpendicularPointDistance($p2, $p3, 0, gap, false);
+                var pTo = collection.getPerpendicularPointDistance($p2, $p3, distance, gap, false);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $distance.x /* targetDistance*/, false);
+                var line = collection.createSVGLineThroughPoints([pFrom, middlePerpPoint, pTo], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+        </For>
+    </Behaviors>
+    <Actions>
+        <Action id="makeStraight" displayName="Make Straight">
+            <Impl>
+                this.def.collection.makeShapeLineStraight(this, "p2", "p3");
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="ArrowEnd"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="ArrowEndPath"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z"
+                  transform="scale(1.1) rotate(180) translate(1,0)" />
+            </marker>
+            <marker
+               id="ArrowStart"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="ArrowStartPath"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z"
+                  transform="scale(1.1) translate(1,0)" />
+            </marker>
+         </defs>
+
+        <path
+           style="stroke-linejoin: round; marker-end:url(#ArrowEnd)"
+           fill="none"
+           id="read" />
+        <path
+           style="stroke-linejoin: round; marker-end:url(#ArrowEnd);"
+           fill="none"
+           id="write" />
+
+        <path id="readGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+        <path id="writeGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+    </p:Content>
+</Shape>

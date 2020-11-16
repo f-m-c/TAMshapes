@@ -1,0 +1,106 @@
+<Shape id="CDPackage_V003" displayName="Package" icon="icons/package.png">
+    <Properties>
+        <PropertyGroup name="Tab Properties">
+            <Property name="ENUMtabHeight" 
+                displayName="Tab height"
+                p:enumValues="['8|8', '12|12', '16|16', '20|20', '24|24', '28|28', '32|32']"
+                type="Enum">20</Property>
+            <Property name="HNDLtabWidth" displayName="Tab width" 
+                p:lockY="true" p:expressionY="$ENUMtabHeight.value / 2" 
+                p:minX="20" p:maxX="$box.w - 5" p:noScale="true"
+                type="Handle">80,10</Property>
+            <Property name="COLRfillColorTab" displayName="Tab Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="TTXTtabText" displayName="Tab Text" p:editInfo="({targetName: 'tabText', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="COLRtextColorTab" displayName="Tab Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="FONTtextFontTab" displayName="Tab Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignmentTab" displayName="Tab Text Alignment" type="Alignment">0,1</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Package Properties">
+            <Property name="box" type="Dimension">300,200</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property name="TTXTpackageText" displayName="Package Text" p:editInfo="({targetName: 'packageText', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="package">
+            <D>[M(0, $ENUMtabHeight.value),
+                L($box.w, $ENUMtabHeight.value), 
+                L($box.w, $box.h),
+                L(0, $box.h),
+                z
+                ]</D>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="tab">
+            <D>[M(0, 0), 
+                L($HNDLtabWidth.x, 0),
+                L($HNDLtabWidth.x, $ENUMtabHeight.value),
+                L(0, $ENUMtabHeight.value),
+                z
+                ]</D>
+            <Fill>$COLRfillColorTab</Fill>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <StrokeColor>$strokeColor</StrokeColor>
+        </For>
+        <For ref="tabText">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtabText.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignmentTab)</DomContent>
+            <Font>$FONTtextFontTab</Font>
+            <Fill>$COLRtextColorTab</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 2, $HNDLtabWidth.x - 5, $ENUMtabHeight.value - 2)</Arg>
+                <Arg>$ALGNtextAlignmentTab</Arg>
+            </BoxFit>
+        </For>
+        <For ref="packageText">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTpackageText.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, $ENUMtabHeight.value / 0.99 + 5, $box.w - 10, $box.h - $ENUMtabHeight.value - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path id="package" x="0" y="0" />
+        <path id="tab"
+               style="fill-rule:evenodd;fill:none;"
+        />
+
+        <text id="tabText"  xml:space="preserve" />
+        <text id="packageText" xml:space="preserve" />
+    </p:Content>
+</Shape>

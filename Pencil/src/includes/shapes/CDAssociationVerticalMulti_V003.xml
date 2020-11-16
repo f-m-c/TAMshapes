@@ -1,0 +1,11 @@
+<Shortcut displayName="Z vert. Association" icon="icons/lineVMulti.png" to="CDLineHorVert_V003">
+    <PropertyValue name="BOOLisHorizontal">false</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionA">true</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionB">true</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">50,40</PropertyValue>
+    <PropertyValue name="HNDLc3">25,20</PropertyValue>
+    <PropertyValue name="HNDLtextPos">40,25</PropertyValue>
+    <PropertyValue name="HNDLtextCSPos">10,10</PropertyValue>
+    <PropertyValue name="HNDLtextCEPos">40,50</PropertyValue>
+</Shortcut>

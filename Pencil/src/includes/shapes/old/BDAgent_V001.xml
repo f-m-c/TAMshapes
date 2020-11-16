@@ -1,0 +1,160 @@
+<Shape id="BDAgent_V001" displayName="Agent" icon="icons/agent.png" system="true">
+    <Properties>
+        <PropertyGroup name="Agent Properties">
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="box" type="Dimension">120,60</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property displayName="Label" name="label" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $textAlignment, multi: true})" type="PlainText" />
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+            <Property name="allowRoundedCorners" p:disabled="true" displayName="AllowRoundedCorners" type="Bool">false</Property>
+            <Property name="hasRoundedCorners" p:disabled="$allowRoundedCorners.value === false" displayName="Rounded Corners" type="Bool">false</Property>
+            <Property name="allowMultiple" p:disabled="true" displayName="AllowMultiple" type="Bool">true</Property>
+            <Property name="isMultiple" p:disabled="$allowMultiple.value === false" displayName="Multiple" type="Bool">false</Property>
+            <Property name="allowHuman" p:disabled="true" displayName="AllowHuman" type="Bool">true</Property>
+            <Property name="showHuman" p:disabled="$allowHuman.value === false" displayName="Human" type="Bool">false</Property>
+            <Property name="humanPos" p:disabled="$showHuman.value === false" displayName="Position of Human"
+              type="Handle" p:minX="0" p:minY="0" p:maxX="$box.w" p:maxY="$box.h">60,30</Property>
+            <Property name="mood" p:disabled="$showHuman.value === false" type="Enum" displayName="Mood" p:enumValues="['happy|Happy', 'normal|Normal', 'waving|Waving']">happy</Property>
+            <Property name="cornerRadius" p:disabled="$hasRoundedCorners.value === false" p:minX="10" p:maxX="50" p:lockY="true" displayName="Corner Radius" type="Handle"><E>$$defaultCornerRadius + ",0"</E></Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Radius>
+                <Arg>$hasRoundedCorners.value ? $cornerRadius.x : 0</Arg>
+                <Arg>$hasRoundedCorners.value ? $cornerRadius.x : 0</Arg>
+            </Radius>
+        </For>
+        <For ref="rectMultiple">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Radius>
+                <Arg>$hasRoundedCorners.value ? $cornerRadius.x : 0</Arg>
+                <Arg>$hasRoundedCorners.value ? $cornerRadius.x : 0</Arg>
+            </Radius>
+            <Transform>[translate(8, -8)]</Transform>
+            <Visibility>$isMultiple</Visibility>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $label.value, $box.w - $textFont.getPixelHeight(), $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$textAlignment</Arg>
+            </BoxFit>
+        </For>
+        <For ref="stickman">
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Transform>[translate($humanPos.x - 22, $humanPos.y - 35),scale(1.5, 1.5)]</Transform>
+            <Visibility>$showHuman</Visibility>
+        </For>
+        <For ref="leftArm">
+            <D><![CDATA[
+                let line;
+                switch ($mood.value) {
+                    case "normal":
+                    case "waving":
+                        line = "m 14.835565,21.093038 -6.6618356,0"; // arm straight
+                        break;
+                    case "happy":
+                        line = "M 14.835565,21.093038 8.1737294,16.482999"; // arm up
+                        break;
+                }
+                line;
+            ]]></D>
+        </For>
+        <For ref="rightArm">
+            <D><![CDATA[
+                let line;
+                switch ($mood.value) {
+                    case "normal":
+                        line = "m 21.402901,21.093038 -6.661836,0"; // arm straight
+                        break;
+                    case "happy":
+                    case "waving":
+                        line = "m 21.402901,16.482639 -6.661836,4.610399"; // arm up
+                        break;
+                }
+                line;
+            ]]></D>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rectMultiple" x="0" y="0" />
+        <rect id="rect" x="0" y="0" />
+        <text id="text" text-anchor="start" xml:space="preserve" />
+
+            <g id="stickman">
+            <ellipse
+               style="opacity:1;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               id="head"
+               cx="14.835565"
+               cy="11"
+               rx="4"
+               ry="4" />
+            <path
+               d="m 14.835565,30.069968 0,-14.45757"
+               id="body"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 14.835565,30.069968 -6.6618356,6.66184"
+               id="leftLeg"
+               />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+               d="m 14.835565,30.069968 6.614593,6.61459"
+               id="rightLeg"
+               />
+            <path
+               id="leftArm"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               sodipodi:nodetypes="cc" />
+            <path
+               sodipodi:nodetypes="cc"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="rightArm"
+               />
+           </g>
+
+
+    </p:Content>
+</Shape>

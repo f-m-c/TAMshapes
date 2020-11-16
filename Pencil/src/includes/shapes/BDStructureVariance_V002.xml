@@ -1,0 +1,8 @@
+<Shortcut displayName="Structure Variance" icon="icons/structureVariance.png" to="AllDRoundedRectangle_V002">
+  <PropertyValue name="box">120,60</PropertyValue>
+  <PropertyValue name="BOOLallowRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLhasRoundedCorners">true</PropertyValue>
+  <PropertyValue name="BOOLallowMultiple">false</PropertyValue>
+  <PropertyValue name="strokeStyle">2|5,5</PropertyValue>
+  <PropertyValue name="fillColor">#EEEEEEFF</PropertyValue>
+</Shortcut>

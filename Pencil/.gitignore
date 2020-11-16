@@ -1,0 +1,8 @@
+build/
+*.swp
+.DS_Store
+node_modules/
+**/*Screenshot*.png
+build/**
+package-lock.json
+

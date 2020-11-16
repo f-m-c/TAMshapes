@@ -1,0 +1,68 @@
+<Shape id="ADDecision_V001" displayName="Decision/Merge" icon="icons/decision.png" system="true">
+    <Properties>
+        <PropertyGroup name="Decision properties">
+            <Property name="decisionSize" type="Dimension">20,20</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="textPos" p:disabled="$textContent.value.length == 0" displayName="Text Position" type="Handle">50,-20</Property>
+            <Property name="textContent" displayName="Content"
+              p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $textAlignment, multi: true})"
+              type="PlainText" />
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                var box = this.getProperty("decisionSize");
+                return [
+                    new Outlet("top-center", "Bounding", box.w/2, 0),
+                    new Outlet("right-center", "Bounding", box.w, box.h/2),
+                    new Outlet("bottom-center", "Bounding", box.w/2, box.h),
+                    new Outlet("left-center", "Bounding", 0, box.h/2),
+                    new Outlet("righttop-center", "Bounding", 3 * box.w/4, box.h/4),
+                    new Outlet("rightbottom-center", "Bounding", 3 * box.w/4, 3 * box.h/4)
+                ];
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <Behaviors>
+        <For ref="line">
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <D><![CDATA[
+                [
+                    M($decisionSize.w/2, 0),
+                    L($decisionSize.w, $decisionSize.h/2),
+                    L($decisionSize.w/2, $decisionSize.h),
+                    L(0, $decisionSize.h/2),
+                    z
+                ]
+            ]]></D>
+        </For>
+
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $textContent.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($textPos.x) - $textAlignment.h * 150, $textPos.y)]</Transform>
+        </For>
+
+    </Behaviors>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path
+            id="line" />
+        <text id="text"  xml:space="preserve"  />
+
+    </p:Content>
+</Shape>

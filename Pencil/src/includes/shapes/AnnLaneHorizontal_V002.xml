@@ -1,0 +1,6 @@
+<Shortcut displayName="hor. Lane/Boundary" icon="icons/laneH.png" to="AnnLane_V002">
+    <PropertyValue name="BOOLisHorizontal">true</PropertyValue>
+    <PropertyValue name="BOOLalignAtStart">true</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">300,0</PropertyValue>
+</Shortcut>

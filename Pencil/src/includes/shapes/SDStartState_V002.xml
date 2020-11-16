@@ -1,0 +1,47 @@
+<Shape id="SDStartState_V002" displayName="Start State" icon="icons/start-of-activity.png">
+    <Properties>
+        <PropertyGroup name="Properties">
+            <Property name="box" p:disabled="true" type="Dimension">20,20</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+    </Properties>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                var box = this.getProperty("box");
+                return [
+                    new Outlet("top-center", "Bounding", box.w/2, 0),
+                    new Outlet("right-center", "Bounding", box.w, box.h/2),
+                    new Outlet("bottom-center", "Bounding", box.w/2, box.h),
+                    new Outlet("left-center", "Bounding", 0, box.h/2)
+                ];
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <Behaviors>
+        <For ref="outCircle">
+            <Attr>
+                <Arg>"cx"</Arg>
+                <Arg>$box.w/2</Arg>
+            </Attr>
+            <Attr>
+                <Arg>"cy"</Arg>
+                <Arg>$box.h/2</Arg>
+            </Attr>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+    </Behaviors>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <circle
+           id="outCircle"
+           style="color:#000000"
+           r="10" />
+
+    </p:Content>
+</Shape>

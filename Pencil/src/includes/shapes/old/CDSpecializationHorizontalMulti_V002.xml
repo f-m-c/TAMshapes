@@ -1,0 +1,13 @@
+<Shortcut displayName="hor. Specialization Multi" icon="icons/specializationHMulti.png" to="CDAssociationVertical_V002" system="true">
+    <PropertyValue name="isHorizontal">true</PropertyValue>
+    <PropertyValue name="hasExtensionA">true</PropertyValue>
+    <PropertyValue name="hasExtensionB">true</PropertyValue>
+    <PropertyValue name="lockArrowStyle">true</PropertyValue>
+    <PropertyValue name="arrowStyleStart">specialization</PropertyValue>
+    <PropertyValue name="hasCardinalityStart">false</PropertyValue>
+    <PropertyValue name="hasCardinalityEnd">false</PropertyValue>
+    <PropertyValue name="p1">0,0</PropertyValue>
+    <PropertyValue name="p2">40,50</PropertyValue>
+    <PropertyValue name="c3">20,25</PropertyValue>
+    <PropertyValue name="textPos">20,10</PropertyValue>
+ </Shortcut>

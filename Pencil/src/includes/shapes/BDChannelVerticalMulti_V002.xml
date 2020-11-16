@@ -1,0 +1,10 @@
+<Shortcut displayName="Z vert. Channel" icon="icons/channelVmulti.png" to="BDChannelHorVert_V002">
+    <PropertyValue name="BOOLisHorizontal">false</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleStart">none</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleEnd">none</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionA">true</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionB">true</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">30,50</PropertyValue>
+    <PropertyValue name="HNDLc3">15,25</PropertyValue>
+</Shortcut>

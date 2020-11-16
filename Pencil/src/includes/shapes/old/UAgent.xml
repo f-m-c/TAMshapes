@@ -1,0 +1,161 @@
+<Shape id="UAgent" displayName="U Agent" icon="icons/u-agent.png" system="true">
+    <Properties>
+        <PropertyGroup name="Agent Properties">
+            <Property name="textFont" displayName="Font" type="Font">Arial,sans-serif|normal|normal|13px</Property>
+            <Property name="box" type="Dimension">300,150</Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property name="label" displayName="Label" type="PlainText">Name</Property>
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+            <Property name="hasRoundedCorners" displayName="Rounded Corners" p:disabled="true" type="Bool">false</Property>
+            <Property name="hasSameSideSize" displayName="Same Width Sides" type="Bool">true</Property>
+            <Property name="pTop" p:minY="20" p:maxY="$box.h - 20" p:lockX="true" displayName="Top Resize" type="Handle">150,30</Property>
+            <Property name="pLeft" p:minX="20" p:lockY="true" displayName="Left Resize" type="Handle">30,75</Property>
+            <Property name="pRight" p:maxX="$box.w - 20" p:lockY="true" p:disabled="$hasSameSideSize.value" displayName="Right Resize" type="Handle">270,75</Property>
+            <Property name="cornerRadius" p:disabled="$hasRoundedCorners.value === false" p:minX="10" p:maxX="50" p:lockY="true" displayName="Corner Radius" type="Handle"><E>$$defaultCornerRadius + ",0"</E></Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="line">
+            <D><![CDATA[
+                const bRounded = $hasRoundedCorners.value;
+
+                let pRight = $pRight;
+                if ($hasSameSideSize.value) {
+                    pRight = {
+                        x: $box.w - $pLeft.x,
+                        y: $pLeft.y
+                    };
+                }
+
+                const aPoints = [
+                    [0, 0],
+                    [$box.w, 0],
+                    [$box.w, $box.h],
+                    [pRight.x, $box.h],
+                    [pRight.x, $pTop.y],
+                    [$pLeft.x, $pTop.y],
+                    [$pLeft.x, $box.h],
+                    [0, $box.h]
+                ].map((aPoint) => ({ x: aPoint[0], y: aPoint[1] }));
+
+                const bClosed = true;
+
+                const line = collection.createSVGLineThroughPoints(
+                    aPoints,
+                    bRounded,
+                    bClosed,
+                    $cornerRadius.x
+                );
+
+                line;
+            ]]></D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Fill>$fillColor</Fill>
+        </For>
+        <For ref="text">
+            <TextContent>$label</TextContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $pTop.y - 10)</Arg>
+                <Arg>$textAlignment</Arg>
+            </BoxFit>
+        </For>
+    </Behaviors>
+    <Actions>
+        <Action id="makeSquared" displayName="Make Squared">
+            <Impl>
+                var box = this.getProperty("box");
+                box.w = Math.max(box.w, box.h);
+                box.h = box.w;
+                this.setProperty("box", box);
+            </Impl>
+        </Action>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                    function generateOutletsBetween (sLabel, bIsXDimension, iDimensionFrom, iDimensionTo, iFixedDimensionValue) {
+                        let aSegments = this.def.collection.divideSegment(iDimensionFrom, iDimensionTo, 5);
+                        aSegments.pop();
+                        return aSegments
+                            .map((iSegmentEnd, i) => {
+
+                                let x = iFixedDimensionValue;
+                                let y = iSegmentEnd;
+
+                                if (bIsXDimension) {
+                                    let tmp = x;
+                                    x = y;
+                                    y = tmp;
+                                }
+
+                                const sOutletName = sLabel + i;
+
+                                return new Outlet(sOutletName, "Bounding", x, y);
+                            });
+                    }
+
+                    var box = this.getProperty("box");
+
+                    var topCenterPoint    = { x: box.w / 2 , y: 0         };
+                    var leftCenterPoint   = { x: 0         , y: box.h / 2 };
+                    var rightCenterPoint  = { x: box.w     , y: box.h / 2 };
+                    var bottomCenterPoint = { x: box.w / 2 , y: box.h     };
+                    var topLeftPoint      = { x: 0         , y: 0         };
+                    var topRightPoint     = { x: box.w     , y: 0         };
+                    var bottomLeftPoint   = { x: 0         , y: box.h     };
+                    var bottomRightPoint  = { x: box.w     , y: box.h     };
+
+                    var fnGenerateOutletsBetween = generateOutletsBetween.bind(this);
+
+                    var aOutlets = [
+                        new Outlet("top-center", "Bounding", topCenterPoint.x, topCenterPoint.y),
+                        new Outlet("left-center", "Bounding", leftCenterPoint.x, leftCenterPoint.y),
+                        new Outlet("right-center", "Bounding", rightCenterPoint.x, rightCenterPoint.y),
+                        new Outlet("bottom-center", "Bounding", bottomCenterPoint.x, bottomCenterPoint.y)
+                    ];
+
+                    if (!this.getProperty("hasExtraConnectionPoints").value) {
+                        return aOutlets;
+                    }
+
+                    return aOutlets.concat(
+                        fnGenerateOutletsBetween("tl-tc", true /*bIsXDimension*/, topLeftPoint.x, topCenterPoint.x, topCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("tc-tr", true /*bIsXDimension*/, topCenterPoint.x, topRightPoint.x, topCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("bl-bc", true /*bIsXDimension*/, bottomLeftPoint.x, bottomCenterPoint.x, bottomCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("bc-br", true /*bIsXDimension*/, bottomCenterPoint.x, bottomRightPoint.x, bottomCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("lt-lc", false /*bIsXDimension*/, topLeftPoint.y, leftCenterPoint.y, leftCenterPoint.x /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("lc-lb", false /*bIsXDimension*/, leftCenterPoint.y, bottomLeftPoint.y, leftCenterPoint.x /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("rt-rc", false /*bIsXDimension*/, topRightPoint.y, rightCenterPoint.y, rightCenterPoint.x /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("rc-rb", false /*bIsXDimension*/, rightCenterPoint.y, bottomRightPoint.y, rightCenterPoint.x /* iFixedDimensionValue */)
+                    );
+
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path
+           style="stroke-linejoin: round;"
+           fill="none"
+           id="line" />
+
+        <path id="lineGrip" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+        <text id="text" />
+
+    </p:Content>
+</Shape>

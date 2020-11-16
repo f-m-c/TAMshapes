@@ -1,0 +1,11 @@
+<Shortcut displayName="Loop Flow bottom" icon="icons/flowLoopB.png" to="AllDHorVertLine_V002">
+    <PropertyValue name="BOOLisHorizontal">true</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleStart">full</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleEnd">none</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionA">true</PropertyValue>
+    <PropertyValue name="BOOLisExtADiagonal">true</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionB">true</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">50,20</PropertyValue>
+    <PropertyValue name="HNDLc3">25,40</PropertyValue>
+</Shortcut>

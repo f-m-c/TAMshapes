@@ -1,0 +1,13 @@
+<Shortcut displayName="Z vert. Specialization" icon="icons/specializationVMulti.png" to="CDLineHorVert_V003">
+    <PropertyValue name="BOOLisHorizontal">false</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionA">true</PropertyValue>
+    <PropertyValue name="BOOLhasExtensionB">true</PropertyValue>
+    <PropertyValue name="BOOLlockArrowStyle">true</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleStart">specialization</PropertyValue>
+    <PropertyValue name="BOOLhasCardinalityStart">false</PropertyValue>
+    <PropertyValue name="BOOLhasCardinalityEnd">false</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">50,40</PropertyValue>
+    <PropertyValue name="HNDLc3">25,20</PropertyValue>
+    <PropertyValue name="HNDLtextPos">25,40</PropertyValue>
+</Shortcut>

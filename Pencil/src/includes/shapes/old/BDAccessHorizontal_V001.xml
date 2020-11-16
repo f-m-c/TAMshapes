@@ -1,0 +1,10 @@
+<Shortcut displayName="hor. Read Access" icon="icons/arrowHl.png" to="BDStraightArrow_V001" system="true">
+    <PropertyValue name="isHorizontal">true</PropertyValue>
+    <PropertyValue name="p1">0,0</PropertyValue>
+    <PropertyValue name="p2">50,0</PropertyValue>
+    <PropertyValue name="c3">25,0</PropertyValue>
+    <PropertyValue name="arrowStyleStart">full</PropertyValue>
+    <PropertyValue name="arrowStyleEnd">none</PropertyValue>
+    <PropertyValue name="textPos">25,-5</PropertyValue>
+    <PropertyValue name="textAlignment">1,1</PropertyValue>
+</Shortcut>

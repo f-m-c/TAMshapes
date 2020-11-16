@@ -1,0 +1,10 @@
+<Shortcut displayName="ver. Read Access Multi" icon="icons/arrowVuMulti.png" to="BDStraightArrow_V001" system="true">
+    <PropertyValue name="isHorizontal">false</PropertyValue>
+    <PropertyValue name="arrowStyleStart">full</PropertyValue>
+    <PropertyValue name="arrowStyleEnd">none</PropertyValue>
+    <PropertyValue name="hasExtensionA">true</PropertyValue>
+    <PropertyValue name="hasExtensionB">true</PropertyValue>
+    <PropertyValue name="p1">0,0</PropertyValue>
+    <PropertyValue name="p2">30,50</PropertyValue>
+    <PropertyValue name="c3">15,25</PropertyValue>
+</Shortcut>

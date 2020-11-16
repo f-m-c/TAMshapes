@@ -1,0 +1,155 @@
+<Shape id="BDQueue_V002" displayName="Queue" icon="icons/queueH.png">
+    <Properties>
+        <PropertyGroup name="Queue">
+            <Property name="box" type="Dimension">100,40</Property>
+            <Property name="BOOLisMultiple" displayName="Multiple" type="Bool">false</Property>
+            <Property name="HNDLqueueArrow" displayName="Queue Arrow" 
+                p:minY="10" p:maxY="$box.h-10" p:lockX="true" p:expressionX="$box.w / 2"
+                type="Handle">50,20</Property>
+            <Property name="strokeStyleQueue" displayName="Queue Symbol" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+            <Property name="ENUMdirection" displayName="Queue Direction" 
+                p:enumValues="['toEnd|Start to End', 'toStart|End to Start']"
+                type="Enum">toEnd</Property>
+            <Property name="ENUMqueueLength" displayName="Queue Symbol Size %" 
+                p:enumValues="['40|40', '50|50', '60|60', '70|70', '80|80']"
+                type="Enum">60</Property>
+            <Property name="HNDLcornerRadius" displayName="Corner Radius" 
+                p:minX="10" p:maxX="50" p:lockY="true" 
+                type="Handle"><E>$$defaultCornerRadius + ",0"</E></Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="TTXTlabel" displayName="Label" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="line">
+            <D>[M($box.w*0.5*(1 - $ENUMqueueLength.value / 100), $HNDLqueueArrow.y),
+                L($box.w*0.5*(1 + $ENUMqueueLength.value / 100), $HNDLqueueArrow.y)
+                ]</D>
+
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyleQueue</StrokeStyle>
+        </For>
+        <For ref="ArrowStartPath">
+            <Fill>$strokeColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG('full');
+              arrowHead;
+              ]]></D>
+            <Visibility>$ENUMdirection.value == 'toStart'</Visibility>
+        </For>
+        <For ref="ArrowEndPath">
+            <Fill>$strokeColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG('full');
+              arrowHead;
+              ]]></D>
+            <Visibility>$ENUMdirection.value == 'toEnd'</Visibility>
+        </For>
+        <For ref="rect">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Radius>
+                <Arg>$HNDLcornerRadius.x</Arg>
+                <Arg>$HNDLcornerRadius.x</Arg>
+            </Radius>
+        </For>
+        <For ref="rectMultiple">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Radius>
+                <Arg>$HNDLcornerRadius.x</Arg>
+                <Arg>$HNDLcornerRadius.x</Arg>
+            </Radius>
+            <Transform>[translate(8, -8)]</Transform>
+            <Visibility>$BOOLisMultiple</Visibility>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTlabel.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="ArrowEnd"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="ArrowEndPath"
+                  transform="rotate(180) translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+            <marker
+               id="ArrowStart"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="ArrowStartPath"
+                  transform="translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+
+         </defs>
+
+        <rect id="rectMultiple" x="0" y="0" />
+        <rect id="rect" x="0" y="0" />
+        <path
+           id="line"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-start = "url(#ArrowStart)"
+           marker-end   = "url(#ArrowEnd)"
+            />
+        <text id="text" text-anchor="start" xml:space="preserve" />
+    </p:Content>
+</Shape>

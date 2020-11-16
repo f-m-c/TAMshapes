@@ -1,0 +1,76 @@
+<Shape id="AnnGroupCFA_V002" displayName="Area / Group" icon="icons/area.png">
+    <Properties>
+        <PropertyGroup name="Area Properties">
+            <Property name="ENUMareaType"  displayName="Type of Area"
+              p:enumValues="['cfa|Common Feature Area', 'group|Group']"
+              type="Enum">cfa</Property>
+            <Property name="BOOLallowRoundedCorners" p:disabled="true" displayName="AllowRoundedCorners" type="Bool">true</Property>
+            <Property name="BOOLhasRoundedCorners" p:disabled="$BOOLallowRoundedCorners.value === false" displayName="Rounded Corners" type="Bool">false</Property>
+            <Property name="HNDLcornerRadius" p:disabled="$BOOLhasRoundedCorners.value === false" p:minX="10" p:maxX="50" p:lockY="true" displayName="Corner Radius" type="Handle"><E>$$defaultCornerRadius + ",0"</E></Property>
+            <Property name="box" type="Dimension">300,150</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color">#CCCCCCFF</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="TTXTlabel"  displayName="Label" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$ENUMareaType.value == "group" ? $strokeStyle : StrokeStyle.fromString("0|")</StrokeStyle>
+            <Radius>
+                <Arg>$BOOLhasRoundedCorners.value ? $HNDLcornerRadius.x : 0</Arg>
+                <Arg>$BOOLhasRoundedCorners.value ? $HNDLcornerRadius.x : 0</Arg>
+            </Radius>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTlabel.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  var ENUMareaType = this.getProperty("ENUMareaType");
+                  if (ENUMareaType == "group") {
+                    return [
+                      new Outlet("top-left", "Bounding", box.w / 4, 0),
+                      new Outlet("top-center", "Bounding", box.w / 2, 0),
+                      new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                      new Outlet("left-top", "Bounding", 0, box.h / 4),
+                      new Outlet("left-center", "Bounding", 0, box.h / 2),
+                      new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                      new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                      new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                      new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                      new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                      new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                      new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                  ] } else {
+                    return []
+                }
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rect" x="0" y="0" />
+        <text id="text" text-anchor="start" xml:space="preserve" />
+
+    </p:Content>
+</Shape>

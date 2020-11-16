@@ -1,0 +1,77 @@
+<Shape id="AnnCurlyBracketVert_V001" displayName="vert. Curly Bracket" icon="icons/lane.png" system="true">
+  <Properties>
+      <PropertyGroup name="Properties">
+          <Property name="isHorizontal" displayName="Horizontal" type="Bool">false</Property>
+          <Property name="strokeColor" displayName="Line Color" type="Color">#000000FF</Property>
+          <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle">1|1</Property>
+      </PropertyGroup>
+      <PropertyGroup name="Text">
+          <Property name="textPos" p:disabled="$textContent.value.length == 0" displayName="Text Position" type="Handle">0,40</Property>
+          <Property name="textContent" displayName="Content"
+            p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $textAlignment, multi: true})"
+            type="PlainText" />
+          <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+          <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+          <Property name="textAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+      </PropertyGroup>
+  </Properties>
+    <Behaviors>
+      <For ref="bracket">
+          <Font>$textFont</Font>
+          <Color>$strokeColor</Color>
+          <Transform>[rotate(90), scale(1,2)]</Transform>
+      </For>
+      <For ref="bracket2">
+          <Color>$strokeColor</Color>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <Fill>Color.fromString("transparent")</Fill>
+          <D>[M(0,0), 
+              A(100, 173.20508075688772, 0, 0, 1, 100, 173.20508075688772),
+              A(100, 173.20508075688772, 0, 0, 0, 200, 346.41016151377545), 
+              A(100, 173.20508075688772, 0, 0, 0, 100, 519.6152422706632), 
+              A(100, 173.20508075688772, 0, 0, 1, 0, 692.8203230275509)    
+             ]
+             </D>
+          
+      </For>
+      <For ref="text">
+          <PlainTextContent>
+            <Arg>$textContent</Arg>
+            <Arg>var textSize = F.textSize("text");
+                 new Bound( -textSize.w/2 + $textPos.x,
+                            -textSize.h/2 + $textPos.y,
+                            Math.max($textContent.value.length, 300),
+                            textSize.h
+                          )</Arg>
+            <Arg>$textAlignment</Arg>
+          </PlainTextContent>
+          <Font>$textFont</Font>
+          <Color>$textColor</Color>
+      </For>
+      <For ref="textbgRect">
+        <Bound>var textSize = F.textSize("text");
+                 new Bound( -textSize.w/2 + $textPos.x,
+                            -textSize.h/2 + $textPos.y,
+                            $textContent.value.length,
+                            textSize.h
+                          )
+        </Bound>
+      </For>
+
+    </Behaviors>
+
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <text
+          id="bracket"
+          text-anchor="middle" 
+          xml:space="preserve"
+          >}</text>        
+
+        <path id="bracket2" style="fill: none; stroke-linejoin: round;" />
+        <text id="text" text-anchor="middle" xml:space="preserve"  />
+        <rect id="textbgRect" style="fill: none; stroke: none;"  />
+
+    </p:Content>
+</Shape>

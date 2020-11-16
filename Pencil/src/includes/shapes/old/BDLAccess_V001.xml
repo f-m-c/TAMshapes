@@ -1,0 +1,5 @@
+<Shortcut displayName="L Access" icon="icons/l-access.png" to="BDAccessRW_V001" system="true">
+    <PropertyValue name="hasExtensionB">true</PropertyValue>
+    <PropertyValue p:readonly="false" p:disabled="false" name="p4">25,100</PropertyValue>
+    <PropertyValue name="hasArrowStart">false</PropertyValue>
+</Shortcut>

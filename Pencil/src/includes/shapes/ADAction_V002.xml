@@ -1,0 +1,5 @@
+<Shortcut displayName="Action" icon="icons/storage.png" to="AllDRoundedRectangle_V002">
+  <PropertyValue name="box">150,50</PropertyValue>
+  <PropertyValue name="BOOLallowRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLhasRoundedCorners">true</PropertyValue>
+</Shortcut>

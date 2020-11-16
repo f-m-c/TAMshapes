@@ -1,0 +1,29 @@
+{
+  "name": "tam-pencil-stencils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/functions/",
+    "dev": "watch 'node build.js' src",
+    "start": "node build.js",
+    "dist": "cd build && for f in $(find . -depth 1 -type d | grep -v icons); do cd ${f}; zip -r ../../dist/${f}.zip .; cd -; done"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Savio Dimatteo, Bernhard Groene",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "js-sequence-diagrams": "github:darksmo/js-sequence-diagrams",
+    "mocha": "^6.1.4",
+    "snapsvg": "^0.5.1",
+    "underscore": "^1.9.1",
+    "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
+}

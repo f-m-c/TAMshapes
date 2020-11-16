@@ -1,0 +1,12 @@
+<Shortcut displayName="vert. Association Multi" icon="icons/lineVMulti.png" to="AssociationVertical" system="true">
+    <PropertyValue name="isHorizontal">false</PropertyValue>
+    <PropertyValue name="hasExtensionA">true</PropertyValue>
+    <PropertyValue name="hasExtensionB">true</PropertyValue>
+    <PropertyValue name="lockArrowStyle">false</PropertyValue>
+    <PropertyValue name="p1">0,0</PropertyValue>
+    <PropertyValue name="p2">50,40</PropertyValue>
+    <PropertyValue name="c3">25,20</PropertyValue>
+    <PropertyValue name="textPos">40,25</PropertyValue>
+    <PropertyValue name="textCSPos">10,10</PropertyValue>
+    <PropertyValue name="textCEPos">40,50</PropertyValue>
+</Shortcut>

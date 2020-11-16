@@ -1,0 +1,3 @@
+<Shortcut displayName="Async. Message Exchange" icon="icons/aSyncMessageExch.png" to="SeqDSyncMessageExchange_V002">
+    <PropertyValue name="BOOLisSync">false</PropertyValue>
+</Shortcut>

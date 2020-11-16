@@ -1,0 +1,161 @@
+<Shape id="BDModAccessDirect_V002" displayName="dir. mod. Access" icon="icons/circular-access-rw.png">
+    <Properties>
+        <PropertyGroup name="Line">
+            <Property name="HNDLdistance" p:minX="0" p:maxX="100" p:lockY="true" displayName="Arrow distance" type="Handle">20,0</Property>
+            <Property name="HNDLp1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+            <Property name="HNDLp2" p:connectTo="*" displayName="End" type="Handle">20,50</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Text Position" type="Handle">40,25</Property>
+            <Property name="TTXTtextContent" displayName="Content"
+              p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+              type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="read">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($HNDLp1, $HNDLp2);
+                var pFrom = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, 0, gap, true);
+                var pTo = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, distance, gap, true);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $HNDLdistance.x /*targetDistance*/, true);
+                var line = collection.createSVGLineThroughPoints([pTo, middlePerpPoint, pFrom], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="readGrip">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($HNDLp1, $HNDLp2);
+                var pFrom = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, 0, gap, true);
+                var pTo = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, distance, gap, true);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $HNDLdistance.x /*targetDistance*/, true);
+                var line = collection.createSVGLineThroughPoints([pTo, middlePerpPoint, pFrom], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+        </For>
+        <For ref="write">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($HNDLp1, $HNDLp2);
+                var pFrom = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, 0, gap, false);
+                var pTo = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, distance, gap, false);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $HNDLdistance.x /* targetDistance*/, false);
+                var line = collection.createSVGLineThroughPoints([pFrom, middlePerpPoint, pTo], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="writeGrip">
+            <D><![CDATA[
+                var gap = 8;
+
+                var distance = collection.findPointDistance($HNDLp1, $HNDLp2);
+                var pFrom = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, 0, gap, false);
+                var pTo = collection.getPerpendicularPointDistance($HNDLp1, $HNDLp2, distance, gap, false);
+
+                var middlePerpPoint = collection.getPerpendicularPointDistance(pFrom, pTo, distance/2, $HNDLdistance.x /* targetDistance*/, false);
+                var line = collection.createSVGLineThroughPoints([pFrom, middlePerpPoint, pTo], true /*bRounded*/, false /*bClosed*/, distance/2);
+                line;
+            ]]></D>
+        </For>
+        <For ref="ArrowStartPath">
+            <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill('full', $strokeColor);
+            arrowHeadFill;
+            ]]></Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <D><![CDATA[
+                var arrowHead = collection.arrowheadCreateSVG('full');
+                arrowHead;
+            ]]></D>
+            <Transform>[translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>  
+        </For>
+        <For ref="ArrowEndPath">
+            <Fill><![CDATA[
+                var arrowHeadFill = collection.arrowheadDetermineFill('full', $strokeColor);
+                arrowHeadFill;
+            ]]></Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <D><![CDATA[
+                var arrowHead = collection.arrowheadCreateSVG('full');
+                arrowHead;
+            ]]></D>
+            <Transform>[rotate(180), translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, 300, $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
+        </For>
+    </Behaviors>
+    <Actions>
+        <Action id="makeStraight" displayName="Make Straight">
+            <Impl>
+                this.def.collection.makeShapeLineStraight(this, "HNDLp1", "HNDLp2");
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="ArrowEnd"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;"
+               markerUnits="userSpaceOnUse">
+
+               <path
+                  id="ArrowEndPath"
+                  style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+            <marker
+               id="ArrowStart"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;"
+               markerUnits="userSpaceOnUse">
+
+               <path
+                  id="ArrowStartPath"
+                  style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+         </defs>
+
+        <path
+           style="stroke-linejoin: round; marker-end:url(#ArrowEnd)"
+           fill="none"
+           id="read" />
+        <path
+           style="stroke-linejoin: round; marker-end:url(#ArrowEnd);"
+           fill="none"
+           id="write" />
+
+        <path id="readGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+        <path id="writeGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+        <text id="text" xml:space="preserve"  />
+
+    </p:Content>
+</Shape>

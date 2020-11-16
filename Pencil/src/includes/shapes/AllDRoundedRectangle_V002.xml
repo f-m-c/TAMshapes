@@ -1,0 +1,91 @@
+<Shape id="AllDRoundedRectangle_V002" displayName="Rounded Rectangle" icon="icons/storage.png" system="true">
+    <Properties>
+        <PropertyGroup name="Rectangle">
+            <Property name="box" type="Dimension">150,50</Property>
+            <Property name="BOOLallowRoundedCorners" p:disabled="true" 
+                displayName="AllowRoundedCorners" type="Bool">true</Property>
+            <Property name="BOOLhasRoundedCorners" p:disabled="$BOOLallowRoundedCorners.value === false" 
+                displayName="Rounded Corners" type="Bool">true</Property>
+            <Property name="BOOLallowMultiple" p:disabled="true" 
+                displayName="AllowMultiple" type="Bool">false</Property>
+            <Property name="BOOLisMultiple" p:disabled="$BOOLallowMultiple.value === false" 
+                displayName="Multiple" type="Bool">false</Property>
+            <Property name="HNDLcornerRadius" p:disabled="$BOOLhasRoundedCorners.value === false" 
+                p:minX="10" p:maxX="50" p:lockY="true" p:noScale="true"
+                displayName="Corner Radius" type="Handle"><E>$$defaultCornerRadius + ",0"</E></Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="TTXTlabel" displayName="Label" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Radius>
+                <Arg>$BOOLhasRoundedCorners.value ? $HNDLcornerRadius.x : 0</Arg>
+                <Arg>$BOOLhasRoundedCorners.value ? $HNDLcornerRadius.x : 0</Arg>
+            </Radius>
+        </For>
+        <For ref="rectMultiple">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Radius>
+                <Arg>$BOOLhasRoundedCorners.value ? $HNDLcornerRadius.x : 0</Arg>
+                <Arg>$BOOLhasRoundedCorners.value ? $HNDLcornerRadius.x : 0</Arg>
+            </Radius>
+            <Transform>[translate(8, -8)]</Transform>
+            <Visibility>$BOOLisMultiple</Visibility>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTlabel.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rectMultiple" x="0" y="0" />
+        <rect id="rect" x="0" y="0" />
+        <text id="text" text-anchor="start" xml:space="preserve" />
+    </p:Content>
+</Shape>

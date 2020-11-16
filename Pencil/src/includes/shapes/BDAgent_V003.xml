@@ -1,0 +1,156 @@
+<Shape id="BDAgent_V003" displayName="Agent" icon="icons/agent.png">
+    <Properties>
+        <PropertyGroup name="Agent Properties">
+            <Property name="box" type="Dimension">120,60</Property>
+            <Property name="BOOLallowMultiple" p:disabled="true" displayName="Allow Multiple" type="Bool">true</Property>
+            <Property name="BOOLisMultiple" p:disabled="$BOOLallowMultiple.value === false" displayName="Multiple" type="Bool">false</Property>
+            <Property name="BOOLallowHuman" p:disabled="true" displayName="Allow Human" type="Bool">true</Property>
+            <Property name="BOOLshowHuman" p:disabled="$BOOLallowHuman.value === false" displayName="Human" type="Bool">false</Property>
+            <Property name="HNDLhumanPos" p:disabled="$BOOLshowHuman.value === false" displayName="Position of Human"
+              type="Handle" p:minX="0" p:minY="0" p:maxX="$box.w" p:maxY="$box.h">60,30</Property>
+            <Property name="ENUMhumanSize" p:disabled="$BOOLshowHuman.value === false" displayName="Size of Human" 
+                p:enumValues="['1.0|Small', '1.5|Medium', '2.0|Large']"
+                type="Enum">1.5</Property>
+            <Property name="ENUMmood" p:disabled="$BOOLshowHuman.value === false"  displayName="Mood" 
+                p:enumValues="['happy|Happy', 'normal|Normal', 'waving|Waving']"
+                type="Enum">happy</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="TTXTlabel" displayName="Label" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="rectMultiple">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Transform>[translate(8, -8)]</Transform>
+            <Visibility>$BOOLisMultiple</Visibility>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTlabel.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+        <For ref="stickman">
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Transform>[translate($HNDLhumanPos.x, $HNDLhumanPos.y),scale($ENUMhumanSize.value, $ENUMhumanSize.value)]</Transform>
+            <Visibility>$BOOLshowHuman</Visibility>
+        </For>
+        <For ref="leftArm">
+            <D><![CDATA[
+                let line;
+                switch ($ENUMmood.value) {
+                    case "normal":
+                    case "waving":
+                        line = "m 0,-1 -5,0"; // arm straight
+                        break;
+                    case "happy":
+                        line = "m 0,-1 -5,-3"; // arm up
+                        break;
+                }
+                line;
+            ]]></D>
+        </For>
+        <For ref="rightArm">
+            <D><![CDATA[
+                let line;
+                switch ($ENUMmood.value) {
+                    case "normal":
+                        line = "m 0,-1 5,0"; // arm straight
+                        break;
+                    case "happy":
+                    case "waving":
+                        line = "m 0,-1 5,-3"; // arm up
+                        break;
+                }
+                line;
+            ]]></D>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rectMultiple" x="0" y="0" />
+        <rect id="rect" x="0" y="0" />
+        <text id="text" text-anchor="start" xml:space="preserve" />
+
+            <g id="stickman">
+            <ellipse
+               style="opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               id="head"
+               cx="0"
+               cy="-7.5"
+               rx="3"
+               ry="3" />
+            <path
+               d="m 0,-4.5 0,7.5"
+               id="body"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 0,3 -5,7"
+               id="leftLeg"
+               />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 0,3 5,7"
+               id="rightLeg"
+               />
+            <path
+               id="leftArm"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               sodipodi:nodetypes="cc" />
+            <path
+               sodipodi:nodetypes="cc"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="rightArm"
+               />
+           </g>
+
+
+    </p:Content>
+</Shape>

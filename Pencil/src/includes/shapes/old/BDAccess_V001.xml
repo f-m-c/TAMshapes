@@ -1,0 +1,4 @@
+<Shortcut displayName="Access" icon="icons/access.png" to="BDAccessRW_V001" system="true">
+    <PropertyValue name="hasArrowStart">false</PropertyValue>
+</Shortcut>
+

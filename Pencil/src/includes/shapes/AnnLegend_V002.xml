@@ -1,0 +1,130 @@
+<Shape id="AnnLegend_V002" displayName="Legend" icon="icons/legend.png">  
+  <Properties>  
+    <PropertyGroup name="Legend Properties">  
+      <Property name="box" type="Dimension">200,100</Property>  
+      <Property name="TTXTcontentText" displayName="Text Content" type="PlainText"
+          p:editInfo="({
+              targetName: 'content', 
+              bound: Bound.fromBox($box, 0, 0),
+              font: $textFont, 
+              align: new Alignment(0, 0), 
+              multi: true})">#EEEEEE|ItemA
+#FF0000|ItemB  
+#00FF00|ItemC</Property>  
+      <Property name="textColor" displayName="Text Color" type="Color">#000000ff</Property>  
+      <Property name="textFont" displayName="Text Font" type="Font">  
+        <E>$$defaultTextFont</E>  
+      </Property>  
+    </PropertyGroup>  
+  </Properties>  
+  <Behaviors>  
+    <For ref="content">  
+      <Bound>Bound.fromBox($box, 0, 54)</Bound>  
+      <Font>$textFont</Font>  
+      <DomContent><![CDATA[
+        var aLegendItems = collection.parseLegendText($TTXTcontentText.value);
+        var specs = [];  
+
+        let textCss = new CSS();  
+        textCss.set("font-size",$textFont.size);  
+        textCss.set("font-family",$textFont.family);  
+        textCss.set("font-style",$textFont.style);  
+        textCss.set("font-weight",$textFont.weight);  
+        textCss.set("font-decor",$textFont.decor);  
+        textCss.set("fill", $textColor.toRGBString());  
+
+        aLegendItems
+            .forEach((oItem, i) => {
+                let gap = 4;
+                let lineHeight = (i + 1) * (gap + $textFont.getPixelHeight());  
+
+                let sColor = oItem.color;
+                let sItemName = oItem.name;
+
+                let rectCss = new CSS();  
+                rectCss.set("fill", Color.fromString(sColor).toRGBString());
+                rectCss.set("stroke", "#000000");
+                rectCss.set("width", 30)
+                rectCss.set("height", $textFont.getPixelHeight());
+
+                specs.push({
+                    _name: "rect",
+                    _uri: "http://www.w3.org/2000/svg",
+                    style: rectCss,
+                    x: 0,
+                    y: lineHeight - $textFont.getPixelHeight()/2 - gap
+                }, {
+                    _name: "text",
+                    _uri: "http://www.w3.org/2000/svg",
+                    _text: sItemName,
+                    style: textCss,
+                    x: 40,
+                    y: lineHeight
+                });
+            });
+        Dom.newDOMFragment(specs);
+        ]]></DomContent>  
+    </For>  
+  </Behaviors>  
+  <Actions>
+          <Action id="findColors" displayName="Populate automatically">
+              <Impl><![CDATA[
+                function getShapeColors (oShape) {
+                    var oShapeProperties = oShape.getProperties();
+                    return Object.keys(oShapeProperties)
+                        .filter((sProperty) => oShapeProperties[sProperty] instanceof Color)
+                        .map((sColorProperty) => oShapeProperties[sColorProperty].toString());
+                }
+
+                // keep user defined colors
+                var sExistingColorText = this.getProperty("TTXTcontentText");
+                var oExistingColors = this.def.collection.parseLegendText(sExistingColorText.value)
+                    .reduce((o, oColor) => {
+                        o[oColor.color] = oColor.name;
+                        return o;
+                    }, {});
+
+                // find all colors
+                this.canvas.selectAll();
+                var aAllShapes = this.canvas.getSelectedTargets();
+                var aAllColors = [];
+                aAllShapes.forEach((oShape) => {
+                    var aColors = getShapeColors(oShape);
+                    Array.prototype.push.apply(aAllColors, aColors);
+                });
+
+                this.canvas.clearSelection();
+
+                var aUniqueColors = Object.keys(aAllColors.reduce((oMap, sColor) => {
+                    if (!oMap[sColor]) {
+                        oMap[sColor] = 0;
+                    }
+
+                    oMap[sColor]++;
+
+                    return oMap;
+                }, {})).filter((sColor) => {
+                    // no grays
+                    var sCheckLetter = sColor[1];
+                    return sColor.slice(1, 6).split("").some((sCh) => { console.log(sCh); return sCh !== sCheckLetter; });
+                });
+
+                var sText = aUniqueColors.map((sColor, i) => {
+                    let sColorName = "Item " + (i+1);
+                    if (oExistingColors[sColor] && !oExistingColors[sColor].match(/^Item\d+/)) {
+                        return `${sColor}|${oExistingColors[sColor]}`;
+                    }
+                    return `${sColor}|${sColorName}`;
+                }).join("\n");
+                if (sText.length === 0) {
+                    sText = "#000000|No colors found";
+                }
+                this.setProperty("TTXTcontentText", sText);
+                ]]>
+            </Impl>
+        </Action>
+  </Actions>
+  <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">  
+    <g id="content" />  
+  </p:Content>  
+</Shape>  

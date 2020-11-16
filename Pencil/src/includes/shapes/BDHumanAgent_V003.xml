@@ -1,0 +1,6 @@
+<Shortcut displayName="Human Agent" icon="icons/human.png" to="BDAgent_V003">
+  <PropertyValue name="BOOLshowHuman">true</PropertyValue>
+  <PropertyValue name="box">50,60</PropertyValue>
+  <PropertyValue name="HNDLhumanPos">25,30</PropertyValue>
+  <PropertyValue name="ALGNtextAlignment">1,2</PropertyValue>
+</Shortcut>

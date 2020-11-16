@@ -1,0 +1,190 @@
+<Shape id="SeqDAgentLifeline_V002" displayName="Agent Lifeline" icon="icons/lifelineAgent.png">
+    <Properties>
+        <PropertyGroup name="Lifeline Properties">
+            <Property name="BOOLterminates" displayName="Destruction at end" type="Bool">false</Property>
+            <Property name="COLRlifelineStrokeColor" displayName="Lifeline Color" type="Color">#666666FF</Property>
+            <Property name="HNDLlifelineHandle"  displayName="Lifeline Size" 
+              type="Handle"
+              p:lockX="true" p:expressionX="$box.w/2" p:minY="$box.h">35,300</Property>
+            <Property name="COLRactiveFillColor" displayName="Activation Fill Color" type="Color">#CCCCCCFF</Property>
+            <Property name="COLRactiveStrokeColor" displayName="Activation Line Color" type="Color">#000000FF</Property>
+            <Property name="HNDLactivationHandle"  displayName="Activation Size" 
+              type="Handle"
+              p:lockX="true" p:expressionX="$box.w/2 + $DIMNactivationSize.w / 2" 
+              p:minY="$box.h" p:maxY="$HNDLlifelineHandle.y">40,150</Property>
+            <Property name="DIMNactivationSize"  displayName="Activation Size" type="Dimension">10,150</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Agent/Object Properties">
+            <Property name="box" type="Dimension">70,40</Property>
+            <Property name="BOOLallowMultiple" p:disabled="true" displayName="AllowMultiple" type="Bool">true</Property>
+            <Property name="BOOLisMultiple" p:disabled="$BOOLallowMultiple.value === false" displayName="Multiple" type="Bool">false</Property>
+            <Property name="BOOLallowHuman" p:disabled="true" displayName="AllowHuman" type="Bool">true</Property>
+            <Property name="BOOLshowHuman" p:disabled="$BOOLallowHuman.value === false" displayName="Human" type="Bool">false</Property>
+            <Property name="HNDLhumanPos" p:disabled="$BOOLshowHuman.value === false" displayName="Position of Human"
+              type="Handle" p:minX="0" p:minY="0" p:maxX="$box.w" p:maxY="$box.h">25,20</Property>
+            <Property name="ENUMmood" p:disabled="$BOOLshowHuman.value === false" type="Enum" displayName="Mood" p:enumValues="['happy|Happy', 'normal|Normal', 'waving|Waving']">happy</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property name="TTXTtextContent" displayName="Label" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font">Arial,sans-serif|normal|normal|13px|underline</Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="lifeline">
+            <StrokeColor>$COLRlifelineStrokeColor</StrokeColor>
+            <D>[M($box.w/2, $box.h), L($box.w/2, $HNDLlifelineHandle.y)]</D>
+        </For>
+        <For ref="activeRect">
+            <Box>new Dimension($DIMNactivationSize.w, $HNDLactivationHandle.y - $box.h)</Box>
+            <Fill>$COLRactiveFillColor</Fill>
+            <StrokeColor>$COLRactiveStrokeColor</StrokeColor>
+            <Transform>[translate($box.w/2 - $DIMNactivationSize.w/2, $box.h)]</Transform>
+        </For>
+        <For ref="rectMultiple">
+            <Box>$box</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Transform>[translate(8, -8)]</Transform>
+            <Visibility>$BOOLisMultiple</Visibility>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+        <For ref="crossA">
+          <D>[M($HNDLlifelineHandle.x - $DIMNactivationSize.w, $HNDLlifelineHandle.y - $DIMNactivationSize.w), L($HNDLlifelineHandle.x + $DIMNactivationSize.w, $HNDLlifelineHandle.y + $DIMNactivationSize.w)]</D>
+          
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <Visibility>$BOOLterminates.value</Visibility>
+        </For>
+        <For ref="crossB">
+          <D>[M($HNDLlifelineHandle.x - $DIMNactivationSize.w, $HNDLlifelineHandle.y + $DIMNactivationSize.w), L($HNDLlifelineHandle.x + $DIMNactivationSize.w, $HNDLlifelineHandle.y - $DIMNactivationSize.w)]</D>
+          
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <Visibility>$BOOLterminates.value</Visibility>
+        </For>
+
+        <For ref="stickman">
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Transform>[translate($HNDLhumanPos.x - 14, $HNDLhumanPos.y - 20)]</Transform>
+            <Visibility>$BOOLshowHuman</Visibility>
+        </For>
+        <For ref="leftArm">
+            <D><![CDATA[
+                let line;
+                switch ($ENUMmood.value) {
+                    case "normal":
+                    case "waving":
+                        line = "m 14.835565,21.093038 -6.6618356,0"; // arm straight
+                        break;
+                    case "happy":
+                        line = "M 14.835565,21.093038 8.1737294,16.482999"; // arm up
+                        break;
+                }
+                line;
+            ]]></D>
+        </For>
+        <For ref="rightArm">
+            <D><![CDATA[
+                let line;
+                switch ($ENUMmood.value) {
+                    case "normal":
+                        line = "m 21.402901,21.093038 -6.661836,0"; // arm straight
+                        break;
+                    case "happy":
+                    case "waving":
+                        line = "m 21.402901,16.482639 -6.661836,4.610399"; // arm up
+                        break;
+                }
+                line;
+            ]]></D>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var dist = 5;
+                  var box = this.getProperty("box");
+                  var lifeline = this.getProperty("HNDLlifelineHandle");
+                  var outlets = [ new Outlet("left-center", "Bounding", 0, box.h / 2) ];
+                  
+                  if (box.h < lifeline.y) {
+                    for (var i = box.h; i < lifeline.y; i = i + dist)
+                    outlets.push( new Outlet("lifeline" + i.toString(), "Bounding", lifeline.x, i) );
+                  }
+
+                  return outlets;
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rectMultiple" x="0" y="0" />
+        <path id="lifeline"
+               style="fill:none;fill-rule:evenodd;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:8;stroke-opacity:1" />
+        <rect id="activeRect" x="0" y="0" />        
+        <rect id="rect" x="0" y="0" />
+        <text id="text" text-anchor="start" xml:space="preserve" />
+
+        <path id="crossA" fill="none" style="stroke-linejoin: round" />
+        <path id="crossB" fill="none" style="stroke-linejoin: round" />
+
+            <g id="stickman">
+            <ellipse
+               style="opacity:1;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               id="head"
+               cx="14.835565"
+               cy="11"
+               rx="4"
+               ry="4" />
+            <path
+               d="m 14.835565,30.069968 0,-14.45757"
+               id="body"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="m 14.835565,30.069968 -6.6618356,6.66184"
+               id="leftLeg"
+               />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+               d="m 14.835565,30.069968 6.614593,6.61459"
+               id="rightLeg"
+               />
+            <path
+               id="leftArm"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               sodipodi:nodetypes="cc" />
+            <path
+               sodipodi:nodetypes="cc"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="rightArm"
+               />
+           </g>
+
+
+    </p:Content>
+</Shape>

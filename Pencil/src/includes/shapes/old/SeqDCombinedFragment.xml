@@ -1,0 +1,197 @@
+<Shape id="CombinedFragment" displayName="CombinedFragment" icon="icons/combinedFragment.png" system="true">
+    <Properties>
+        <PropertyGroup name="Properties">
+            <Property name="StrokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+            <Property name="labelHandle"  displayName="Label Size"  
+                p:lockY="true" p:expressionY="20"
+                type="Handle">60,20</Property>            
+            <Property displayName="Label" name="label" 
+                p:editInfo="({targetName: 'text', font: $textFont, multi: false})" type="PlainText"></Property>
+            <Property name="sectionCount"  displayName="Number of Sections"
+                p:enumValues="['1|1', '2|2', '3|3', '4|4', '5|5']" 
+                type="Enum">1</Property>
+            <Property name="box" type="Dimension">300,100</Property>
+            <Property name="sectionOneLabel"  displayName="Section 1"
+                p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText"></Property>
+            <Property name="sectionOneLabelHandle"  displayName="Label of Section 1" 
+                type="Handle">150,30</Property>
+            <Property name="separator12Handle"  displayName="Separator 1-2" 
+                type="Handle" p:disabled="$sectionCount.value == '1'"
+                p:lockX="true" p:expressionX="$box.w / 2"
+                p:minY="5" p:maxY="$box.h - 5"
+                >150,50</Property>            
+            <Property name="sectionTwoLabel"  displayName="Section 2"
+                p:disabled="$sectionCount.value == '1'"
+                p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText"></Property>
+            <Property name="sectionTwoLabelHandle"  displayName="Label of Section 2" 
+                p:minY="$separator12Handle.y" p:maxY="$separator12Handle.y + 20"
+                p:disabled="$sectionCount.value == '1'"
+                type="Handle">150,60</Property>
+            <Property name="separator23Handle"  displayName="Separator 2-3" 
+                type="Handle" p:disabled="$sectionCount.value == '1' || $sectionCount.value == '2'"
+                p:lockX="true" p:expressionX="$box.w / 2"
+                p:minY="10" p:maxY="$box.h - 5"
+                >150,60</Property>            
+            <Property name="sectionThreeLabel"  displayName="Section 3"
+                p:disabled="$sectionCount.value == '1' || $sectionCount.value == '2'"
+                p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText"></Property>
+            <Property name="sectionThreeLabelHandle"  displayName="Label of Section 3" 
+                p:minY="$separator23Handle.y" p:maxY="$separator23Handle.y + 20"
+                p:disabled="$sectionCount.value == '1' || $sectionCount.value == '2'"
+                type="Handle">150,70</Property>
+            <Property name="separator34Handle"  displayName="Separator 3-4" 
+                type="Handle" p:disabled="$sectionCount.value == '1' || $sectionCount.value == '2' || $sectionCount.value == '3'"
+                p:lockX="true" p:expressionX="$box.w / 2"
+                p:minY="15" p:maxY="$box.h - 5"
+                >150,70</Property>            
+            <Property name="sectionFourLabel"  displayName="Section 4"
+                p:disabled="$sectionCount.value == '1' || $sectionCount.value == '2' || $sectionCount.value == '3'"
+                p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText"></Property>
+            <Property name="sectionFourLabelHandle"  displayName="Label of Section 4"
+                p:minY="$separator34Handle.y" p:maxY="$separator34Handle.y + 20" 
+                p:disabled="$sectionCount.value == '1' || $sectionCount.value == '2' || $sectionCount.value == '3'"
+                type="Handle">150,80</Property>
+            <Property name="separator45Handle"  displayName="Separator 4-5" 
+                type="Handle" p:disabled="$sectionCount.value != '5'"
+                p:lockX="true" p:expressionX="$box.w / 2"
+                p:minY="20" p:maxY="$box.h - 5"
+                >150,80</Property>            
+            <Property name="sectionFiveLabel"  displayName="Section 5"
+                p:disabled="$sectionCount.value != '5'"
+                p:editInfo="({targetName: 'text', font: $textFont, align: $textAlignment, multi: true})" type="PlainText"></Property>
+            <Property name="sectionFiveLabelHandle"  displayName="Label of Section 5" 
+                p:minY="$separator45Handle.y" p:maxY="$separator45Handle.y + 20"
+                p:disabled="$sectionCount.value != '5'"
+                type="Handle">150,90</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="frame">
+            <StrokeColor>$StrokeColor</StrokeColor>
+            <D>[M(0,20), 
+                L($labelHandle.x - 5, 20),
+                L($labelHandle.x, 15),
+                L($labelHandle.x, 0),
+                M(0,0),
+                L($box.w, 0),
+                L($box.w, $box.h),
+                L(0, $box.h),
+                L(0,0)
+                ]</D>
+        </For>
+        <For ref="frameGrip">
+            <D>[M(0,$labelHandle.y), 
+                L($labelHandle.x - 5, $labelHandle.y),
+                L($labelHandle.x, $labelHandle.y - 5),
+                L($labelHandle.x, 0),
+                M(0,0),
+                L($box.w, 0),
+                L($box.w, $box.h),
+                L(0, $box.h),
+                L(0,0)
+                ]</D>
+        </For>
+        <For ref="label">
+            <DomContent>F.buildTextWrapDomContent(F._target, $label.value, $labelHandle.x, new Alignment(0,0))</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(5, 16)]</Transform>
+        </For>
+        <For ref="sectionOneLabel">
+            <DomContent>F.buildTextWrapDomContent(F._target, $sectionOneLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($sectionOneLabelHandle.x) - $textAlignment.h * 150, $sectionOneLabelHandle.y)]</Transform>
+        </For>
+        <For ref="sectionTwoLabel">
+            <Visibility>Number.parseInt($sectionCount.value) > 1</Visibility> 
+            <DomContent>F.buildTextWrapDomContent(F._target, $sectionTwoLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($sectionTwoLabelHandle.x) - $textAlignment.h * 150, $sectionTwoLabelHandle.y)]</Transform>
+        </For>
+        <For ref="sectionThreeLabel">
+            <Visibility>Number.parseInt($sectionCount.value) > 2</Visibility> 
+            <DomContent>F.buildTextWrapDomContent(F._target, $sectionThreeLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($sectionThreeLabelHandle.x) - $textAlignment.h * 150, $sectionThreeLabelHandle.y)]</Transform>
+        </For>
+        <For ref="sectionFourLabel">
+            <Visibility>Number.parseInt($sectionCount.value) > 3</Visibility> 
+            <DomContent>F.buildTextWrapDomContent(F._target, $sectionFourLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($sectionFourLabelHandle.x) - $textAlignment.h * 150, $sectionFourLabelHandle.y)]</Transform>
+        </For>
+        <For ref="sectionFiveLabel">
+            <Visibility>Number.parseInt($sectionCount.value) > 4</Visibility> 
+            <DomContent>F.buildTextWrapDomContent(F._target, $sectionFiveLabel.value, 300, $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($sectionFiveLabelHandle.x) - $textAlignment.h * 150, $sectionFiveLabelHandle.y)]</Transform>
+        </For>
+        <For ref="separator1">
+            <StrokeColor>$StrokeColor</StrokeColor>
+            <D>[M(0,$separator12Handle.y), 
+                L($box.w, $separator12Handle.y)
+                ]</D>
+            <Visibility>Number.parseInt($sectionCount.value) > 1</Visibility>    
+        </For>
+        <For ref="separator2">
+            <StrokeColor>$StrokeColor</StrokeColor>
+            <D>[M(0,$separator23Handle.y), 
+                L($box.w, $separator23Handle.y)
+                ]</D>
+            <Visibility>Number.parseInt($sectionCount.value) > 2</Visibility>    
+        </For>
+        <For ref="separator3">
+            <StrokeColor>$StrokeColor</StrokeColor>
+            <D>[M(0,$separator34Handle.y), 
+                L($box.w, $separator34Handle.y)
+                ]</D>
+            <Visibility>Number.parseInt($sectionCount.value) > 3</Visibility>    
+        </For>
+        <For ref="separator4">
+            <StrokeColor>$StrokeColor</StrokeColor>
+            <D>[M(0,$separator45Handle.y), 
+                L($box.w, $separator45Handle.y)
+                ]</D>
+            <Visibility>Number.parseInt($sectionCount.value) > 4</Visibility>    
+        </For>
+
+    </Behaviors>
+    <Actions>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path id="frame"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;"
+        />
+        <path id="frameGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+        <text id="label"  xml:space="preserve" />
+
+        <path id="separator1"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5;"
+        />
+        <path id="separator2"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5;"
+        />
+        <path id="separator3"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5;"
+        />
+        <path id="separator4"
+               style="fill:none;fill-rule:evenodd;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5;"
+        />
+
+        <text id="sectionOneLabel"   xml:space="preserve" />
+        <text id="sectionTwoLabel"   xml:space="preserve" />
+        <text id="sectionThreeLabel" xml:space="preserve" />
+        <text id="sectionFourLabel"  xml:space="preserve" />
+        <text id="sectionFiveLabel"  xml:space="preserve" />
+    </p:Content>
+</Shape>

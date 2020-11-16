@@ -1,0 +1,116 @@
+<Shape id="AnnDots_V002" displayName="Dots" icon="icons/dots.png">
+    <Properties>
+        <PropertyGroup name="Dots properties">
+            <Property name="box" type="Dimension">20,20</Property>
+            <Property name="ENUMorientation" type="Enum" displayName="Orientation" p:enumValues="[
+                'hor|Horizontal',
+                'ver|Vertical',
+                'diaU|Diagonal up',
+                'diaD|Diagonal down'
+            ]">hor</Property>
+            <Property name="ENUMdotSize" type="Enum" displayName="Dot Size" p:enumValues="[
+                '1|1',
+                '2|2',
+                '3|3',
+                '4|4',
+                '5|5',
+                '6|6',
+                '7|7',
+                '8|8'
+            ]">2</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="dot1">
+            <Attr>
+                <Arg>"cx"</Arg>
+                <Arg>$ENUMorientation.value == "hor" ? 0 : ( 
+                    $ENUMorientation.value == "ver" ? $box.w/2 : (
+                        $ENUMorientation.value == "diaU" ? 0: (
+                            $ENUMorientation.value == "diaD" ? 0 : 0
+                        )
+                    )
+                ) 
+                </Arg>
+            </Attr>
+            <Attr>
+                <Arg>"cy"</Arg>
+                <Arg>$ENUMorientation.value == "hor" ? $box.h/2 : ( 
+                    $ENUMorientation.value == "ver" ? 0 : (
+                        $ENUMorientation.value == "diaU" ? $box.h : (
+                            $ENUMorientation.value == "diaD" ? 0 : 0
+                        )
+                    )
+                ) </Arg>
+            </Attr>
+            <Attr>
+                <Arg>"r"</Arg>
+                <Arg>$ENUMdotSize.value</Arg>
+            </Attr>
+            <Fill>$strokeColor</Fill>
+        </For>
+        <For ref="dot2">
+            <Attr>
+                <Arg>"cx"</Arg>
+                <Arg>$box.w/2 </Arg>
+            </Attr>
+            <Attr>
+                <Arg>"cy"</Arg>
+                <Arg>$box.h/2</Arg>
+            </Attr>
+            <Attr>
+                <Arg>"r"</Arg>
+                <Arg>$ENUMdotSize.value</Arg>
+            </Attr>
+            <Fill>$strokeColor</Fill>
+        </For>
+        <For ref="dot3">
+            <Attr>
+                <Arg>"cx"</Arg>
+                <Arg>$ENUMorientation.value == "hor" ? $box.w : ( 
+                    $ENUMorientation.value == "ver" ? $box.w/2 : (
+                        $ENUMorientation.value == "diaU" ? $box.w : (
+                            $ENUMorientation.value == "diaD" ? $box.w : $box.w
+                        )
+                    )
+                ) 
+                </Arg>
+            </Attr>
+            <Attr>
+                <Arg>"cy"</Arg>
+                <Arg>$ENUMorientation.value == "hor" ? $box.h/2 : ( 
+                    $ENUMorientation.value == "ver" ? $box.h : (
+                        $ENUMorientation.value == "diaU" ? 0 : (
+                            $ENUMorientation.value == "diaD" ? $box.h : $box.h
+                        )
+                    )
+                )
+                </Arg>
+            </Attr>
+            <Attr>
+                <Arg>"r"</Arg>
+                <Arg>$ENUMdotSize.value</Arg>
+            </Attr>
+            <Fill>$strokeColor</Fill>
+        </For>
+        <For ref="rectGrip">
+            <Box>$box</Box>
+        </For>
+    </Behaviors>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <rect id="rectGrip" x="0" y="0" style="fill: rgba(0, 0, 0, 0); stroke: none;"/>
+
+        <circle
+           id="dot1"
+        />
+        <circle
+           id="dot2"
+        />
+        <circle
+           id="dot3"
+        />
+    </p:Content>
+</Shape>

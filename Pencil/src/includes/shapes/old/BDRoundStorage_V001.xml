@@ -1,0 +1,6 @@
+<Shortcut displayName="Round Storage" icon="icons/round-storage.png" to="BDAgent_V001" system="true">
+    <PropertyValue name="hasRoundedCorners">true</PropertyValue>
+    <PropertyValue name="cornerRadius">50,0</PropertyValue>
+    <PropertyValue name="box">50,50</PropertyValue>
+    <PropertyValue name="label"></PropertyValue>
+</Shortcut>

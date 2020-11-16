@@ -1,0 +1,30 @@
+<Shape id="SeqDActive_V002" displayName="Active Area" icon="icons/activation.png">
+    <Properties>
+        <PropertyGroup name="Properties">
+            <Property name="HNDLstartHandle"  displayName="Start" p:connectTo="*" 
+              type="Handle">5,0</Property>
+            <Property name="HNDLendHandle"  displayName="End" p:connectTo="*" 
+              type="Handle"
+              p:minY="$HNDLstartHandle.y">5,80</Property>
+            <Property name="COLRactiveFillColor" displayName="Activation Fill Color" type="Color">#CCCCCCFF</Property>
+            <Property name="COLRactiveStrokeColor" displayName="Activation Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="DIMNactivationSize"  displayName="Activation Size" type="Dimension">10,150</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="activeRect">
+            <Box>new Dimension($DIMNactivationSize.w, Math.abs($HNDLstartHandle.y - $HNDLendHandle.y))</Box>
+            <Fill>$COLRactiveFillColor</Fill>
+            <StrokeColor>$COLRactiveStrokeColor</StrokeColor>
+            <Transform>[translate($HNDLendHandle.x - $DIMNactivationSize.w / 2, $HNDLstartHandle.y)]</Transform>
+        </For>
+
+    </Behaviors>
+    <Actions>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <rect id="activeRect" x="0" y="0" />        
+    </p:Content>
+</Shape>

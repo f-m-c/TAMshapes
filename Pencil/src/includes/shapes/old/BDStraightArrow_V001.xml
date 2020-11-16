@@ -1,0 +1,324 @@
+<Shape id="BDStraightArrow_V001" displayName="vert. Line" icon="icons/lineV.png" system="true">
+    <Properties>
+        <PropertyGroup name="Line">
+            <Property name="hasExtensionA"  displayName="Extension at Start"  type="Bool">false</Property>
+            <Property name="hasExtensionB"  displayName="Extension at End"  type="Bool">false</Property>
+            <Property name="isHorizontal" p:disabled="true" displayName="Horizontal" type="Bool">false</Property>
+            <Property name="alignType"  displayName="Alignment" p:disabled="$hasExtensionA.value || $hasExtensionB.value"
+                  p:enumValues="['start|Start', 'center|Center', 'end|End', 'control|Control']"
+                  type="Enum">center</Property>
+            <Property name="p1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+            <Property name="p2" p:connectTo="*" displayName="End" type="Handle">0,50</Property>
+            <Property name="c3" displayName="Control" type="Handle" 
+                      p:disabled="!($alignType.value == 'control' || $hasExtensionA.value  || $hasExtensionB.value || $isChannel.value)"
+                      >0,25</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+            <Property name="lockArrowStyle" p:disabled="true" displayName="Prevent changing arrowhead" type="Bool">false</Property>
+            <Property name="arrowStyleStart"  displayName="Arrow Style Start" p:disabled="$lockArrowStyle.value"
+                p:enumValues="['none|None', 'full|Full', 'open|Open']"
+                type="Enum">none</Property>
+            <Property name="arrowStyleEnd"  displayName="Arrow Style End" p:disabled="$lockArrowStyle.value"
+                p:enumValues="['none|None', 'full|Full', 'open|Open']"
+                type="Enum">none</Property>
+           <Property name="isChannel" p:disabled="true" displayName="Channel" type="Bool">false</Property>
+           <Property name="directionType" p:disabled="$isChannel.value === false"
+                     type="Enum" displayName="Request Direction Type"
+                     p:enumValues="['none|None', 'single|Single Direction', 'bidirectional|Bidirectional']">single</Property>
+           <Property name="circleRadius" p:disabled="$isChannel.value === false"
+                     type="Enum" displayName="Channel Circle Radius"
+                     p:enumValues="['6|6', '8|8', '10|10']">8</Property>
+           <Property name="rOffset" type="Enum" displayName="Request Symbol Offset" p:disabled="$isChannel.value === false"
+                     p:enumValues="[
+                         '-25|-25',
+                         '-20|-20',
+                         '-15|-15',
+                         '15|15',
+                         '20|20',
+                         '25|25'
+                     ]">20</Property>
+            <Property name="nodeStrokeStyle" displayName="Circle Line Style" p:disabled="$isChannel.value === false" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property name="nodeFillColor" displayName="Circle Fill Color" p:disabled="$isChannel.value === false" type="Color"><E>$$defaultBackgroundColor</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="textPos" p:disabled="$textContent.value.length == 0" displayName="Text Position" type="Handle">40,25</Property>
+            <Property name="textContent" displayName="Content"
+              p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $textAlignment, multi: true})"
+              type="PlainText" />
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+      <For ref="line">
+        <D><![CDATA[
+            var aPoints = collection.calculateHorVertLinePoints_V001($p1, $p2, $c3, $isHorizontal.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+            var line = collection.createSVGLineThroughPoints(aPoints, true /*bRounded*/, false /*bClosed*/);
+            line;
+        ]]></D>
+
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+      </For>
+      <For ref="lineGrip">
+        <D><![CDATA[
+            var aPoints = collection.calculateHorVertLinePoints_V001($p1, $p2, $c3, $isHorizontal.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+            var line = collection.createSVGLineThroughPoints(aPoints, true /*bRounded*/, false /*bClosed*/);
+            line;
+        ]]></D>
+      </For>
+      <For ref="ArrowStartPath">
+        <Fill><![CDATA[
+          var arrowHeadFill = collection.arrowheadDetermineFill($arrowStyleStart.value, $strokeColor);
+          arrowHeadFill;
+        ]]></Fill>
+        <StrokeColor>$strokeColor</StrokeColor>
+        <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG($arrowStyleStart.value);
+            arrowHead;
+        ]]></D>
+          <Visibility>$arrowStyleStart.value != 'none'</Visibility>
+      </For>
+      <For ref="ArrowEndPath">
+          <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill($arrowStyleEnd.value, $strokeColor);
+            arrowHeadFill;
+          ]]></Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG($arrowStyleEnd.value);
+            arrowHead;
+          ]]></D>
+
+          <Visibility>$arrowStyleEnd.value != 'none'</Visibility>
+      </For>
+
+      <For ref="line1">
+          <D><![CDATA[
+                    var cc = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                    var draw = [];
+                    draw.push(M(cc.las1x, cc.las1y));
+                    draw.push(L(cc.las2x, cc.las2y));
+                    draw;
+                ]]>
+          </D>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <Visibility>$isChannel.value &amp;&amp; $arrowStyleEnd.value != 'none'</Visibility>
+      </For>
+
+      <For ref="line2">
+          <D><![CDATA[
+                    var cc = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                    var draw = [];
+                    draw.push(M(cc.lae2x, cc.lae2y));
+                    draw.push(L(cc.lae1x, cc.lae1y));
+                    draw;
+                ]]>
+          </D>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <Visibility>$isChannel.value &amp;&amp; $arrowStyleStart.value != 'none'</Visibility>
+      </For>
+
+      <For ref="ChannelAnnotation">
+          <Visibility>$isChannel.value</Visibility>
+      </For>
+
+
+      <For ref="R">
+          <Visibility>$directionType.value !== "none"</Visibility>
+          <Attr>
+            <Arg>"x"</Arg>
+            <Arg><![CDATA[
+                  var channelCoord = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                  channelCoord.rx;
+               ]]></Arg>
+          </Attr>
+          <Attr>
+            <Arg>"y"</Arg>
+            <Arg><![CDATA[
+                  var channelCoord = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                  channelCoord.ry;
+               ]]></Arg>
+          </Attr>
+      </For>
+      <For ref="Rline1">
+          <D><![CDATA[
+                    var cc = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                    var draw = [];
+                    draw.push(M(cc.ras1x, cc.ras1y));
+                    draw.push(L(cc.ras2x, cc.ras2y));
+                    draw;
+                ]]></D>
+
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <Visibility>$directionType.value == 'bidirectional'</Visibility>
+      </For>
+
+      <For ref="Rline2">
+          <D><![CDATA[
+                    var cc = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                    var draw = [];
+                    draw.push(M(cc.rae1x, cc.rae1y));
+                    draw.push(L(cc.rae2x, cc.rae2y));
+                    draw;
+                ]]></D>
+
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <Visibility>$directionType.value != 'none'</Visibility>
+      </For>
+      <For ref="RArrowPath">
+          <Fill>$strokeColor</Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG("full");
+            arrowHead;
+          ]]></D>
+
+          <Visibility>$isChannel.value</Visibility>
+      </For>
+
+      <For ref="circle">
+         <StrokeColor>$strokeColor</StrokeColor>
+         <StrokeStyle>$nodeStrokeStyle</StrokeStyle>
+         <Fill>$nodeFillColor</Fill>
+         <Radius>
+           <Arg>$circleRadius.value</Arg>
+           <Arg>$circleRadius.value</Arg>
+         </Radius>
+         <Attr>
+              <Arg>"cx"</Arg>
+              <Arg><![CDATA[
+                  var channelCoord = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                  channelCoord.cx;
+               ]]></Arg>
+         </Attr>
+         <Attr>
+              <Arg>"cy"</Arg>
+              <Arg><![CDATA[
+                  var channelCoord = collection.calculateChannelCoord_V001($p1, $p2, $c3, $isHorizontal.value, $circleRadius.value, $directionType.value, $rOffset.value, $alignType.value, $hasExtensionA.value, $hasExtensionB.value);
+                  channelCoord.cy;
+               ]]>
+              </Arg>
+          </Attr>
+          <Visibility>$isChannel.value</Visibility>
+      </For>
+
+      <For ref="text">
+          <DomContent>F.buildTextWrapDomContent(F._target, $textContent.value, 300, $textAlignment)</DomContent>
+          <Font>$textFont</Font>
+          <Color>$textColor</Color>
+          <Transform>[translate(parseFloat($textPos.x) - $textAlignment.h * 150, $textPos.y)]</Transform>
+      </For>
+    </Behaviors>
+    <Actions>
+          <Action id="toggleHorVert" displayName="Toggle Horizontal / Vertical">
+              <Impl>
+                  var currentIsHorizontal = this.getProperty("isHorizontal");
+                  this.setProperty("isHorizontal", new Bool(!currentIsHorizontal.value));
+              </Impl>
+          </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="ArrowEnd"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="ArrowEndPath"
+                  transform="rotate(180) translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+            <marker
+               id="ArrowStart"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="ArrowStartPath"
+                  transform="translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+
+            <marker
+               id="RArrow"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;">
+
+               <path
+                  id="RArrowPath"
+                  transform="rotate(180) translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+         </defs>
+
+        <path
+           id="line"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-start = "url(#ArrowStart)"
+           marker-end   = "url(#ArrowEnd)"
+            />
+
+        <path id="lineGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+        <path
+           id="line1"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-end   = "url(#ArrowEnd)"
+            />
+
+        <path
+           id="line2"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-end   = "url(#ArrowStart)"
+            />
+
+        <ellipse
+               id="circle"
+                />
+
+      <g id="ChannelAnnotation">
+        <text style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:13px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+              id="R">
+          <tspan id="Rspan">R</tspan>
+        </text>
+
+        <path
+           id="Rline1"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-end   = "url(#RArrow)"
+            />
+
+        <path
+           id="Rline2"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-end   = "url(#RArrow)"
+            />
+      </g>
+
+        <text id="text" xml:space="preserve"  />        
+
+    </p:Content>
+</Shape>

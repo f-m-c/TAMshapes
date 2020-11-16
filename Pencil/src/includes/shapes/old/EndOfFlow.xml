@@ -1,0 +1,3 @@
+<Shortcut displayName="End of Flow" icon="icons/end-of-flow.png" to="EndOfActivity" system="true">
+    <PropertyValue name="endOfFlow">true</PropertyValue>
+</Shortcut>

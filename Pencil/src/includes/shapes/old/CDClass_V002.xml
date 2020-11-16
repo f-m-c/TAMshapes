@@ -1,0 +1,129 @@
+<Shape id="CDClass_V002" displayName="Class w/ compartments" icon="icons/class.png" system="true">
+    <Properties>
+        <PropertyGroup name="Class Properties">
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="box" type="Dimension">150,80</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color">#EEEEEEFF</Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property displayName="Class Name" name="classname"
+              p:editInfo="({targetName: 'textClassName', bound: Bound.fromBox($box), font: $textFont, align: $textAlignment, multi: true})" 
+              type="PlainText" />
+            <Property name="textAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Compartment Properties">
+            <Property name="showCompartments"  displayName="Show Compartments" 
+                p:enumValues="['none|None', 'attr|Attributes only', 'all|All']"
+                type="Enum">all</Property>
+            <Property name="posClassCompASeparator" p:disabled="$showCompartments.value == 'none'" displayName="Separator Classname-Compartment A" 
+              type="Handle"
+              p:lockX="true" p:minY="20" p:maxY="$box.h">50,25</Property>
+            <Property name="posCompACompMSeparator" p:disabled="$showCompartments.value != 'all'" displayName="Separator Compartments A-M" 
+              type="Handle"
+              p:lockX="true" p:minY="30" p:maxY="$box.h">50,50</Property>
+            <Property displayName="Attributes" name="attributes" p:disabled="$showCompartments.value == 'none'"
+              p:editInfo="({targetName: 'textAttributes', bound: Bound.fromBox($box), font: $textFont, align: $compTextAlignment, multi: true})" 
+              type="PlainText" />
+            <Property displayName="Methods" name="methods" p:disabled="$showCompartments.value != 'all'"
+              p:editInfo="({targetName: 'textMethods', bound: Bound.fromBox($box), font: $textFont, align: $compTextAlignment, multi: true})" 
+              type="PlainText" />
+            <Property name="compTextFont" displayName="Font" type="Font">Arial,sans-serif|normal|normal|11px</Property>
+            <Property name="compFillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="compTextColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="compTextAlignment" displayName="Compartment Text Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Fill>$compFillColor</Fill>
+        </For>
+        <For ref="rectClassName">
+            <Box>new Dimension($box.w, $showCompartments.value == 'none' ? $box.h : $posClassCompASeparator.y)</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="textClassName">
+            <DomContent>F.buildTextWrapDomContent(F._target, $classname.value, $box.w - $textFont.getPixelHeight(), $textAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(3, 3, $box.w - 6, $showCompartments.value == 'none' ? $box.h - 6 : $posClassCompASeparator.y - 6)</Arg>
+                <Arg>$textAlignment</Arg>
+            </BoxFit>
+        </For>
+        <For ref="separatorClassAttributes">
+          <D>[M(0, $posClassCompASeparator.y), L($box.w, $posClassCompASeparator.y)]</D>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <Visibility>$showCompartments.value != 'none'</Visibility>
+        </For>
+        <For ref="separatorAttributesMethods">
+          <D>[M(0, $posCompACompMSeparator.y), L($box.w, $posCompACompMSeparator.y)]</D>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <Visibility>$showCompartments.value == 'all'</Visibility>
+        </For>
+        <For ref="textAttributes">
+            <DomContent>F.buildTextWrapDomContent(F._target, $attributes.value, $box.w - $textFont.getPixelHeight(), $compTextAlignment)</DomContent>
+            <Font>$compTextFont</Font>
+            <Fill>$compTextColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, $posClassCompASeparator.y, $box.w - 10, Math.abs(($showCompartments.value == 'all' ? $posCompACompMSeparator.y : $box.h) - $posClassCompASeparator.y))</Arg>
+                <Arg>$compTextAlignment</Arg>
+            </BoxFit>
+            <Visibility>$showCompartments.value != 'none'</Visibility>
+        </For>
+        <For ref="textMethods">
+            <DomContent>F.buildTextWrapDomContent(F._target, $methods.value, $box.w - $textFont.getPixelHeight(), $compTextAlignment)</DomContent>
+            <Font>$compTextFont</Font>
+            <Fill>$compTextColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, $posCompACompMSeparator.y, $box.w - 10, Math.abs($box.h - $posCompACompMSeparator.y))</Arg>
+                <Arg>$compTextAlignment</Arg>
+            </BoxFit>
+            <Visibility>$showCompartments.value == 'all'</Visibility>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rect" x="0" y="0" />
+        <rect id="rectClassName" x="0" y="0" />
+        <rect id="rectAttributesCompartment" x="0" y="0" />
+        <rect id="rectMethodsCompartment" x="0" y="0" />
+        <text id="textClassName"  xml:space="preserve" />
+        <text id="textAttributes"  xml:space="preserve" />
+        <text id="textMethods"  xml:space="preserve" />
+        <path id="separatorClassAttributes" fill="none" style="stroke-linejoin: round" />
+        <path id="separatorAttributesMethods" fill="none" style="stroke-linejoin: round" />
+
+    </p:Content>
+</Shape>

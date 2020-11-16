@@ -1,0 +1,6 @@
+<Shortcut displayName="System" icon="icons/rectangle.png" to="AllDRoundedRectangle_V002">
+  <PropertyValue name="box">100,50</PropertyValue>
+  <PropertyValue name="BOOLallowRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLhasRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLallowMultiple">false</PropertyValue>
+</Shortcut>

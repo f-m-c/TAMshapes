@@ -1,0 +1,239 @@
+<Shape id="CDLineHorVert_V003" displayName="hor. / vert. Line" icon="icons/arrowVMulti.png" system="true">
+      <Properties>
+          <PropertyGroup name="Line">
+              <Property name="BOOLlockArrowStyle" p:disabled="true" displayName="Prevent changing arrowhead" type="Bool">false</Property>
+              <Property name="ENUMarrowStyleStart"  displayName="Arrow Style Start" p:disabled="$BOOLlockArrowStyle.value"
+                  p:enumValues="['none|None', 'open|Open', 'aggregation|Aggregation', 'composition|Composition', 'specialization|Specialization']"
+                  type="Enum">none</Property>
+              <Property name="ENUMarrowStyleEnd"  displayName="Arrow Style End" p:disabled="$BOOLlockArrowStyle.value"
+                  p:enumValues="['none|None', 'open|Open', 'aggregation|Aggregation', 'composition|Composition', 'specialization|Specialization']"
+                  type="Enum">none</Property>
+              <Property name="BOOLhasExtensionA"  displayName="Extension at Start"  type="Bool">true</Property>
+              <Property name="BOOLallowDiagonalExtA" displayName="Allow Diagonal Extension at Start"  p:disabled="true" type="Bool">false</Property>
+              <Property name="BOOLisExtADiagonal"  displayName="Diagonal Extension at Start" p:disabled="$BOOLallowDiagonalExtA.value == false || $BOOLhasExtensionA.value == false" type="Bool">false</Property>
+              <Property name="BOOLhasExtensionB"  displayName="Extension at End"  type="Bool">true</Property>
+              <Property name="BOOLisHorizontal" p:disabled="true" displayName="Horizontal" type="Bool">false</Property>
+              <Property name="ENUMalignType"  displayName="Alignment" p:disabled="$BOOLhasExtensionA.value || $BOOLhasExtensionB.value"
+                    p:enumValues="['start|Start', 'center|Center', 'end|End', 'control|Control']"
+                    type="Enum">center</Property>
+              <Property name="BOOLhasCardinalityStart" p:disabled="true" displayName="Cardinality at Start" type="Bool">true</Property>
+              <Property name="BOOLhasCardinalityEnd" p:disabled="true" displayName="Cardinality at End" type="Bool">true</Property>
+              <Property name="HNDLp1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+              <Property name="HNDLp2" p:connectTo="*" displayName="End" type="Handle">30,50</Property>
+              <Property name="HNDLc3" displayName="Control" 
+                  p:disabled="!collection.calculateHorVertControlConstraints($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMalignType.value, $BOOLhasExtensionA.value, $BOOLhasExtensionB.value, $BOOLisExtADiagonal.value).inUse"
+                  p:minX="$BOOLisHorizontal.value ? Math.min($HNDLp1.x, $HNDLp2.x) : -9999" 
+                  p:maxX="$BOOLisHorizontal.value ? Math.max($HNDLp1.x, $HNDLp2.x) :  9999"
+                  p:minY="$BOOLisHorizontal.value ? -9999 : Math.min($HNDLp1.y, $HNDLp2.y)" 
+                  p:maxY="$BOOLisHorizontal.value ?  9999 : Math.max($HNDLp1.y, $HNDLp2.y)"
+                  type="Handle" >15,25</Property>
+              <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+              <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+          </PropertyGroup>
+          <PropertyGroup name="Text">
+              <Property name="ENUMtextArrowDirection"  displayName="Text Arrow"
+                  p:enumValues="['none|None', 'start|to Start', 'end|to End']"
+                  type="Enum">none</Property>
+              <Property name="ENUMtextArrowOffset"  displayName="Text Arrow Offset"
+                  p:enumValues="['10|10', '15|15', '20|20']"
+                  type="Enum">15</Property>
+              <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Label Position" type="Handle">30,25</Property>
+              <Property name="HNDLtextCSPos" p:disabled="$TTXTtextCSContent.value.length == 0 || $BOOLhasCardinalityStart.value == false" displayName="Card. Start Position" type="Handle"
+                  p:minX="$HNDLp1.x-25" p:minY="$HNDLp1.y-25" p:maxX="$HNDLp1.x+25" p:maxY="$HNDLp1.y+25">20,5</Property>
+              <Property name="HNDLtextCEPos" p:disabled="$TTXTtextCEContent.value.length == 0 || $BOOLhasCardinalityEnd.value == false" displayName="Card. End Position" type="Handle"
+                  p:minX="$HNDLp2.x-25" p:minY="$HNDLp2.y-25" p:maxX="$HNDLp2.x+25" p:maxY="$HNDLp2.y+25">20,45</Property>
+              <Property name="TTXTtextContent" displayName="Label"
+                  p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+                  type="PlainText" />
+              <Property name="TTXTtextCSContent" displayName="Cardinality Start" p:disabled="$BOOLhasCardinalityStart.value == false || $ENUMarrowStyleStart == 'composition'  || $ENUMarrowStyleStart == 'specialization' || $ENUMarrowStyleEnd == 'specialization'"
+                  p:editInfo="var targetBox = F.getObjectBoundingBox('textCS'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+                  type="PlainText" />
+              <Property name="TTXTtextCEContent" displayName="Cardinality End" p:disabled="$BOOLhasCardinalityEnd.value == false || $ENUMarrowStyleEnd == 'composition' || $ENUMarrowStyleStart == 'specialization' || $ENUMarrowStyleEnd == 'specialization'"
+                  p:editInfo="var targetBox = F.getObjectBoundingBox('textCE'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+                  type="PlainText" />
+              <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+              <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+              <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+          </PropertyGroup>
+      </Properties>
+      <Behaviors>
+        <For ref="line">
+          <D><![CDATA[
+            var aPoints = collection.calculateHorVertLinePoints($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMalignType.value, $BOOLhasExtensionA.value, $BOOLhasExtensionB.value, $BOOLisExtADiagonal.value);
+            var line = collection.createSVGLineThroughPoints(aPoints, true /*bRounded*/, false /*bClosed*/);
+            line;
+            ]]>
+          </D>
+
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="lineGrip">
+          <D><![CDATA[
+            var aPoints = collection.calculateHorVertLinePoints($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMalignType.value, $BOOLhasExtensionA.value, $BOOLhasExtensionB.value, $BOOLisExtADiagonal.value);
+            var line = collection.createSVGLineThroughPoints(aPoints, true /*bRounded*/, false /*bClosed*/);
+            line;
+            ]]>
+          </D>
+        </For>
+        <For ref="ArrowStartPath">
+          <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill($ENUMarrowStyleStart.value, $strokeColor);
+            arrowHeadFill;
+          ]]></Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>StrokeStyle.fromString("1.3|")</StrokeStyle>
+          <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG($ENUMarrowStyleStart.value);
+              arrowHead;
+          ]]></D>
+          <Transform>[translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>
+          <Visibility>$ENUMarrowStyleStart.value != 'none'</Visibility>
+        </For>
+        <For ref="ArrowEndPath">
+          <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill($ENUMarrowStyleEnd.value, $strokeColor);
+            arrowHeadFill;
+          ]]></Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>StrokeStyle.fromString("1.3|")</StrokeStyle>
+          <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG($ENUMarrowStyleEnd.value);
+            arrowHead;
+          ]]></D>
+          <Transform>[rotate(180), translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>
+          <Visibility>$ENUMarrowStyleEnd.value != 'none'</Visibility>
+        </For>
+
+        <For ref="textArrow">
+          <Fill>$textColor</Fill>
+          <StrokeColor>$textColor</StrokeColor>
+          <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG('full');
+              arrowHead;
+          ]]></D>
+          <Transform><![CDATA[
+              // depends $HNDLtextPos, $TTXTtextContent
+              var transform = [];
+              var tx = 0.0;
+              var ty = 0.0;
+              var rot = 0;
+              var bound = F.getObjectBoundingBox('text');
+              if ($BOOLisHorizontal.value) {
+                ty = bound.y + bound.h / 2;
+                if ($ENUMtextArrowDirection.value == 'start' && $HNDLp2.x > $HNDLp1.x) {
+                  // left <
+                  tx = bound.x - $ENUMtextArrowOffset.value; 
+                  rot = 0;
+                } else {
+                  // right >
+                  tx = bound.x + bound.w + parseFloat($ENUMtextArrowOffset.value); 
+                  rot = 180;
+                }
+              } else {
+                // vertical
+                tx = bound.x + bound.w / 2;
+                if ($ENUMtextArrowDirection.value == 'start' && $HNDLp2.y > $HNDLp1.y) {
+                  // up ^
+                  ty = bound.y - $ENUMtextArrowOffset.value; 
+                  rot = 90;
+                } else {
+                  // down v
+                  ty = bound.y + bound.h + parseFloat($ENUMtextArrowOffset.value);
+                  rot = -90;
+                }
+              }
+              transform.push(translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150 + tx, parseFloat($HNDLtextPos.y) + ty));
+              transform.push(rotate(rot));
+              transform;
+          ]]></Transform>
+          <Visibility>$ENUMtextArrowDirection.value != "none"</Visibility>
+        </For>
+
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, 300, $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
+        </For>
+        <For ref="textCS">
+            <Visibility>$BOOLhasCardinalityStart.value &amp;&amp; $ENUMarrowStyleStart != 'composition'  &amp;&amp; $ENUMarrowStyleStart != 'specialization' &amp;&amp; $ENUMarrowStyleEnd != 'specialization'</Visibility>
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextCSContent.value, 300, $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($HNDLtextCSPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextCSPos.y)]</Transform>
+        </For>
+        <For ref="textCE">
+            <Visibility>$BOOLhasCardinalityEnd.value &amp;&amp; $ENUMarrowStyleEnd != 'composition'  &amp;&amp; $ENUMarrowStyleStart != 'specialization' &amp;&amp; $ENUMarrowStyleEnd != 'specialization'</Visibility>
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextCEContent.value, 300, $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($HNDLtextCEPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextCEPos.y)]</Transform>
+        </For>
+      </Behaviors>
+      <Actions>
+          <Action id="toggleHorVert" displayName="Toggle Horizontal / Vertical">
+              <Impl>
+                  var currentIsHorizontal = this.getProperty("BOOLisHorizontal");
+                  this.setProperty("BOOLisHorizontal", new Bool(!currentIsHorizontal.value));
+              </Impl>
+          </Action>
+          <Action id="centerTextPos" displayName="Move text block to center">
+              <Impl>
+                  var p1 = this.getProperty("HNDLp1");
+                  var p2 = this.getProperty("HNDLp2");
+                  var textPos = this.getProperty("HNDLtextPos");
+                  textPos.x = (p1.x + p2.x) / 2;
+                  textPos.y = (p1.y + p2.y) / 2;
+                  this.setProperty("HNDLtextPos", textPos);
+              </Impl>
+          </Action>
+      </Actions>
+      <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+                 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                 xmlns="http://www.w3.org/2000/svg">
+          <defs>
+              <marker
+                 id="ArrowEnd"
+                 orient="auto"
+                 refY="0.0"
+                 refX="0.0"
+                 style="overflow:visible;"
+                 markerUnits="userSpaceOnUse">
+
+                 <path
+                    id="ArrowEndPath"
+                    style="fill-rule:evenodd;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                    />
+              </marker>
+              <marker
+                 id="ArrowStart"
+                 orient="auto"
+                 refY="0.0"
+                 refX="0.0"
+                 style="overflow:visible;"
+                 markerUnits="userSpaceOnUse">
+
+                 <path
+                    id="ArrowStartPath"
+                    style="fill-rule:evenodd;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                    />
+              </marker>
+
+           </defs>
+
+          <path
+             id="line"
+             style="stroke-linejoin: round; "
+             fill="none"
+             marker-start = "url(#ArrowStart)"
+             marker-end   = "url(#ArrowEnd)"
+              />
+          <path id="lineGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+          <path id="textArrow" style="fill-rule:evenodd;stroke-width:0.5;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"/>
+          <text id="text"   xml:space="preserve"  />
+          <text id="textCS" xml:space="preserve"  />
+          <text id="textCE" xml:space="preserve"  />
+      </p:Content>
+  </Shape>

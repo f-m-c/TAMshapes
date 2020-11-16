@@ -1,0 +1,157 @@
+<Shape id="BDModAccessVertical_V002" displayName="vert. mod. Access" icon="icons/mod-access-V.png">
+    <Properties>
+        <PropertyGroup name="Line">
+            <Property name="BOOLisHorizontal" p:disabled="true" displayName="Horizontal" type="Bool">false</Property>
+            <Property name="ENUMalignType"  displayName="Alignment" 
+                  p:enumValues="['start|Start', 'center|Center', 'end|End', 'control|Control']"
+                  type="Enum">center</Property>
+            <Property name="ENUMcurvedOffset" displayName="Curved RW Offset" type="Enum"
+                p:enumValues="['5|5', '10|10', '15|15']">10</Property>
+            <Property name="ENUMcurvedRadius" displayName="Curved RW Radius" type="Enum"
+                p:enumValues="['10|10', '15|15', '20|20', '30|30', '40|40']">20</Property>
+            <Property name="HNDLp1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+            <Property name="HNDLp2" p:connectTo="*" displayName="End" type="Handle">0,50</Property>
+            <Property name="HNDLc3" displayName="Control" type="Handle" 
+                      p:disabled="!($ENUMalignType.value == 'control')"
+                      >0,25</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Text Position" type="Handle">40,25</Property>
+            <Property name="TTXTtextContent" displayName="Content"
+              p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+              type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+      <For ref="ArrowStartPath">
+        <Fill><![CDATA[
+          var arrowHeadFill = collection.arrowheadDetermineFill('full', $strokeColor);
+          arrowHeadFill;
+        ]]></Fill>
+        <StrokeColor>$strokeColor</StrokeColor>
+        <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG('full');
+            arrowHead;
+        ]]></D>
+        <Transform>[translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>  
+      </For>
+      <For ref="ArrowEndPath">
+          <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill('full', $strokeColor);
+            arrowHeadFill;
+          ]]></Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG('full');
+            arrowHead;
+          ]]></D>
+          <Transform>[rotate(180), translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>
+      </For>
+      <For ref="readCurved">
+          <D><![CDATA[
+               var curveSVG = collection.modAccessCreateSVG($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMcurvedOffset.value, $ENUMcurvedRadius.value, $ENUMalignType.value);
+               curveSVG.r;
+            ]]>
+          </D>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+      </For>
+      <For ref="readCurvedGrip">
+        <D><![CDATA[
+               var curveSVG = collection.modAccessCreateSVG($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMcurvedOffset.value, $ENUMcurvedRadius.value, $ENUMalignType.value);
+               curveSVG.r;
+            ]]>
+        </D>
+      </For>
+      <For ref="writeCurved">
+        <D><![CDATA[
+               var curveSVG = collection.modAccessCreateSVG($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMcurvedOffset.value, $ENUMcurvedRadius.value, $ENUMalignType.value);
+               curveSVG.w;
+            ]]>
+        </D>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+      </For>
+      <For ref="writeCurvedGrip">
+        <D><![CDATA[
+               var curveSVG = collection.modAccessCreateSVG($HNDLp1, $HNDLp2, $HNDLc3, $BOOLisHorizontal.value, $ENUMcurvedOffset.value, $ENUMcurvedRadius.value, $ENUMalignType.value);
+               curveSVG.w;
+            ]]>
+        </D>
+      </For>
+
+      <For ref="text">
+          <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, 300, $ALGNtextAlignment)</DomContent>
+          <Font>$textFont</Font>
+          <Color>$textColor</Color>
+          <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
+      </For>
+
+    </Behaviors>
+    <Actions>
+          <Action id="toggleHorVert" displayName="Toggle Horizontal / Vertical">
+              <Impl>
+                  var currentIsHorizontal = this.getProperty("BOOLisHorizontal");
+                  this.setProperty("BOOLisHorizontal", new Bool(!currentIsHorizontal.value));
+              </Impl>
+          </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="ArrowEnd"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;"
+               markerUnits="userSpaceOnUse">
+
+               <path
+                  id="ArrowEndPath"
+                  style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+            <marker
+               id="ArrowStart"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;"
+               markerUnits="userSpaceOnUse">
+
+               <path
+                  id="ArrowStartPath"
+                  style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+
+         </defs>
+
+      <g id="CircularAccess">
+        <path
+           id="readCurved"
+           style="stroke-linejoin: round;"
+           fill="none"
+           marker-start = "url(#ArrowStart)"
+            />
+        <path
+           id="writeCurved"
+           style="stroke-linejoin: round;"
+           fill="none"
+           marker-end   = "url(#ArrowEnd)"
+            />
+      </g>
+
+        <path id="readCurvedGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+        <path id="writeCurvedGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+        <text id="text" xml:space="preserve"  />
+
+    </p:Content>
+</Shape>

@@ -1,0 +1,132 @@
+<Shape id="CDClass_V003" displayName="Class w/ compartments" icon="icons/class.png">
+    <Properties>
+        <PropertyGroup name="Class Properties">
+            <Property name="box" type="Dimension">150,80</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color">#EEEEEEFF</Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+            <Property name="TTXTclassname" displayName="Class Name"
+              p:editInfo="({targetName: 'textClassName', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" 
+              type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Compartment Properties">
+            <Property name="ENUMshowCompartments"  displayName="Show Compartments" 
+                p:enumValues="['none|None', 'attr|Attributes only', 'all|All']"
+                type="Enum">all</Property>
+            <Property name="HNDLposClassCompASeparator" p:disabled="$ENUMshowCompartments.value == 'none'" 
+              displayName="Separator Classname-Compartment A" 
+              p:noScale="true"
+              p:lockX="true" p:minY="20" p:maxY="$box.h"
+              type="Handle">50,25</Property>
+            <Property name="HNDLposCompACompMSeparator" p:disabled="$ENUMshowCompartments.value != 'all'" displayName="Separator Compartments A-M" 
+              p:noScale="true"
+              p:lockX="true" p:minY="30" p:maxY="$box.h"
+              type="Handle">50,50</Property>
+            <Property name="COLRcompFillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="TTXTattributes" displayName="Attributes" p:disabled="$ENUMshowCompartments.value == 'none'"
+              p:editInfo="({targetName: 'textAttributes', bound: Bound.fromBox($box), font: $textFont, align: $ALGNcompTextAlignment, multi: true})" 
+              type="PlainText" />
+            <Property name="TTXTmethods" displayName="Methods" p:disabled="$ENUMshowCompartments.value != 'all'"
+              p:editInfo="({targetName: 'textMethods', bound: Bound.fromBox($box), font: $textFont, align: $ALGNcompTextAlignment, multi: true})" 
+              type="PlainText" />
+            <Property name="COLRcompTextColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="FONTcompTextFont" displayName="Font" type="Font">Arial,sans-serif|normal|normal|11px</Property>
+            <Property name="ALGNcompTextAlignment" displayName="Compartment Text Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="rect">
+            <Box>$box</Box>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Fill>$COLRcompFillColor</Fill>
+        </For>
+        <For ref="rectClassName">
+            <Box>new Dimension($box.w, $ENUMshowCompartments.value == 'none' ? $box.h : $HNDLposClassCompASeparator.y)</Box>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="textClassName">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTclassname.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(3, 3, $box.w - 6, $ENUMshowCompartments.value == 'none' ? $box.h - 6 : $HNDLposClassCompASeparator.y - 6)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+        <For ref="separatorClassAttributes">
+          <D>[M(0, $HNDLposClassCompASeparator.y), L($box.w, $HNDLposClassCompASeparator.y)]</D>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <Visibility>$ENUMshowCompartments.value != 'none'</Visibility>
+        </For>
+        <For ref="separatorAttributesMethods">
+          <D>[M(0, $HNDLposCompACompMSeparator.y), L($box.w, $HNDLposCompACompMSeparator.y)]</D>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <Visibility>$ENUMshowCompartments.value == 'all'</Visibility>
+        </For>
+        <For ref="textAttributes">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTattributes.value, $box.w - $textFont.getPixelHeight(), $ALGNcompTextAlignment)</DomContent>
+            <Font>$FONTcompTextFont</Font>
+            <Fill>$COLRcompTextColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, $HNDLposClassCompASeparator.y, $box.w - 10, Math.abs(($ENUMshowCompartments.value == 'all' ? $HNDLposCompACompMSeparator.y : $box.h) - $HNDLposClassCompASeparator.y))</Arg>
+                <Arg>$ALGNcompTextAlignment</Arg>
+            </BoxFit>
+            <Visibility>$ENUMshowCompartments.value != 'none'</Visibility>
+        </For>
+        <For ref="textMethods">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTmethods.value, $box.w - $textFont.getPixelHeight(), $ALGNcompTextAlignment)</DomContent>
+            <Font>$FONTcompTextFont</Font>
+            <Fill>$COLRcompTextColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, $HNDLposCompACompMSeparator.y, $box.w - 10, Math.abs($box.h - $HNDLposCompACompMSeparator.y))</Arg>
+                <Arg>$ALGNcompTextAlignment</Arg>
+            </BoxFit>
+            <Visibility>$ENUMshowCompartments.value == 'all'</Visibility>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+        <rect id="rect" x="0" y="0" />
+        <rect id="rectClassName" x="0" y="0" />
+        <rect id="rectAttributesCompartment" x="0" y="0" />
+        <rect id="rectMethodsCompartment" x="0" y="0" />
+        <text id="textClassName"  xml:space="preserve" />
+        <text id="textAttributes"  xml:space="preserve" />
+        <text id="textMethods"  xml:space="preserve" />
+        <path id="separatorClassAttributes" fill="none" style="stroke-linejoin: round" />
+        <path id="separatorAttributesMethods" fill="none" style="stroke-linejoin: round" />
+
+    </p:Content>
+</Shape>

@@ -1,0 +1,169 @@
+<Shapes xmlns="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+
+    id="tamBD"
+    displayName="TAM Block Diagram"
+    description="TAM Stencils for Block Diagrams"
+    author="Savio Dimatteo, Bernhard Groene"
+    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+
+    <!-- include includes/Properties.xml -->
+
+    <Script>
+        <![CDATA[
+        // Old Versions
+        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
+        collection.calculateChannelCoord_V001       = /* includeJS includes/functions/old/calculateChannelCoord_V001.js */;
+
+        // Common
+        collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
+        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
+        collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
+        collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
+        collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
+        collection.getPointOnLine = /* includeJS includes/functions/getPointOnLine.js */;
+
+        // for BDAccessRW_Vxxx.xml, BDChannel_Vxxx.xml
+        collection.arrangeExtensionPoints = /* includeJS includes/functions/arrangeExtensionPoints.js */;
+        collection.getClosestPoint =  /* includeJS includes/functions/getClosestPoint.js */;
+        collection.swapShapeProperties = /* includeJS includes/functions/swapShapeProperties.js */;
+
+        // for BDChannel_Vxxx.xml
+        collection.center = function (a, b, coord) {
+            var pFromTo = collection.getFromToPoints(a, b);
+            var pFrom = pFromTo[0];
+            var pTo = pFromTo[1];
+            return pFrom[coord] + (pTo[coord] - pFrom[coord]) / 2;
+        }
+        collection.isLineVertical = function (a, b) {
+            var [pFrom, pTo] = collection.getFromToPoints(a, b);
+            return Math.abs(pTo.x - pFrom.x) < Math.abs(pTo.y - pFrom.y);
+        }
+        collection.ifLineVertical = function (a, b, trueValue, falseValue) {
+            var pFromTo = collection.getFromToPoints(a, b);
+            var pFrom = pFromTo[0];
+            var pTo = pFromTo[1];
+            if (collection.isLineVertical(pFrom, pTo)) {
+                return trueValue;
+            }
+            return falseValue;
+        }
+        collection.ifReadingDirection = function (a, b, trueValue, falseValue) {
+            /*
+             * Returns the true value if direction of the two points is
+             * top-to-bottom or left-to-right.
+             */
+            if (collection.isLineVertical(a, b)) {
+                return a.y < b.y ? trueValue : falseValue;
+            }
+            return a.x < b.x ? trueValue : falseValue;
+        }
+        collection.getPointOnComplexSegment = /* includeJS includes/functions/getPointOnComplexSegment.js */;
+        collection.rangeMap = /* includeJS includes/functions/rangeMap.js */;
+        collection.getFromToPoints = /* includeJS includes/functions/getFromToPoints.js */;
+        collection.makeShapeLineStraight = /* includeJS includes/functions/makeShapeLineStraight.js */;
+
+
+        // for BDModAccessDirect_Vxxx.xml
+        collection.findPointDistance = /* includeJS includes/functions/findPointDistance.js */;
+        collection.getPerpendicularPointDistance = /* includeJS includes/functions/getPerpendicularPointDistance.js */;
+
+        // for BDModAccessVertical_Vxxx.xml
+        collection.modAccessCreateSVG          = /* includeJS includes/functions/modAccessCreateSVG.js */;
+
+        // for BDChannelHorVert_Vxxx.xml
+        collection.calculateChannelCoord       = /* includeJS includes/functions/calculateChannelCoord.js */;
+
+        // for BDUAgent_Vxxx.xml
+        collection.divideSegment               = /* includeJS includes/functions/divideSegment.js */;
+
+        // for AnnLegend_Vxxx.xml
+        collection.parseLegendText = /* includeJS includes/functions/parseLegendText.js */;
+        ]]>
+    </Script>
+    
+<!-- System ( invisible ) -->
+    <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
+    <!-- include includes/shapes/AllDDirectLine_V002.xml -->
+    <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
+    <!-- include includes/shapes/BDChannelHorVert_V002.xml -->
+    
+<!-- Main Shapes ( visible ) -->
+    <!-- include includes/shapes/BDAgent_V003.xml -->
+    <!-- include includes/shapes/BDHumanAgent_V003.xml -->
+    <!-- include includes/shapes/BDStorage_V002.xml -->
+    <!-- include includes/shapes/BDAccessVertical_V002.xml -->
+    <!-- include includes/shapes/BDAccessVerticalMulti_V002.xml -->
+    <!-- include includes/shapes/BDAccessHorizontal_V002.xml -->
+    <!-- include includes/shapes/BDAccessHorizontalMulti_V002.xml -->
+    <!-- include includes/shapes/BDModAccessVertical_V002.xml -->
+    <!-- include includes/shapes/BDModAccessHorizontal_V002.xml -->
+    <!-- include includes/shapes/BDChannelVertical_V002.xml -->
+    <!-- include includes/shapes/BDChannelVerticalMulti_V002.xml -->
+    <!-- include includes/shapes/BDChannelHorizontal_V002.xml -->
+    <!-- include includes/shapes/BDChannelHorizontalMulti_V002.xml -->
+    <!-- include includes/shapes/BDAccessVerticalL_V002.xml -->
+    <!-- include includes/shapes/BDAccessHorizontalL_V002.xml -->
+    <!-- include includes/shapes/AnnLineVertical_V002.xml -->
+    <!-- include includes/shapes/AnnLineHorizontal_V002.xml -->
+    <!-- include includes/shapes/AnnDots_V002.xml -->
+    <!-- include includes/shapes/AnnDotsVertical_V002.xml -->
+    <!-- include includes/shapes/AnnGroupCFA_V002.xml -->
+    <!-- include includes/shapes/BDUAgent_V002.xml -->
+    <!-- include includes/shapes/BDUStorage_V002.xml -->
+    <!-- include includes/shapes/BDQueue_V002.xml -->
+    <!-- include includes/shapes/BDStructureVariance_V002.xml -->
+    <!-- include includes/shapes/BDAccessDirect_V002.xml -->
+    <!-- include includes/shapes/BDModAccessDirect_V002.xml -->
+    <!-- include includes/shapes/BDChannelDirect_V002.xml -->
+
+<!-- old versions to keep compatibility -->
+    <!-- include includes/shapes/old/BDAgent_V002.xml -->
+    <!-- include includes/shapes/old/BDHumanAgent_V002.xml -->
+    <!-- include includes/shapes/old/BDAgent_V001.xml -->
+    <!-- include includes/shapes/old/BDHumanAgent_V001.xml -->
+    <!-- include includes/shapes/old/BDStorage_V001.xml -->
+    <!-- include includes/shapes/old/BDStraightArrow_V001.xml -->
+    <!-- include includes/shapes/old/BDStraightArrowHorizontal_V001.xml -->
+    <!-- include includes/shapes/old/BDAccessVertical_V001.xml -->
+    <!-- include includes/shapes/old/BDAccessVerticalMulti_V001.xml -->
+    <!-- include includes/shapes/old/BDAccessHorizontal_V001.xml -->
+    <!-- include includes/shapes/old/BDAccessHorizontalMulti_V001.xml -->
+    <!-- include includes/shapes/old/BDModAccessVertical_V001.xml -->
+    <!-- include includes/shapes/old/BDModAccessHorizontal_V001.xml -->
+    <!-- include includes/shapes/old/BDChannelVertical_V001.xml -->
+    <!-- include includes/shapes/old/BDChannelVerticalMulti_V001.xml -->
+    <!-- include includes/shapes/old/BDChannelHorizontal_V001.xml -->
+    <!-- include includes/shapes/old/BDChannelHorizontalMulti_V001.xml -->
+    <!-- include includes/shapes/old/AnnDots_V001.xml -->
+    <!-- include includes/shapes/old/AnnGroupCFA_V001.xml -->
+    <!-- include includes/shapes/old/BDUAgent_V001.xml -->
+    <!-- include includes/shapes/old/BDUStorage_V001.xml -->
+    <!-- include includes/shapes/old/BDAccessRW_V001.xml -->
+    <!-- include includes/shapes/old/BDCircularAccessRW_V001.xml -->
+    <!-- include includes/shapes/old/BDChannel_V001.xml -->
+    <!-- include includes/shapes/old/Agent.xml -->
+    <!-- include includes/shapes/old/HumanAgent.xml -->
+    <!-- include includes/shapes/old/Storage.xml -->
+    <!-- include includes/shapes/old/StraightArrow.xml -->
+    <!-- include includes/shapes/old/StraightArrowHorizontal.xml -->
+    <!-- include includes/shapes/old/AccessVertical.xml -->
+    <!-- include includes/shapes/old/AccessVerticalMulti.xml -->
+    <!-- include includes/shapes/old/AccessHorizontal.xml -->
+    <!-- include includes/shapes/old/AccessHorizontalMulti.xml -->
+    <!-- include includes/shapes/old/ModAccessVertical.xml -->
+    <!-- include includes/shapes/old/ModAccessHorizontal.xml -->
+    <!-- include includes/shapes/old/ChannelVertical.xml -->
+    <!-- include includes/shapes/old/ChannelVerticalMulti.xml -->
+    <!-- include includes/shapes/old/ChannelHorizontal.xml -->
+    <!-- include includes/shapes/old/ChannelHorizontalMulti.xml -->
+    <!-- include includes/shapes/old/Dots.xml -->
+    <!-- include includes/shapes/old/UAgent.xml -->
+    <!-- include includes/shapes/old/UStorage.xml -->
+    <!-- include includes/shapes/old/AccessRW.xml -->
+    <!-- include includes/shapes/old/CircularAccessRW.xml -->
+    <!-- include includes/shapes/old/Channel.xml -->
+    <!-- include includes/shapes/old/Legend.xml -->
+</Shapes>

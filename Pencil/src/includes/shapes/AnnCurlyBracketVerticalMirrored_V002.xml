@@ -1,0 +1,6 @@
+<Shortcut displayName="vert. Curly Bracket m" icon="icons/curlyBracketVm.png" to="AnnCurlyBracketVertical_V002">
+    <PropertyValue name="BOOLmirrored">true</PropertyValue>
+    <PropertyValue name="box">16,80</PropertyValue>
+    <PropertyValue name="HNDLtextPos">-4,40</PropertyValue>
+    <PropertyValue name="ALGNtextAlignment">2,1</PropertyValue>
+</Shortcut>

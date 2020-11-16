@@ -1,0 +1,90 @@
+<Shape id="AnnLane_V002" displayName="vert. Lane/Boundary" icon="icons/lane.png">
+  <Properties>
+      <PropertyGroup name="Line">
+          <Property name="BOOLisHorizontal" p:disabled="true" displayName="Horizontal" type="Bool">false</Property>
+          <Property name="BOOLalignAtStart"  displayName="Align at Start (not End)" type="Bool">false</Property>
+          <Property name="HNDLp1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+          <Property name="HNDLp2" p:connectTo="*" displayName="End" type="Handle">0,300</Property>
+          <Property name="strokeColor" displayName="Line Color" type="Color">#888888FF</Property>
+          <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle">2|5,5</Property>
+      </PropertyGroup>
+      <PropertyGroup name="Text">
+          <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Text Position" type="Handle">0,40</Property>
+          <Property name="TTXTtextContent" displayName="Content"
+            p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+            type="PlainText" />
+          <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+          <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+          <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+      </PropertyGroup>
+  </Properties>
+    <Behaviors>
+      <For ref="line">
+        <D>[M(
+              $BOOLisHorizontal.value ? $HNDLp1.x : ($BOOLalignAtStart.value ? $HNDLp1.x : $HNDLp2.x) ,
+              $BOOLisHorizontal.value ? ($BOOLalignAtStart.value ? $HNDLp1.y : $HNDLp2.y) : $HNDLp1.y
+              ),
+            L(
+              $BOOLisHorizontal.value ? $HNDLp2.x : ($BOOLalignAtStart.value ? $HNDLp1.x : $HNDLp2.x) ,
+              $BOOLisHorizontal.value ? ($BOOLalignAtStart.value ? $HNDLp1.y : $HNDLp2.y ) : $HNDLp2.y
+              )
+            ]</D>
+
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+      </For>
+      <For ref="lineGrip">
+        <D>[M(
+              $BOOLisHorizontal.value ? $HNDLp1.x : ($BOOLalignAtStart.value ? $HNDLp1.x : $HNDLp2.x) ,
+              $BOOLisHorizontal.value ? ($BOOLalignAtStart.value ? $HNDLp1.y : $HNDLp2.y) : $HNDLp1.y
+              ),
+            L(
+              $BOOLisHorizontal.value ? $HNDLp2.x : ($BOOLalignAtStart.value ? $HNDLp1.x : $HNDLp2.x) ,
+              $BOOLisHorizontal.value ? ($BOOLalignAtStart.value ? $HNDLp1.y : $HNDLp2.y ) : $HNDLp2.y
+              )
+            ]</D>
+      </For>
+
+      <For ref="text">
+          <PlainTextContent>
+            <Arg>$TTXTtextContent</Arg>
+            <Arg>var textSize = F.textSize("text");
+                 new Bound( -textSize.w/2 + $HNDLtextPos.x,
+                            -textSize.h/2 + $HNDLtextPos.y,
+                            Math.max($TTXTtextContent.value.length, 300),
+                            textSize.h
+                          )</Arg>
+            <Arg>$ALGNtextAlignment</Arg>
+          </PlainTextContent>
+          <Font>$textFont</Font>
+          <Color>$textColor</Color>
+      </For>
+      <For ref="textbgRect">
+        <Bound>var textSize = F.textSize("text");
+                 new Bound( -textSize.w/2 + $HNDLtextPos.x,
+                            -textSize.h/2 + $HNDLtextPos.y,
+                            $TTXTtextContent.value.length,
+                            textSize.h
+                          )
+        </Bound>
+      </For>
+
+    </Behaviors>
+
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path
+          id="line"
+          style="stroke-linejoin: round; "
+          fill="none"
+           />
+
+        <path id="lineGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+        <text id="text" text-anchor="middle" xml:space="preserve"  />
+        <rect id="textbgRect" style="fill: none; stroke: none;"  />
+
+    </p:Content>
+</Shape>

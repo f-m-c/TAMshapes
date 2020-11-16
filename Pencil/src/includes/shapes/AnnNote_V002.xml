@@ -1,0 +1,84 @@
+<Shape id="AnnNote_V002" displayName="Note" icon="icons/note.png">
+    <Properties>
+        <PropertyGroup name="Properties">
+            <Property name="box" type="Dimension">100,100</Property>
+            <Property name="ENUMdogEarSize" 
+                      type="Enum" displayName="Dog Ear size"
+                      p:enumValues="['8|8', '12|12', '16|16', '20|20']">12</Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="TTXTtextContent" displayName="Label"  p:editInfo="({targetName: 'text', bound: Bound.fromBox($box), font: $textFont, align: $ALGNtextAlignment, multi: true})" type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="note">
+            <D>[M(0,0),
+                L($box.w - $ENUMdogEarSize.value,0), 
+                L($box.w, $ENUMdogEarSize.value),
+                L($box.w, $box.h),
+                L(0, $box.h),
+                z
+                ]</D>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="dogEar">
+            <D>[M($box.w - $ENUMdogEarSize.value,0), 
+                L($box.w - $ENUMdogEarSize.value, $ENUMdogEarSize.value),
+                L($box.w, $ENUMdogEarSize.value)
+                ]</D>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <StrokeColor>$strokeColor</StrokeColor>
+        </For>
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, $box.w - $textFont.getPixelHeight(), $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $box.h - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var box = this.getProperty("box");
+                  return [
+                    new Outlet("top-left", "Bounding", box.w / 4, 0),
+                    new Outlet("top-center", "Bounding", box.w / 2, 0),
+                    new Outlet("top-right", "Bounding", 3 * box.w / 4, 0),
+                    new Outlet("left-top", "Bounding", 0, box.h / 4),
+                    new Outlet("left-center", "Bounding", 0, box.h / 2),
+                    new Outlet("left-bottom", "Bounding", 0, 3 * box.h / 4),
+                    new Outlet("bottom-left", "Bounding",  box.w / 4, box.h),
+                    new Outlet("bottom-center", "Bounding", box.w / 2, box.h),
+                    new Outlet("bottom-right", "Bounding", 3 * box.w / 4, box.h),
+                    new Outlet("right-top", "Bounding", box.w, box.h / 4),
+                    new Outlet("right-center", "Bounding", box.w, box.h / 2),
+                    new Outlet("right-bottom", "Bounding", box.w, 3 * box.h / 4)
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path id="note" x="0" y="0" />
+        <path id="dogEar"
+               style="fill-rule:evenodd;fill:none;"
+        />
+
+        <text id="text" text-anchor="start" xml:space="preserve" />
+    </p:Content>
+</Shape>

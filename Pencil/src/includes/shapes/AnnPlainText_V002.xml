@@ -1,0 +1,41 @@
+<Shape id="AnnPlainText_V002" displayName="Plain Text" icon="icons/plainText.png">
+    <Properties>
+        <PropertyGroup>
+            <Property name="HNDLwidth" displayName="Width" type="Handle" p:lockY="true" p:minX="10" p:disabled="!$BOOLfixedWidth.value">100,0</Property>
+            <Property name="BOOLfixedWidth" displayName="Fixed Width" type="Bool">false</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="TTXTlabel" displayName="Label" type="PlainText" p:editInfo="var textSize = F.textSize('text'); console.log('F.textSize(\'text\') = ', textSize); var size = 80; ({targetName: 'text', bound: new Bound(0, 0, Math.max(180, Math.max(textSize.w, $BOOLfixedWidth.value ? $HNDLwidth.x : 0)) , Math.max($BOOLfixedWidth.value ? 80 : $textFont.getPixelHeight() + 2, textSize.h)), font: $textFont, align: $ALGNtextAlign, multi: $BOOLfixedWidth.value})">Text...</Property>
+            <Property name="textColor" displayName="Color" type="Color">
+                <E>$$defaultTextColor</E>
+            </Property>
+            <Property name="textFont" displayName="Font" type="Font">
+                <E>$$defaultTextFont</E>
+            </Property>
+            <Property name="ALGNtextAlign" displayName="Alignment" type="Alignment">0,0</Property>
+        </PropertyGroup>
+    </Properties>
+
+    <Behaviors>
+        <For ref="text">
+            <Fill>$textColor</Fill>
+            <Font>$textFont</Font>
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTlabel.value, $BOOLfixedWidth.value ? $HNDLwidth.x : 2000, $ALGNtextAlign)</DomContent>
+            <Transform>[translate(0.0 - ($BOOLfixedWidth.value ? 0 : ($ALGNtextAlign.h * 1000.0)), 0)]</Transform>
+        </For>
+        <For ref="bgRect">
+            <Visibility>$BOOLfixedWidth</Visibility>
+            <Bound>
+                //depends $textFont, $TTXTlabel, $BOOLfixedWidth
+                var textSize = F.textSize("text");
+                new Bound(0, 0, $BOOLfixedWidth.value ? $HNDLwidth.x : textSize.w, $BOOLfixedWidth.value ? textSize.h : textSize.h)
+            </Bound>
+        </For>
+    </Behaviors>
+    <Actions>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" style="fill: none; stroke: none;" id="bgRect" />
+        <text id="text" xml:space="preserve" dominant-baseline="hanging">Text...</text>
+    </p:Content>
+</Shape>

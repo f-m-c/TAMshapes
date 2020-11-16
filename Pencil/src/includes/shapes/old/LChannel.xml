@@ -1,0 +1,4 @@
+<Shortcut displayName="L Channel" icon="icons/l-channel.png" to="Channel" system="true">
+    <PropertyValue name="hasExtensionB">true</PropertyValue>
+    <PropertyValue p:readonly="false" p:disabled="false" name="p4">25,100</PropertyValue>
+</Shortcut>

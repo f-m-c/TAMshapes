@@ -1,0 +1,3 @@
+<Shortcut displayName="U Storage" icon="icons/u-storage.png" to="BDUAgent_V002">
+    <PropertyValue name="BOOLhasRoundedCorners">true</PropertyValue>
+</Shortcut>

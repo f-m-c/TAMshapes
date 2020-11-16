@@ -1,0 +1,74 @@
+<Shape id="AnnCurlyBracketVertical_V002" displayName="vert. Curly Bracket" icon="icons/curlyBracketV.png">
+  <Properties>
+      <PropertyGroup name="Properties">
+          <Property name="box" type="Dimension">16,80</Property>
+          <Property name="BOOLisHorizontal" displayName="Horizontal" type="Bool">false</Property>
+          <Property name="BOOLmirrored" displayName="Mirror" type="Bool">false</Property>
+          <Property name="strokeColor" displayName="Line Color" type="Color">#000000FF</Property>
+          <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+      </PropertyGroup>
+      <PropertyGroup name="Text">
+          <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Text Position" type="Handle">20,40</Property>
+          <Property name="TTXTtextContent" displayName="Label"
+                  p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+                  type="PlainText" />
+          <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+          <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+          <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+      </PropertyGroup>
+  </Properties>
+    <Behaviors>
+      <For ref="bracketX">
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>$strokeStyle</StrokeStyle>
+          <D><![CDATA[
+            var radius = $BOOLisHorizontal.value == false ? Math.max(Math.min($box.w/2, $box.h/6), 4) : Math.max(Math.min($box.h/2, $box.w/6), 4);
+            var start = $BOOLmirrored.value == false ? 0 : radius * 2;
+            var arcDir = $BOOLmirrored.value == false ? 1 : 0;
+            var b = [  ];
+            if ($BOOLisHorizontal.value == false) {
+              b.push( M(start, 0) );
+              b.push( A(radius,radius,0,0,arcDir,radius,radius) ); 
+              b.push( L(radius,$box.h/2-radius) );
+              b.push( A(radius,radius,0,0,1 - arcDir,radius*2 - start, $box.h/2) );
+              b.push( A(radius,radius,0,0,1 - arcDir,radius,$box.h/2+radius) );
+              b.push( L(radius,$box.h-radius) );
+              b.push( A(radius,radius,0,0,arcDir,start,$box.h) );
+              } 
+            else {
+              start = radius*2 - start;
+              b.push( M(0, start) );
+              b.push( A(radius,radius,0,0,arcDir,radius,radius) ); 
+              b.push( L($box.w/2-radius, radius) );
+              b.push( A(radius,radius,0,0,1 - arcDir, $box.w/2,radius*2 - start) );
+              b.push( A(radius,radius,0,0,1 - arcDir, $box.w/2 + radius, radius) );
+              b.push( L($box.w-radius, radius) );
+              b.push( A(radius,radius,0,0,arcDir,$box.w,start) );
+              }
+            b;
+            ]]>
+             </D>
+          
+      </For>
+      <For ref="text">
+          <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, 300, $ALGNtextAlignment)</DomContent>
+          <Font>$textFont</Font>
+          <Color>$textColor</Color>
+          <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
+      </For>
+      <For ref="rectGrip">
+          <Box>$box</Box>
+      </For>
+
+    </Behaviors>
+
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <rect id="rectGrip" x="0" y="0" style="fill: rgba(0, 0, 0, 0); stroke: none;"/>
+
+        <path id="bracketX" style="fill: none; stroke-linejoin: round;" />
+        <text id="text"   xml:space="preserve"  />
+
+    </p:Content>
+</Shape>

@@ -1,0 +1,57 @@
+<Shapes xmlns="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+
+    id="tamSD"
+    displayName="TAM State Diagram"
+    description="TAM Stencils for State Diagrams"
+    author="Savio Dimatteo, Bernhard Groene"
+    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+
+    <!-- include includes/Properties.xml -->
+
+    <Script>
+        <![CDATA[
+        // Old Versions
+        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
+
+        // Common
+        collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
+        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
+        collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
+        collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
+        collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
+        collection.getPointOnLine = /* includeJS includes/functions/getPointOnLine.js */;
+
+        ]]>
+    </Script>
+
+<!-- Collection of Shapes -->
+
+    <!-- System ( invisible ) -->
+      <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
+      <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
+
+    <!-- Active ( visible ) -->
+      <!-- include includes/shapes/SDState_V002.xml -->
+      <!-- include includes/shapes/SDTransitionVertical_V002.xml -->
+      <!-- include includes/shapes/SDTransitionVerticalMulti_V002.xml -->
+      <!-- include includes/shapes/SDTransitionHorizontal_V002.xml -->
+      <!-- include includes/shapes/SDTransitionHorizontalMulti_V002.xml -->
+      <!-- include includes/shapes/SDStartState_V002.xml -->
+      <!-- include includes/shapes/SDEndState_V002.xml -->
+    
+
+    <!-- old versions to keep compatibility ( invisible ) -->
+      <!-- include includes/shapes/old/AllDHorVertLine_V001.xml -->
+      <!-- include includes/shapes/old/AllDRoundedRectangle_V001.xml -->
+      <!-- include includes/shapes/old/SDTransitionVertical_V001.xml -->
+      <!-- include includes/shapes/old/SDTransitionVerticalMulti_V001.xml -->
+      <!-- include includes/shapes/old/SDTransitionHorizontal_V001.xml -->
+      <!-- include includes/shapes/old/SDTransitionHorizontalMulti_V001.xml -->
+      <!-- include includes/shapes/old/SDStartState_V001.xml -->
+      <!-- include includes/shapes/old/SDEndState_V001.xml -->
+
+
+</Shapes>

@@ -1,0 +1,9 @@
+<Shortcut displayName="direct Arrow dashed" icon="icons/arrowDashed.png" to="AllDDirectLine_V002">
+    <PropertyValue name="ENUMarrowStyleStart">none</PropertyValue>
+    <PropertyValue name="ENUMarrowStyleEnd">open</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">50,30</PropertyValue>
+    <PropertyValue name="HNDLtextPos">25,5</PropertyValue>
+    <PropertyValue name="ALGNtextAlignment">1,1</PropertyValue>
+    <PropertyValue name="strokeStyle">1|5,5</PropertyValue>
+</Shortcut>

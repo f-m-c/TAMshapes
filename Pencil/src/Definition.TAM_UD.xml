@@ -1,0 +1,45 @@
+<Shapes xmlns="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+
+    id="tamUD"
+    displayName="TAM Use Case Diagram"
+    description="TAM Stencils for Use Case Diagrams"
+    author="Savio Dimatteo, Bernhard Groene"
+    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+
+    <!-- include includes/Properties.xml -->
+
+    <Script>
+        <![CDATA[
+        // Old Versions
+
+        // Common
+        collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
+        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
+        collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
+        collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
+        collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
+        collection.getPointOnLine = /* includeJS includes/functions/getPointOnLine.js */;
+
+        ]]>
+    </Script>
+
+    <!-- System ( invisible ) -->
+      <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
+      <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
+      <!-- include includes/shapes/AllDDirectLine_V002.xml -->
+
+    <!-- Active ( visible ) -->
+      <!-- include includes/shapes/UDUseCase_V001.xml -->
+      <!-- include includes/shapes/UDActor_V001.xml -->
+      <!-- include includes/shapes/UDSystem_V001.xml -->
+      <!-- include includes/shapes/UDAssociation_V001.xml -->
+      <!-- include includes/shapes/UDArrowExtension_V001.xml -->
+      <!-- include includes/shapes/UDArrowInclusion_V001.xml -->
+      <!-- include includes/shapes/UDSpecialization_V001.xml -->
+
+    <!-- old versions to keep compatibility ( invisible ) -->
+
+</Shapes>

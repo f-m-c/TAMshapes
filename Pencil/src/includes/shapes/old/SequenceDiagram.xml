@@ -1,0 +1,64 @@
+<Shape id="SequenceDiagram" displayName="SequenceDiagram" icon="icons/sequence-diagram.png" system="true">
+  <Script>
+      debugger;
+  </Script>
+  <Properties>  
+    <PropertyGroup name="Legend Properties">  
+      <Property name="textFont" displayName="Font" type="Font">$$defaultTextFont</Property>
+      <Property name="backgroundColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+      <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+      <Property name="contentText" displayName="Text Content" type="PlainText"
+          p:editInfo="({
+              targetName: 'content', 
+              font: $textFont,
+              align: new Alignment(0, 0), 
+              multi: true})"><![CDATA[
+title: Diagram Title
+hide footbox
+
+participant Alice as A
+participant Bob as B
+
+activate A
+A->A: Self Sync Message Exchange
+A->B: Sync Message Exchange
+activate B
+A->>B: Async Message Exchange
+B-->>A: Return Message
+deactivate B
+
+note left of A: A Note left of Alice
+note right of B: A Note right of Bob
+note over A,B:A note over Alice and Bob\nover\nmultiple\nlines
+]]></Property>  
+    </PropertyGroup>  
+  </Properties>  
+  <Behaviors>  
+    <For ref="background">
+      <Fill>$backgroundColor</Fill>
+      <Attr>
+          <Arg>"width" // depends $contentText</Arg>
+          <Arg><E>var oSvg = collection.getHiddenDiv().querySelector("svg"); oSvg ? oSvg.getAttribute("width") : "100px" </E></Arg>
+      </Attr>
+      <Attr>
+          <Arg>"height" // depends $contentText</Arg>
+          <Arg><E>var oSvg = collection.getHiddenDiv().querySelector("svg"); oSvg ? oSvg.getAttribute("height") : "100px" </E></Arg>
+      </Attr>
+    </For>
+    <For ref="content">  
+      <Font>$textFont</Font>  
+      <Fill>$textColor</Fill>
+      <DomContent><![CDATA[
+          var sText = $contentText.value;
+          collection.drawSequenceDiagramSvg(sText, {
+              fontFamily: $textFont.family,
+              fontSize: $textFont.size
+          });
+      ]]></DomContent>  
+    </For>  
+  </Behaviors>  
+  <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">  
+    <rect id="background" />
+    <g id="content" />  
+  </p:Content>  
+</Shape>

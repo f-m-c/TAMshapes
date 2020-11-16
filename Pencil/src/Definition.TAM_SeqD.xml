@@ -1,0 +1,84 @@
+<Shapes xmlns="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+
+    id="tamSeqD"
+    displayName="TAM Sequence Diagram"
+    description="TAM Stencils for Sequence Diagrams"
+    author="Savio Dimatteo, Bernhard Groene"
+    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+
+    <!-- include includes/Properties.xml -->
+
+    <Script>
+        <![CDATA[
+        <!-- include lib/underscore-min.js -->
+        <!-- include lib/snap.svg.js -->
+        <!-- include lib/sequence-diagram.js -->
+
+        // Old Versions
+        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
+
+        // Common
+        collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
+        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
+        collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
+        collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
+        collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
+        collection.getPointOnLine = /* includeJS includes/functions/getPointOnLine.js */;
+
+        // for SeqDSequenceDiagram_Vxxx.xml
+        collection.getHiddenDiv = function () {
+            // (create and) return a div element that is actually in the DOM.
+            // This is useful when sequence diagrams must be drawn in an actual dom element.
+            var oDiv = document.querySelector("#diagram-invisible-div");
+            if (!oDiv) {
+                oDiv = document.createElement("div");
+                oDiv.id = "diagram-invisible-div";
+                oDiv.style.visibility = "hidden";
+                oDiv.style.height = 0;
+                document.body.appendChild(oDiv);
+            }
+            return oDiv;
+        };
+        collection.drawSequenceDiagramSvg = /* includeJS includes/functions/drawSequenceDiagramSvg.js */;
+        collection.parseSVGMarkupAsDOMFragment = /* includeJS includes/functions/parseSVGMarkupAsDOMFragment.js */;
+
+
+        // for AnnLegend_Vxxx.xml
+        collection.parseLegendText = /* includeJS includes/functions/parseLegendText.js */;
+        ]]>
+    </Script>
+
+<!-- Collection of Shapes -->
+
+    <!-- System ( invisible ) -->
+
+    <!-- Active ( visible ) -->
+        <!-- include includes/shapes/SeqDAgentLifeline_V002.xml -->
+        <!-- include includes/shapes/SeqDSyncMessageExchange_V002.xml --> 
+        <!-- include includes/shapes/SeqDAsyncMessageExchange_V002.xml -->     
+        <!-- include includes/shapes/SeqDCreateInstance_V002.xml --> 
+        <!-- include includes/shapes/SeqDSyncSelfMessageExchange_V002.xml --> 
+        <!-- include includes/shapes/SeqDCombinedFragment_V002.xml --> 
+        <!-- include includes/shapes/SeqDActive_V002.xml --> 
+        <!-- include includes/shapes/SeqDSequenceDiagram_V002.xml -->
+
+    <!-- old versions to keep compatibility ( invisible ) -->
+        <!-- include includes/shapes/old/SeqDAgentLifeline_V001.xml -->
+        <!-- include includes/shapes/old/SeqDSyncMessageExchange_V001.xml --> 
+        <!-- include includes/shapes/old/SeqDAsyncMessageExchange_V001.xml -->     
+        <!-- include includes/shapes/old/SeqDCreateInstance_V001.xml --> 
+        <!-- include includes/shapes/old/SeqDSyncSelfMessageExchange_V001.xml --> 
+        <!-- include includes/shapes/old/SeqDCombinedFragment_V001.xml --> 
+        <!-- include includes/shapes/old/SeqDSequenceDiagram_V001.xml -->
+        <!-- include includes/shapes/old/SeqDAgentLifeline.xml -->
+        <!-- include includes/shapes/old/SeqDSyncMessageExchange.xml --> 
+        <!-- include includes/shapes/old/SeqDAsyncMessageExchange.xml -->     
+        <!-- include includes/shapes/old/SeqDCreateInstance.xml --> 
+        <!-- include includes/shapes/old/SeqDSyncSelfMessageExchange.xml --> 
+        <!-- include includes/shapes/old/SeqDCombinedFragment.xml --> 
+        <!-- include includes/shapes/old/SequenceDiagram.xml -->
+        <!-- include includes/shapes/old/Legend.xml -->
+</Shapes>

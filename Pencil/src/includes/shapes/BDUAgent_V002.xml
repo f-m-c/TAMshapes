@@ -1,0 +1,169 @@
+<Shape id="BDUAgent_V002" displayName="U Agent" icon="icons/u-agent.png">
+    <Properties>
+        <PropertyGroup name="Agent Properties">
+            <Property name="box" type="Dimension">300,150</Property>
+            <Property name="BOOLisMultiple" displayName="Multiple" type="Bool">false</Property>
+            <Property name="BOOLhasRoundedCorners" displayName="Rounded Corners" p:disabled="true" type="Bool">false</Property>
+            <Property name="BOOLhasSameSideSize" displayName="Same Width Sides" type="Bool">true</Property>
+            <Property name="HNDLpTop" p:minY="20" p:maxY="$box.h - 20" p:lockX="true" displayName="Top Resize" type="Handle">150,30</Property>
+            <Property name="HNDLpLeft" p:minX="20" p:lockY="true" displayName="Left Resize" type="Handle">30,75</Property>
+            <Property name="HNDLpRight" p:maxX="$box.w - 20" p:lockY="true" p:disabled="$BOOLhasSameSideSize.value" displayName="Right Resize" type="Handle">270,75</Property>
+            <Property name="HNDLcornerRadius" p:disabled="$BOOLhasRoundedCorners.value === false" p:minX="10" p:maxX="50" p:lockY="true" displayName="Corner Radius" type="Handle"><E>$$defaultCornerRadius + ",0"</E></Property>
+            <Property name="fillColor" displayName="Background Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+            <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+            <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="BOOLuseTextPos" p:disabled="true" displayName="Position text w/ control" type="Bool">false</Property>
+            <Property name="HNDLtextPos" p:minX="0" p:maxX="$box.w" p:minY="0" p:maxY="$box.h" 
+                displayName="Text Position" 
+                p:disabled="$BOOLuseTextPos.value != true"
+                type="Handle">150,30</Property>
+            <Property name="TTXTlabel" displayName="Label" type="PlainText">Name</Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+        <For ref="line">
+            <D><![CDATA[
+                const bRounded = $BOOLhasRoundedCorners.value;
+
+                let HNDLpRight = $HNDLpRight;
+                if ($BOOLhasSameSideSize.value) {
+                    HNDLpRight = {
+                        x: $box.w - $HNDLpLeft.x,
+                        y: $HNDLpLeft.y
+                    };
+                }
+
+                const aPoints = [
+                    [0, 0],
+                    [$box.w, 0],
+                    [$box.w, $box.h],
+                    [HNDLpRight.x, $box.h],
+                    [HNDLpRight.x, $HNDLpTop.y],
+                    [$HNDLpLeft.x, $HNDLpTop.y],
+                    [$HNDLpLeft.x, $box.h],
+                    [0, $box.h]
+                ].map((aPoint) => ({ x: aPoint[0], y: aPoint[1] }));
+
+                const bClosed = true;
+
+                const line = collection.createSVGLineThroughPoints(
+                    aPoints,
+                    bRounded,
+                    bClosed,
+                    $HNDLcornerRadius.x
+                );
+
+                line;
+            ]]></D>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+            <Fill>$fillColor</Fill>
+        </For>
+        <For ref="text">
+            <TextContent>$TTXTlabel</TextContent>
+            <Font>$textFont</Font>
+            <Fill>$textColor</Fill>
+            <BoxFit>
+                <Arg>new Bound(5, 5, $box.w - 10, $HNDLpTop.y - 10)</Arg>
+                <Arg>$ALGNtextAlignment</Arg>
+            </BoxFit>
+        </For>
+    </Behaviors>
+    <Actions>
+        <Action id="makeSquared" displayName="Make Squared">
+            <Impl>
+                var box = this.getProperty("box");
+                box.w = Math.max(box.w, box.h);
+                box.h = box.w;
+                this.setProperty("box", box);
+            </Impl>
+        </Action>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                    function generateOutletsBetween (sLabel, bIsXDimension, iDimensionFrom, iDimensionTo, iFixedDimensionValue) {
+                        let aSegments = collection.divideSegment(iDimensionFrom, iDimensionTo, 5);
+                        aSegments.pop();
+                        return aSegments
+                            .map((iSegmentEnd, i) => {
+
+                                let x = iFixedDimensionValue;
+                                let y = iSegmentEnd;
+
+                                if (bIsXDimension) {
+                                    let tmp = x;
+                                    x = y;
+                                    y = tmp;
+                                }
+
+                                const sOutletName = sLabel + i;
+
+                                return new Outlet(sOutletName, "Bounding", x, y);
+                            });
+                    }
+
+                    var box = this.getProperty("box");
+
+                    var topCenterPoint    = { x: box.w / 2 , y: 0         };
+                    var leftCenterPoint   = { x: 0         , y: box.h / 2 };
+                    var rightCenterPoint  = { x: box.w     , y: box.h / 2 };
+                    var bottomCenterPoint = { x: box.w / 2 , y: box.h     };
+                    var toHNDLpLeftPoint      = { x: 0         , y: 0         };
+                    var toHNDLpRightPoint     = { x: box.w     , y: 0         };
+                    var bottomLeftPoint   = { x: 0         , y: box.h     };
+                    var bottomRightPoint  = { x: box.w     , y: box.h     };
+
+                    var fnGenerateOutletsBetween = generateOutletsBetween.bind(this);
+
+                    var aOutlets = [
+                        new Outlet("top-center", "Bounding", topCenterPoint.x, topCenterPoint.y),
+                        new Outlet("left-center", "Bounding", leftCenterPoint.x, leftCenterPoint.y),
+                        new Outlet("right-center", "Bounding", rightCenterPoint.x, rightCenterPoint.y),
+                        new Outlet("bottom-center", "Bounding", bottomCenterPoint.x, bottomCenterPoint.y)
+                    ];
+
+                    if (!this.getProperty("hasExtraConnectionPoints").value) {
+                        return aOutlets;
+                    }
+
+                    return aOutlets.concat(
+                        fnGenerateOutletsBetween("tl-tc", true /*bIsXDimension*/, toHNDLpLeftPoint.x, topCenterPoint.x, topCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("tc-tr", true /*bIsXDimension*/, topCenterPoint.x, toHNDLpRightPoint.x, topCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("bl-bc", true /*bIsXDimension*/, bottomLeftPoint.x, bottomCenterPoint.x, bottomCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("bc-br", true /*bIsXDimension*/, bottomCenterPoint.x, bottomRightPoint.x, bottomCenterPoint.y /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("lt-lc", false /*bIsXDimension*/, toHNDLpLeftPoint.y, leftCenterPoint.y, leftCenterPoint.x /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("lc-lb", false /*bIsXDimension*/, leftCenterPoint.y, bottomLeftPoint.y, leftCenterPoint.x /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("rt-rc", false /*bIsXDimension*/, toHNDLpRightPoint.y, rightCenterPoint.y, rightCenterPoint.x /* iFixedDimensionValue */)
+                    ).concat(
+                        fnGenerateOutletsBetween("rc-rb", false /*bIsXDimension*/, rightCenterPoint.y, bottomRightPoint.y, rightCenterPoint.x /* iFixedDimensionValue */)
+                    );
+
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns="http://www.w3.org/2000/svg">
+
+        <path
+           style="stroke-linejoin: round;"
+           fill="none"
+           id="line" />
+
+        <path id="lineGrip" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+        <text id="text" />
+
+    </p:Content>
+</Shape>
