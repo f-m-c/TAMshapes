@@ -1,0 +1,9 @@
+    <mxGraphModel>
+        <root>
+            <mxCell id="0"/>
+            <mxCell id="1" parent="0"/>
+            <mxCell id="2" value="" style="rounded=0;fillColor=#000000;whiteSpace=wrap;html=1;strokeWidth=2;rotatable=0;editable=0" vertex="1" parent="1">
+                <mxGeometry width="120" height="10" as="geometry"/>
+            </mxCell>
+        </root>
+    </mxGraphModel>

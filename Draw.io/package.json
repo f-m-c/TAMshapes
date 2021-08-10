@@ -1,0 +1,22 @@
+{
+  "name": "tam-drawio-stencils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "",
+    "dev": "",
+    "start": "node build.js",
+    "dist": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Bernhard Groene",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "pako": "^2.0.3"
+  }
+}

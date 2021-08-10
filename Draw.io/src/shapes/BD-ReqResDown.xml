@@ -1,0 +1,9 @@
+<mxGraphModel>
+    <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="" style="shape=stencil(filename=BD-ReqRes.stencil);whiteSpace=wrap;html=1;;connectable=0;allowArrows=0;rotatable=1;editable=0;expand=0;aspect=fixed;" vertex="1" parent="1">
+            <mxGeometry width="30" height="30" as="geometry" />
+        </mxCell>
+    </root>
+</mxGraphModel>

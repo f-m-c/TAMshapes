@@ -1,0 +1,17 @@
+<shape h="100" w="120" strokewidth="inherit">
+  <background>    
+  </background>  
+  <foreground>    
+    <fontsize size="10" />    
+    <text str="Class" align="center" x="0" valign="middle" y="4"/>    
+    <fillcolor color="#000000" />    
+    <path>      
+      <move x="6" y="10" />      
+      <line x="10" y="12" />      
+      <line x="14" y="10" />      
+      <line x="10" y="18" />      
+      <close />      
+    </path>    
+    <fillstroke />    
+  </foreground>  
+</shape>

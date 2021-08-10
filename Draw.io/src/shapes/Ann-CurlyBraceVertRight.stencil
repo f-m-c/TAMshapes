@@ -1,0 +1,19 @@
+<shape h="120" w="20" strokewidth="inherit">
+  <background>    
+  </background>  
+  <foreground>    
+    <strokecolor color="#000000" />    
+    <fontsize size="12" />    
+    <fillcolor color="none" />    
+    <path>      
+      <move x="0" y="0" />      
+      <arc rx="10" ry="10" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="10" y="10" />      
+      <line x="10" y="50" />      
+      <arc rx="10" ry="10" x-axis-rotation="0" large-arc-flag="0" sweep-flag="0" x="20" y="60" />      
+      <arc rx="10" ry="10" x-axis-rotation="0" large-arc-flag="0" sweep-flag="0" x="10" y="70" />      
+      <line x="10" y="110" />      
+      <arc rx="10" ry="10" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="0" y="120" />         
+    </path>    
+    <fillstroke />    
+  </foreground>  
+</shape>

@@ -1,0 +1,47 @@
+    <mxGraphModel>
+        <root>
+            <mxCell id="0"/>
+            <mxCell id="1" parent="0"/>
+            <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;rotatable=0;verticalAlign=bottom;align=center;" vertex="1" parent="1">
+                <mxGeometry width="60" height="60" as="geometry"/>
+            </mxCell>
+            <mxCell id="3" value="" style="group;strokeWidth=2;rotatable=0;editable=0;fillColor=none;" vertex="1" connectable="0" parent="2">
+                <mxGeometry width="20" height="40" relative="1" as="geometry">
+                    <mxPoint x="20" y="10" as="offset" />
+                </mxGeometry>
+            </mxCell>
+            <mxCell id="4" value="" style="ellipse;strokeWidth=2;whiteSpace=wrap;html=1;deletable=0;movable=0;" vertex="1" parent="3">
+                <mxGeometry x="4" y="0" width="12" height="12" as="geometry"/>
+            </mxCell>
+            <mxCell id="5" style="edgeStyle=none;strokeWidth=2;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;jettySize=auto;orthogonalLoop=1;deletable=0;" edge="1" parent="3">
+                <mxGeometry relative="0" as="geometry">
+                    <mxPoint x="10" y="26" as="targetPoint"/>
+                    <mxPoint x="10" y="12" as="sourcePoint"/>
+                </mxGeometry>
+            </mxCell>
+            <mxCell id="6" style="edgeStyle=none;strokeWidth=2;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;jettySize=auto;orthogonalLoop=1;deletable=0;movable=0;" edge="1" parent="3">
+                <mxGeometry relative="0" as="geometry">
+                    <mxPoint x="20" y="12" as="targetPoint"/>
+                    <mxPoint x="10" y="18" as="sourcePoint"/>
+                </mxGeometry>
+            </mxCell>
+            <mxCell id="7" style="edgeStyle=none;strokeWidth=2;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;jettySize=auto;orthogonalLoop=1;deletable=0;movable=0;" edge="1" parent="3">
+                <mxGeometry relative="0" as="geometry">
+                    <mxPoint x="0" y="12" as="targetPoint"/>
+                    <mxPoint x="10" y="18" as="sourcePoint"/>
+                </mxGeometry>
+            </mxCell>
+            <mxCell id="8" style="edgeStyle=none;strokeWidth=2;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;jettySize=auto;orthogonalLoop=1;deletable=0;movable=0;" edge="1" parent="3">
+                <mxGeometry relative="0" as="geometry">
+                    <mxPoint x="0" y="40" as="targetPoint"/>
+                    <mxPoint x="10" y="26" as="sourcePoint"/>
+                </mxGeometry>
+            </mxCell>
+            <mxCell id="9" style="edgeStyle=none;strokeWidth=2;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;jettySize=auto;orthogonalLoop=1;deletable=0;movable=0;" edge="1" parent="3">
+                <mxGeometry relative="0" as="geometry">
+                    <mxPoint x="20" y="40" as="targetPoint"/>
+                    <mxPoint x="10" y="26" as="sourcePoint"/>
+                </mxGeometry>
+            </mxCell>
+        </root>
+    </mxGraphModel>

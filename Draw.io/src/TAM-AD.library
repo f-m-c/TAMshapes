@@ -1,0 +1,12 @@
+shapes/AD-Action.shape
+shapes/AD-StartOfActivity.shape
+shapes/AD-EndOfActivity.shape
+shapes/AD-Decision.shape
+shapes/AD-Flow-Rect-N.shape
+shapes/AD-Flow-Rect-Z.shape
+shapes/AD-Flow-Rect.shape
+shapes/AD-SwimlaneVertLR.shape
+shapes/AD-SwimlaneVertR.shape
+shapes/AD-Fork.shape
+shapes/AD-EndOfFlow.shape
+shapes/SD-State.shape

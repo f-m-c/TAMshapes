@@ -1,0 +1,13 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="2" value="" style="edgeStyle=elbowEdgeStyle;dashed=1;dashPattern=5 5;strokeWidth=2;strokeColor=#666666;arcSize=0;startArrow=none;endArrow=none;startSize=0;endSize=0;html=1;endFill=0;align=center;resizeHeight=0;" edge="1" parent="1">
+      <mxGeometry width="300" height="0" relative="1" as="geometry">
+        <mxPoint x="0" y="0" as="sourcePoint" />
+        <mxPoint x="300" y="0" as="targetPoint" />
+        <mxPoint y="-10" as="offset" />
+      </mxGeometry>
+    </mxCell>
+  </root>
+</mxGraphModel>
