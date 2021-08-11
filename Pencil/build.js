@@ -42,15 +42,23 @@
 //    g. copy src/icons to build/<Collection>/icons
 
 
-var fse = require("fs-extra");
-var fs = require("fs");
+const fs = require("fs");
+const archiver = require("archiver");
 const S_DEFINITIONS_DIR = "src";
 const S_BUILD_DIR = "build";
 const S_FILE_INCLUDE_TEMPLATE = "<!-- include {PLACEHOLDER} -->";
 const S_JSFILE_INCLUDE_TEMPLATE = "/* includeJS {PLACEHOLDER} */";
 
+// function copyDir (sourceDir, destDir ) {
+//     fs.mkdirSync(destDir, { recursive: true});
+//     fs.readdirSync(sourceDir, { withFileTypes: true}).forEach((entry) => {
+//         let sourcePath = path.join(sourceDir, entry.name);
+//         let destPath = path.join(destDir, entry.name);
+//         entry.isDirectory() ? copyDir(sourcePath, destPath) : fs.copyFileSync^(sourcePath, destPath);
+//     });
+// }
 function readFileContent (sFile) {
-    return fse.readFileSync(sFile, "utf8");
+    return fs.readFileSync(sFile, "utf8");
 }
 
 function readIncludesFunctions (sBaseDir, aJSFileNames) {
@@ -58,7 +66,7 @@ function readIncludesFunctions (sBaseDir, aJSFileNames) {
 }
 
 function saveFileContent (sFileName, sFileContent) {
-    fse.writeFileSync(sFileName, sFileContent, { encoding: "utf8" });
+    fs.writeFileSync(sFileName, sFileContent, { encoding: "utf8" });
 }
 
 function readLinesContaining(reMatch, sFile) {
@@ -70,9 +78,17 @@ function readLinesContaining(reMatch, sFile) {
         .map(x => x.match(reMatch)[1] || x);
 }
 
+function findLinesContaining(reMatch, sContent) {
+  return sContent.split(/\r?\n/)
+      .filter(function (sLine) {
+          return reMatch.test(sLine);
+      })
+      .map(x => x.match(reMatch)[1] || x);
+}
+
 function readIncludesContent (sBaseDir, aFilesToRead) {
     return aFilesToRead.map((sFile) => {
-        return fse.readFileSync(sBaseDir + "/" + sFile, "utf8");
+        return fs.readFileSync(sBaseDir + "/" + sFile, "utf8");
     });
 }
 
@@ -89,68 +105,89 @@ function replaceIncludes (sIncludeTemplate, sFile, aIncludeNames, aIncludesConte
 }
 
 function readCollectionList (sBaseDir) {
-  // find collection Definitions using the schema Definition.NAME.xml
-  // and return an array with items [Definition.NAME.xml, NAME]
-  var aCollections = [];
-  var aDirContent = fs.readdirSync(sBaseDir);
+    // find collection Definitions using the schema Definition.NAME.xml
+    // and return an array with items [Definition.NAME.xml, NAME]
+    var aCollections = [];
+    var aDirContent = fs.readdirSync(sBaseDir);
 
-  aDirContent.forEach(filename => {
-    if (filename.includes('Definition.')) {
-      if (fs.statSync(sBaseDir + '/' + filename).isFile()) {
-        var words = filename.split('.');
-        if (words[1] != 'xml') {
-          console.log("found Collection " + filename);
-          aCollections.push([filename, words[1]]);
+    aDirContent.forEach(filename => {
+        if (filename.includes('Definition.')) {
+            if (fs.statSync(sBaseDir + '/' + filename).isFile()) {
+                var words = filename.split('.');
+                if (words[1] != 'xml') {
+                    console.log("found Collection " + filename);
+                    aCollections.push([filename, words[1]]);
+                }
+            }
         }
-      }
-    }
-  })
-  return aCollections;
+    })
+    return aCollections;
 } // readCollectionList
 
 function processCollection (sCollDef, sCollName = '') {
-  console.log("process Collection " + sCollDef + ' ('+ sCollName + ')');
-  if (sCollName.length > 0)
-  {
-    var s_definition_file_build_dir = S_BUILD_DIR + '/' + sCollName;
-    if (!fs.existsSync(s_definition_file_build_dir)) {
-      // Target directory doesn't exist: Create it now
-      fs.mkdirSync(s_definition_file_build_dir);
-      fs.mkdirSync(s_definition_file_build_dir + '/icons');
-      console.log("mkdir " + s_definition_file_build_dir);
+    console.log("process Collection " + sCollDef + ' ('+ sCollName + ')');
+    if (sCollName.length > 0)
+    {
+        var s_definition_file_build_dir = S_BUILD_DIR + '/' + sCollName;
+        if (!fs.existsSync(s_definition_file_build_dir)) {
+            // Target directory doesn't exist: Create it now
+            fs.mkdirSync(s_definition_file_build_dir);
+            fs.mkdirSync(s_definition_file_build_dir + '/icons');
+            console.log("mkdir " + s_definition_file_build_dir);
+        }
+    } else {
+        var s_definition_file_build_dir = S_BUILD_DIR
     }
-  } else {
-    var s_definition_file_build_dir = S_BUILD_DIR
-  }
 
-  var sDefinitionFile      = S_DEFINITIONS_DIR + '/' + sCollDef;
-  var sDefinitionFileBuild = s_definition_file_build_dir + '/Definition.xml';
-  var aIncludes = readLinesContaining(/<!-- include\s(.+)\s-->/, sDefinitionFile);
-  var aIncludesContent = readIncludesContent(S_DEFINITIONS_DIR, aIncludes);
+    var sDefinitionFile      = S_DEFINITIONS_DIR + '/' + sCollDef;
+    var sDefinitionFileBuild = s_definition_file_build_dir + '/Definition.xml';
+    var aIncludes = readLinesContaining(/<!-- include\s(.+)\s-->/, sDefinitionFile);
+    var aIncludesContent = readIncludesContent(S_DEFINITIONS_DIR, aIncludes);
+    var aIcons = findLinesContaining( /icon=\"(icons\/[^\"]+)\"/, aIncludesContent.toString());
 
-  var sDefinitions = readFileContent(sDefinitionFile);
-  var sDefinitionsReplaced = replaceIncludes(S_FILE_INCLUDE_TEMPLATE, sDefinitions, aIncludes, aIncludesContent);
+    var sDefinitions = readFileContent(sDefinitionFile);
+    var sDefinitionsReplaced = replaceIncludes(S_FILE_INCLUDE_TEMPLATE, sDefinitions, aIncludes, aIncludesContent);
 
-  var aIncludesJS = readLinesContaining(/\/\* includeJS\s([^\s]+)\s\*\//, sDefinitionFile);
-  var aIncludesJSContent = readIncludesFunctions(S_DEFINITIONS_DIR, aIncludesJS);
+    var aIncludesJS = readLinesContaining(/\/\* includeJS\s([^\s]+)\s\*\//, sDefinitionFile);
+    var aIncludesJSContent = readIncludesFunctions(S_DEFINITIONS_DIR, aIncludesJS);
 
-  var sDefinitionsReplacedWithJS = replaceIncludes(S_JSFILE_INCLUDE_TEMPLATE, sDefinitionsReplaced, aIncludesJS, aIncludesJSContent);
+    var sDefinitionsReplacedWithJS = replaceIncludes(S_JSFILE_INCLUDE_TEMPLATE, sDefinitionsReplaced, aIncludesJS, aIncludesJSContent);
 
-  saveFileContent(sDefinitionFileBuild, sDefinitionsReplacedWithJS);
+    saveFileContent(sDefinitionFileBuild, sDefinitionsReplacedWithJS);
 
-  fse.copy(S_DEFINITIONS_DIR + "/icons", s_definition_file_build_dir + "/icons")
-      .then(() => console.log(new Date() + " " + sCollName + ': Build success!'))
-      .catch(err => console.error(err));
+    // copy icons
+    aIcons.forEach(iconPath => {
+        fs.copyFileSync(S_DEFINITIONS_DIR + '/' + iconPath, s_definition_file_build_dir + '/' + iconPath)
+    });
+    //copyDir(S_DEFINITIONS_DIR + "/icons", s_definition_file_build_dir + "/icons");
+    //     .then(() => console.log(new Date() + " " + sCollName + ': Build success!'))
+    //     .catch(err => console.error(err));
 
+    // create zip archive
+    var outZip = fs.createWriteStream(S_BUILD_DIR + '/' + sCollName + '.zip');
+    var arch = archiver('zip');
+
+    outZip.on('close', function() {
+        console.log(S_BUILD_DIR + '/' + sCollName + '.zip: ' + arch.pointer() + ' bytes.');
+    });
+
+    arch.on('error', function(err){
+        throw err;
+    } );
+
+    arch.pipe(outZip);
+    arch.directory(S_BUILD_DIR + '/' + sCollName, false);
+
+    arch.finalize();
 } // processCollection
 
 
 var aCollections = readCollectionList(S_DEFINITIONS_DIR);
 if (aCollections.length > 0) {
-  aCollections.forEach(aCollection => {
-    processCollection(aCollection[0], aCollection[1]);
-  });
+    aCollections.forEach(aCollection => {
+        processCollection(aCollection[0], aCollection[1]);
+    });
 } else
 {
-  processCollection('Definition.xml');
+    processCollection('Definition.xml');
 }

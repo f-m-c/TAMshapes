@@ -7,7 +7,7 @@
     "test": "mocha test/functions/",
     "dev": "watch 'node build.js' src",
     "start": "node build.js",
-    "dist": "cd build && for f in $(find . -depth 1 -type d | grep -v icons); do cd ${f}; zip -r ../../dist/${f}.zip .; cd -; done"
+    "dist": "node copy2dist.js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +18,11 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "js-sequence-diagrams": "github:darksmo/js-sequence-diagrams",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.3",
     "snapsvg": "^0.5.1",
-    "underscore": "^1.9.1",
-    "watch": "^1.0.2"
+    "watch": "^0.13.0"
   },
   "dependencies": {
-    "fs-extra": "^7.0.1"
+    "archiver": "^5.3.0"
   }
 }
