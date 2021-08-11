@@ -15,10 +15,11 @@
         <![CDATA[
         // Old Versions
         collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
-
-        // Common
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
         collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
+
+        // Common
+        collection.calculateHorVertLineAndConstraints  = /* includeJS includes/functions/calculateHorVertLineAndConstraints.js */;
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
@@ -36,7 +37,7 @@
 
 
 <!-- System ( invisible ) -->
-    <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
+    <!-- include includes/shapes/AllDHorVertLine_V2107.xml -->
     <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
 
 <!-- Main Shapes ( visible ) -->
@@ -48,6 +49,7 @@
     <!-- include includes/shapes/ADFlowVerticalMulti_V002.xml -->
     <!-- include includes/shapes/ADFlowHorizontalLoopT_V002.xml -->
     <!-- include includes/shapes/ADFlowHorizontalLoopB_V002.xml -->
+    <!-- include includes/shapes/ADFlowVerticalMultiS_V2107.xml -->
     <!-- include includes/shapes/ADDecision_V002.xml -->
     <!-- include includes/shapes/AnnLane_V002.xml -->
     <!-- include includes/shapes/ADLaneMultiVertical_V002.xml -->
@@ -56,6 +58,7 @@
     <!-- include includes/shapes/ADEndOfFlow_V002.xml -->
 
 <!-- old versions to keep compatibility -->
+    <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
     <!-- include includes/shapes/old/ADAction_V001.xml -->
     <!-- include includes/shapes/old/ADStartOfActivity_V001.xml -->
     <!-- include includes/shapes/old/ADEndOfActivity_V001.xml -->

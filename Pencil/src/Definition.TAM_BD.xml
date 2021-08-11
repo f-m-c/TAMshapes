@@ -24,6 +24,7 @@
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
         collection.getPointOnLine = /* includeJS includes/functions/getPointOnLine.js */;
+        collection.calculateLTShapePoints  = /* includeJS includes/functions/calculateLTShapePoints.js */;
 
         // for BDAccessRW_Vxxx.xml, BDChannel_Vxxx.xml
         collection.arrangeExtensionPoints = /* includeJS includes/functions/arrangeExtensionPoints.js */;
@@ -86,8 +87,10 @@
     
 <!-- System ( invisible ) -->
     <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
+    <!-- include includes/shapes/AllDHorVertLine_V2107.xml -->
     <!-- include includes/shapes/AllDDirectLine_V002.xml -->
     <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
+    <!-- include includes/shapes/AllDLTShape_V002.xml -->
     <!-- include includes/shapes/BDChannelHorVert_V002.xml -->
     
 <!-- Main Shapes ( visible ) -->
@@ -111,6 +114,8 @@
     <!-- include includes/shapes/AnnDots_V002.xml -->
     <!-- include includes/shapes/AnnDotsVertical_V002.xml -->
     <!-- include includes/shapes/AnnGroupCFA_V002.xml -->
+    <!-- include includes/shapes/BDLTAgent_V002.xml -->
+    <!-- include includes/shapes/BDLTStorage_V002.xml -->
     <!-- include includes/shapes/BDUAgent_V002.xml -->
     <!-- include includes/shapes/BDUStorage_V002.xml -->
     <!-- include includes/shapes/BDQueue_V002.xml -->

@@ -4,8 +4,8 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
 
     id="tamCD"
-    displayName="TAM Class Diagram"
-    description="TAM Stencils for Class Diagrams"
+    displayName="TAM E/R &amp; Class Diagram"
+    description="TAM Stencils for TAM Entity/Relationship &amp; Class Diagrams"
     author="Savio Dimatteo, Bernhard Groene"
     url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
 
