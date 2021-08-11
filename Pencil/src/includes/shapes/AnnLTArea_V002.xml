@@ -1,0 +1,13 @@
+<Shortcut displayName="L/T Area" icon="icons/areaL.png" to="AllDLTShape_V002">
+  <PropertyValue name="box">300,150</PropertyValue>
+  <PropertyValue name="BOOLallowRoundedCorners">true</PropertyValue>
+  <PropertyValue name="BOOLhasRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLallowMultiple">true</PropertyValue>
+  <PropertyValue name="fillColor">#CCCCCCFF</PropertyValue>
+  <PropertyValue name="strokeStyle">0|</PropertyValue>  
+  <PropertyValue name="HNDLcornerNW">30,20</PropertyValue>
+  <PropertyValue name="HNDLcornerNE">250,50</PropertyValue>
+  <PropertyValue name="HNDLcornerSE">250,120</PropertyValue>
+  <PropertyValue name="HNDLcornerSW">30,120</PropertyValue>  
+  <PropertyValue name="ALGNtextAlignment">0,0</PropertyValue>
+</Shortcut>

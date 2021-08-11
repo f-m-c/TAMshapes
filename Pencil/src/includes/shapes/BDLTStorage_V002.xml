@@ -1,0 +1,11 @@
+<Shortcut displayName="L/T Storage" icon="icons/ltShapeRounded.png" to="AllDLTShape_V002">
+  <PropertyValue name="box">150,60</PropertyValue>
+  <PropertyValue name="BOOLallowRoundedCorners">false</PropertyValue>
+  <PropertyValue name="BOOLhasRoundedCorners">true</PropertyValue>
+  <PropertyValue name="BOOLallowMultiple">true</PropertyValue>
+  <PropertyValue name="HNDLcornerRadius">10,0</PropertyValue>
+  <PropertyValue name="HNDLcornerNW">30,20</PropertyValue>
+  <PropertyValue name="HNDLcornerNE">120,20</PropertyValue>
+  <PropertyValue name="HNDLcornerSE">120,40</PropertyValue>
+  <PropertyValue name="HNDLcornerSW">30,40</PropertyValue>
+</Shortcut>
