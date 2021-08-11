@@ -20,6 +20,7 @@
 
         // Common
         collection.calculateHorVertLineAndConstraints  = /* includeJS includes/functions/calculateHorVertLineAndConstraints.js */;
+        collection.calculateHorVertControlConstraints3 = /* includeJS includes/functions/calculateHorVertControlConstraints3.js */;
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;

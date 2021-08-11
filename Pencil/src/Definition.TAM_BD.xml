@@ -16,10 +16,12 @@
         // Old Versions
         collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
         collection.calculateChannelCoord_V001       = /* includeJS includes/functions/old/calculateChannelCoord_V001.js */;
+        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
 
         // Common
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
-        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
+        collection.calculateHorVertLineAndConstraints  = /* includeJS includes/functions/calculateHorVertLineAndConstraints.js */;
+        collection.calculateHorVertControlConstraints3 = /* includeJS includes/functions/calculateHorVertControlConstraints3.js */;        
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
