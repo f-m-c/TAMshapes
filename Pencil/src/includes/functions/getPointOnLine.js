@@ -14,10 +14,10 @@ function getPointOnLine (a, b, offset) {
     }
 
     function findPointDistance (a, b) {
-        const x1 = a.x;
-        const y1 = a.y;
-        const x2 = b.x;
-        const y2 = b.y;
+        const x1 = parseFloat(a.x);
+        const y1 = parseFloat(a.y);
+        const x2 = parseFloat(b.x);
+        const y2 = parseFloat(b.y);
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
@@ -29,7 +29,7 @@ function getPointOnLine (a, b, offset) {
     } = getPointCoordinates(a, b);
 
     const R = findPointDistance(a, b);
-    const rR = parseFloat(offset)/R;
+    const rR = R > offset * 0.7 ? parseFloat(offset)/R : R/2;
 
     return {
         x : ax + ( bx - ax ) * rR,

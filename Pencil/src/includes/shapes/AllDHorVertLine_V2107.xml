@@ -1,0 +1,180 @@
+<Shape id="AllDHorVertLine_V2107" displayName="hor. / vert. multi Line" icon="icons/arrowSMultiV.png" system="true">
+      <Properties>
+          <PropertyGroup name="Line">
+              <Property name="ENUMcontrolPoints"  displayName="Control Points" p:disabled="$BOOLstraight.value"
+                  p:enumValues="['0|0 (L)', '1|1 (S)', '2|2', '3|3', '4|4', '5|5']"
+                  type="Enum">1</Property>              
+              <Property name="BOOLAllowStraight"  displayName="Allow straight hor/vert. line"  p:disabled="true" type="Bool">true</Property>
+              <Property name="BOOLstraight"  displayName="straight hor/vert. line" p:disabled="!$BOOLAllowStraight.value" type="Bool">false</Property>
+              <Property name="BOOLAllowDiagonalEnd" displayName="Allow Diagonal Segment at End"  p:disabled="true" type="Bool">false</Property>
+              <Property name="BOOLDiagonalEnd" displayName="Diagonal Segment at End"  p:disabled="!$BOOLAllowDiagonalEnd.value" type="Bool">false</Property>
+              <Property name="BOOLstartsHorizontal" p:disabled="false" displayName="Horizontal Start" type="Bool">false</Property>
+              <Property name="BOOLlockArrowStyle" p:disabled="true" displayName="Prevent changing arrowhead" type="Bool">false</Property>
+              <Property name="ENUMarrowStyleStart"  displayName="Arrow Style Start"
+                  p:enumValues="['none|None', 'full|Full', 'open|Open']" p:disabled="$BOOLlockArrowStyle.value"
+                  type="Enum">none</Property>
+              <Property name="ENUMarrowStyleEnd"  displayName="Arrow Style End" p:disabled="$BOOLlockArrowStyle.value"
+                  p:enumValues="['none|None', 'full|Full', 'open|Open']"
+                  type="Enum">full</Property>
+              <Property name="ENUMalignType"  displayName="Alignment" p:disabled="!$BOOLstraight.value"
+                  p:enumValues="['start|Start', 'center|Center', 'end|End', 'control|Control']"
+                  type="Enum">center</Property>
+              <Property name="HNDLp1" p:connectTo="*" displayName="Begin" type="Handle">0,0</Property>
+              <Property name="HNDLp2" p:connectTo="*" displayName="End" type="Handle">50,50</Property>
+              <Property name="HNDLc1" displayName="Control 1" 
+                  p:disabled="!((!$BOOLstraight.value &amp;&amp; parseInt($ENUMcontrolPoints.value) &gt; 0) || ($BOOLstraight.value &amp;&amp; $ENUMalignType.value == 'control'))"
+                  p:minX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][0].xmin" 
+                  p:maxX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][0].xmax" 
+                  p:minY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][0].ymin" 
+                  p:maxY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][0].ymax" 
+                  type="Handle">15,25</Property>
+              <Property name="HNDLc2" displayName="Control 2" 
+                  p:disabled="parseInt($ENUMcontrolPoints.value) &lt; 2 || $BOOLstraight.value"
+                  p:minX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][1].xmin" 
+                  p:maxX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][1].xmax" 
+                  p:minY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][1].ymin" 
+                  p:maxY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][1].ymax" 
+                  type="Handle">25,35</Property>
+              <Property name="HNDLc3" displayName="Control 3" 
+                  p:disabled="parseInt($ENUMcontrolPoints.value) &lt; 3 || $BOOLstraight.value"
+                  p:minX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][2].xmin" 
+                  p:maxX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][2].xmax" 
+                  p:minY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][2].ymin" 
+                  p:maxY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][2].ymax" 
+                  type="Handle">15,15</Property>
+              <Property name="HNDLc4" displayName="Control 4" 
+                  p:disabled="parseInt($ENUMcontrolPoints.value) &lt; 4 || $BOOLstraight.value"
+                  p:minX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][3].xmin" 
+                  p:maxX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][3].xmax" 
+                  p:minY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][3].ymin" 
+                  p:maxY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][3].ymax" 
+                  type="Handle">60,25</Property>
+              <Property name="HNDLc5" displayName="Control 5" 
+                  p:disabled="parseInt($ENUMcontrolPoints.value) &lt; 5 || $BOOLstraight.value"
+                  p:minX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][4].xmin" 
+                  p:maxX="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][4].xmax" 
+                  p:minY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][4].ymin" 
+                  p:maxY="collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[1][4].ymax" 
+                  type="Handle">70,35</Property>
+              <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+              <Property name="strokeStyle" displayName="Line Style" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+          </PropertyGroup>
+          <PropertyGroup name="Text">
+              <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Text Position" 
+                  p:minX="collection.calculateHorVertControlConstraints3(collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[0], 50).xmin" 
+                  p:maxX="collection.calculateHorVertControlConstraints3(collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[0], 50).xmax" 
+                  p:minY="collection.calculateHorVertControlConstraints3(collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[0], 50).ymin" 
+                  p:maxY="collection.calculateHorVertControlConstraints3(collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value)[0], 50).ymax" 
+                  type="Handle">40,25</Property>
+              <Property name="TTXTtextContent" displayName="Content"
+                p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+                type="PlainText" />
+              <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+              <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+              <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">0,1</Property>
+          </PropertyGroup>
+      </Properties>
+      <Behaviors>
+        <For ref="line">
+          <D><![CDATA[
+            const aPoints = collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value);
+            const line = collection.createSVGLineThroughPoints(aPoints[0], true /*bRounded*/, false /*bClosed*/);
+            line;
+            ]]>
+          </D>
+
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+        <For ref="lineGrip">
+          <D><![CDATA[
+            const aPoints = collection.calculateHorVertLineAndConstraints($HNDLp1, $HNDLp2, [$HNDLc1, $HNDLc2, $HNDLc3, $HNDLc4, $HNDLc5], $ENUMcontrolPoints.value, $BOOLstartsHorizontal.value, $BOOLstraight.value, $ENUMalignType.value, $BOOLDiagonalEnd.value);
+            const line = collection.createSVGLineThroughPoints(aPoints[0], true /*bRounded*/, false /*bClosed*/);
+            line;
+            ]]>
+          </D>
+        </For>
+        <For ref="ArrowStartPath">
+          <Fill><![CDATA[
+            var arrowHeadFill = collection.arrowheadDetermineFill($ENUMarrowStyleStart.value, $strokeColor);
+            arrowHeadFill;
+          ]]></Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG($ENUMarrowStyleStart.value);
+              arrowHead;
+          ]]></D>
+          <Transform>[translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>
+          <Visibility>$ENUMarrowStyleStart.value != 'none'</Visibility>
+        </For>
+        <For ref="ArrowEndPath">
+            <Fill><![CDATA[
+              var arrowHeadFill = collection.arrowheadDetermineFill($ENUMarrowStyleEnd.value, $strokeColor);
+              arrowHeadFill;
+            ]]></Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <D><![CDATA[
+              var arrowHead = collection.arrowheadCreateSVG($ENUMarrowStyleEnd.value);
+              arrowHead;
+            ]]></D>
+            <Transform>[rotate(180), translate(1, 0), scale((parseFloat($strokeStyle.w)+2)/4, (parseFloat($strokeStyle.w)+2)/4)]</Transform>
+            <Visibility>$ENUMarrowStyleEnd.value != 'none'</Visibility>
+        </For>
+
+
+        <For ref="text">
+            <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, 300, $ALGNtextAlignment)</DomContent>
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+            <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
+        </For>
+      </Behaviors>
+      <Actions>
+      </Actions>
+      <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+                 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                 xmlns="http://www.w3.org/2000/svg">
+          <defs>
+              <marker
+                 id="ArrowEnd"
+                 orient="auto"
+                 refY="0.0"
+                 refX="0.0"
+                 style="overflow:visible;"
+                 markerUnits="userSpaceOnUse">
+
+                 <path
+                    id="ArrowEndPath"
+                    style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                    />
+              </marker>
+              <marker
+                 id="ArrowStart"
+                 orient="auto"
+                 refY="0.0"
+                 refX="0.0"
+                 style="overflow:visible;"
+                 markerUnits="userSpaceOnUse">
+
+                 <path
+                    id="ArrowStartPath"
+                    style="fill-rule:evenodd;stroke-width:0.9;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                    />
+              </marker>
+
+           </defs>
+
+          <path
+             id="line"
+             style="stroke-linejoin: round; "
+             fill="none"
+             marker-start = "url(#ArrowStart)"
+             marker-end   = "url(#ArrowEnd)"
+              />
+
+          <path id="lineGrip" fill="none" style="stroke: rgba(0, 0, 0, 0); stroke-width: 10px;"/>
+
+          <text id="text" xml:space="preserve"  />
+
+      </p:Content>
+  </Shape>
