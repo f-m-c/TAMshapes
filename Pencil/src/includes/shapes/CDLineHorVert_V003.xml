@@ -45,10 +45,10 @@
               <Property name="TTXTtextContent" displayName="Label"
                   p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
                   type="PlainText" />
-              <Property name="TTXTtextCSContent" displayName="Cardinality Start" p:disabled="$BOOLhasCardinalityStart.value == false || $ENUMarrowStyleStart == 'composition'  || $ENUMarrowStyleStart == 'specialization' || $ENUMarrowStyleEnd == 'specialization'"
+              <Property name="TTXTtextCSContent" displayName="Cardinality Start" p:disabled="$BOOLhasCardinalityStart.value == false ||  $ENUMarrowStyleStart == 'specialization' || $ENUMarrowStyleEnd == 'specialization'"
                   p:editInfo="var targetBox = F.getObjectBoundingBox('textCS'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
                   type="PlainText" />
-              <Property name="TTXTtextCEContent" displayName="Cardinality End" p:disabled="$BOOLhasCardinalityEnd.value == false || $ENUMarrowStyleEnd == 'composition' || $ENUMarrowStyleStart == 'specialization' || $ENUMarrowStyleEnd == 'specialization'"
+              <Property name="TTXTtextCEContent" displayName="Cardinality End" p:disabled="$BOOLhasCardinalityEnd.value == false ||  $ENUMarrowStyleStart == 'specialization' || $ENUMarrowStyleEnd == 'specialization'"
                   p:editInfo="var targetBox = F.getObjectBoundingBox('textCE'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
                   type="PlainText" />
               <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
@@ -121,7 +121,7 @@
               var bound = F.getObjectBoundingBox('text');
               if ($BOOLisHorizontal.value) {
                 ty = bound.y + bound.h / 2;
-                if ($ENUMtextArrowDirection.value == 'start' && $HNDLp2.x > $HNDLp1.x) {
+                if (($ENUMtextArrowDirection.value == 'start' && $HNDLp2.x > $HNDLp1.x) || ($ENUMtextArrowDirection.value == 'end' && $HNDLp2.x < $HNDLp1.x)) {
                   // left <
                   tx = bound.x - $ENUMtextArrowOffset.value; 
                   rot = 0;
@@ -133,7 +133,7 @@
               } else {
                 // vertical
                 tx = bound.x + bound.w / 2;
-                if ($ENUMtextArrowDirection.value == 'start' && $HNDLp2.y > $HNDLp1.y) {
+                if (($ENUMtextArrowDirection.value == 'start' && $HNDLp2.y > $HNDLp1.y) || ($ENUMtextArrowDirection.value == 'end' && $HNDLp2.y < $HNDLp1.y)) {
                   // up ^
                   ty = bound.y - $ENUMtextArrowOffset.value; 
                   rot = 90;
@@ -157,14 +157,14 @@
             <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
         </For>
         <For ref="textCS">
-            <Visibility>$BOOLhasCardinalityStart.value &amp;&amp; $ENUMarrowStyleStart != 'composition'  &amp;&amp; $ENUMarrowStyleStart != 'specialization' &amp;&amp; $ENUMarrowStyleEnd != 'specialization'</Visibility>
+            <Visibility>$BOOLhasCardinalityStart.value  &amp;&amp; $ENUMarrowStyleStart != 'specialization' &amp;&amp; $ENUMarrowStyleEnd != 'specialization'</Visibility>
             <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextCSContent.value, 300, $ALGNtextAlignment)</DomContent>
             <Font>$textFont</Font>
             <Color>$textColor</Color>
             <Transform>[translate(parseFloat($HNDLtextCSPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextCSPos.y)]</Transform>
         </For>
         <For ref="textCE">
-            <Visibility>$BOOLhasCardinalityEnd.value &amp;&amp; $ENUMarrowStyleEnd != 'composition'  &amp;&amp; $ENUMarrowStyleStart != 'specialization' &amp;&amp; $ENUMarrowStyleEnd != 'specialization'</Visibility>
+            <Visibility>$BOOLhasCardinalityEnd.value  &amp;&amp; $ENUMarrowStyleStart != 'specialization' &amp;&amp; $ENUMarrowStyleEnd != 'specialization'</Visibility>
             <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextCEContent.value, 300, $ALGNtextAlignment)</DomContent>
             <Font>$textFont</Font>
             <Color>$textColor</Color>

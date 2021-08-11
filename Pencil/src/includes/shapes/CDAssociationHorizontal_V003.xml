@@ -1,4 +1,4 @@
-<Shortcut displayName="hor. Association" icon="icons/lineH.png" to="CDLineHorVert_V003">
+<Shortcut displayName="hor. Association / Aggregation / Composition" icon="icons/lineH.png" to="CDLineHorVert_V003">
     <PropertyValue name="BOOLisHorizontal">true</PropertyValue>
     <PropertyValue name="BOOLhasExtensionA">false</PropertyValue>
     <PropertyValue name="BOOLhasExtensionB">false</PropertyValue>
