@@ -77,7 +77,7 @@
                     $BOOLcornerNE.value, $HNDLcornerNE, 
                     $BOOLcornerSE.value, $HNDLcornerSE, 
                     $BOOLcornerSW.value, $HNDLcornerSW );
-                var line = collection.createSVGLineThroughPoints2(aPoints, $BOOLhasRoundedCorners.value /*bRounded*/, true /*bClosed*/, $HNDLcornerRadius.x);
+                var line = collection.createSVGLineThroughPoints(aPoints, $BOOLhasRoundedCorners.value /*bRounded*/, true /*bClosed*/, $HNDLcornerRadius.x);
                 line;
                 ]]>
             </D>    
