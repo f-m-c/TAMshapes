@@ -65,7 +65,7 @@
     <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
                xmlns="http://www.w3.org/2000/svg">
 
-        <rect id="rectGrip" x="0" y="0" style="fill: rgba(0, 0, 0, 0); stroke: none;"/>
+        <rect id="rectGrip" x="0" y="0" fill-opacity="0.0" style="fill: rgba(0, 0, 0, 0); stroke: none;"/>
 
         <path id="bracketX" style="fill: none; stroke-linejoin: round;" />
         <text id="text"   xml:space="preserve"  />
