@@ -1,6 +1,6 @@
 <Shape id="AllDRoundedRectangle_V002" displayName="Rounded Rectangle" icon="icons/storage.png" system="true">
     <Properties>
-        <PropertyGroup name="Rectangle">
+        <PropertyGroup name="Shape">
             <Property name="box" type="Dimension">150,50</Property>
             <Property name="BOOLallowRoundedCorners" p:disabled="true" 
                 displayName="AllowRoundedCorners" type="Bool">true</Property>
