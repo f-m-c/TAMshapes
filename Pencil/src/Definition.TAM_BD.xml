@@ -7,21 +7,19 @@
     displayName="TAM Block Diagram"
     description="TAM Stencils for Block Diagrams"
     author="Savio Dimatteo, Bernhard Groene"
-    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+    url="https://github.wdf.sap.corp/TAMusers/pencil-tam-stencils">
 
     <!-- include includes/Properties.xml -->
 
     <Script>
         <![CDATA[
         // Old Versions
-        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
-        collection.calculateChannelCoord_V001       = /* includeJS includes/functions/old/calculateChannelCoord_V001.js */;
         collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
 
         // Common
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
         collection.calculateHorVertLineAndConstraints  = /* includeJS includes/functions/calculateHorVertLineAndConstraints.js */;
-        collection.calculateHorVertControlConstraints3 = /* includeJS includes/functions/calculateHorVertControlConstraints3.js */;        
+        collection.calculateHorVertControlConstraints2108  = /* includeJS includes/functions/calculateHorVertControlConstraints2108.js */;
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
@@ -88,7 +86,6 @@
     </Script>
     
 <!-- System ( invisible ) -->
-    <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
     <!-- include includes/shapes/AllDHorVertLine_V2107.xml -->
     <!-- include includes/shapes/AllDDirectLine_V002.xml -->
     <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
@@ -127,50 +124,4 @@
     <!-- include includes/shapes/BDChannelDirect_V002.xml -->
 
 <!-- old versions to keep compatibility -->
-    <!-- include includes/shapes/old/BDAgent_V002.xml -->
-    <!-- include includes/shapes/old/BDHumanAgent_V002.xml -->
-    <!-- include includes/shapes/old/BDAgent_V001.xml -->
-    <!-- include includes/shapes/old/BDHumanAgent_V001.xml -->
-    <!-- include includes/shapes/old/BDStorage_V001.xml -->
-    <!-- include includes/shapes/old/BDStraightArrow_V001.xml -->
-    <!-- include includes/shapes/old/BDStraightArrowHorizontal_V001.xml -->
-    <!-- include includes/shapes/old/BDAccessVertical_V001.xml -->
-    <!-- include includes/shapes/old/BDAccessVerticalMulti_V001.xml -->
-    <!-- include includes/shapes/old/BDAccessHorizontal_V001.xml -->
-    <!-- include includes/shapes/old/BDAccessHorizontalMulti_V001.xml -->
-    <!-- include includes/shapes/old/BDModAccessVertical_V001.xml -->
-    <!-- include includes/shapes/old/BDModAccessHorizontal_V001.xml -->
-    <!-- include includes/shapes/old/BDChannelVertical_V001.xml -->
-    <!-- include includes/shapes/old/BDChannelVerticalMulti_V001.xml -->
-    <!-- include includes/shapes/old/BDChannelHorizontal_V001.xml -->
-    <!-- include includes/shapes/old/BDChannelHorizontalMulti_V001.xml -->
-    <!-- include includes/shapes/old/AnnDots_V001.xml -->
-    <!-- include includes/shapes/old/AnnGroupCFA_V001.xml -->
-    <!-- include includes/shapes/old/BDUAgent_V001.xml -->
-    <!-- include includes/shapes/old/BDUStorage_V001.xml -->
-    <!-- include includes/shapes/old/BDAccessRW_V001.xml -->
-    <!-- include includes/shapes/old/BDCircularAccessRW_V001.xml -->
-    <!-- include includes/shapes/old/BDChannel_V001.xml -->
-    <!-- include includes/shapes/old/Agent.xml -->
-    <!-- include includes/shapes/old/HumanAgent.xml -->
-    <!-- include includes/shapes/old/Storage.xml -->
-    <!-- include includes/shapes/old/StraightArrow.xml -->
-    <!-- include includes/shapes/old/StraightArrowHorizontal.xml -->
-    <!-- include includes/shapes/old/AccessVertical.xml -->
-    <!-- include includes/shapes/old/AccessVerticalMulti.xml -->
-    <!-- include includes/shapes/old/AccessHorizontal.xml -->
-    <!-- include includes/shapes/old/AccessHorizontalMulti.xml -->
-    <!-- include includes/shapes/old/ModAccessVertical.xml -->
-    <!-- include includes/shapes/old/ModAccessHorizontal.xml -->
-    <!-- include includes/shapes/old/ChannelVertical.xml -->
-    <!-- include includes/shapes/old/ChannelVerticalMulti.xml -->
-    <!-- include includes/shapes/old/ChannelHorizontal.xml -->
-    <!-- include includes/shapes/old/ChannelHorizontalMulti.xml -->
-    <!-- include includes/shapes/old/Dots.xml -->
-    <!-- include includes/shapes/old/UAgent.xml -->
-    <!-- include includes/shapes/old/UStorage.xml -->
-    <!-- include includes/shapes/old/AccessRW.xml -->
-    <!-- include includes/shapes/old/CircularAccessRW.xml -->
-    <!-- include includes/shapes/old/Channel.xml -->
-    <!-- include includes/shapes/old/Legend.xml -->
 </Shapes>

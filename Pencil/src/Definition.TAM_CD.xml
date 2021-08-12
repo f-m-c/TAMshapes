@@ -7,14 +7,13 @@
     displayName="TAM E/R &amp; Class Diagram"
     description="TAM Stencils for TAM Entity/Relationship &amp; Class Diagrams"
     author="Savio Dimatteo, Bernhard Groene"
-    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+    url="https://github.wdf.sap.corp/TAMusers/pencil-tam-stencils">
 
     <!-- include includes/Properties.xml -->
 
     <Script>
         <![CDATA[
         // Old Versions
-        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
 
         // Common
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
@@ -41,30 +40,4 @@
     <!-- include includes/shapes/CDPackage_V003.xml -->
 
 <!-- old versions to keep compatibility -->
-    <!-- include includes/shapes/old/CDClass_V002.xml -->
-    <!-- include includes/shapes/old/CDClassSimple_V002.xml -->
-    <!-- include includes/shapes/old/CDAssociationVertical_V002.xml -->
-    <!-- include includes/shapes/old/CDAssociationHorizontal_V002.xml -->
-    <!-- include includes/shapes/old/CDAssociationHorizontalMulti_V002.xml -->
-    <!-- include includes/shapes/old/CDAssociationVerticalMulti_V002.xml -->
-    <!-- include includes/shapes/old/CDSpecializationHorizontalMulti_V002.xml -->
-    <!-- include includes/shapes/old/CDSpecializationVerticalMulti_V002.xml -->
-    <!-- include includes/shapes/old/Class.xml -->
-    <!-- include includes/shapes/old/ClassSimple.xml -->
-    <!-- include includes/shapes/old/AssociationVertical.xml -->
-    <!-- include includes/shapes/old/AssociationHorizontal.xml -->
-    <!-- include includes/shapes/old/AssociationHorizontalMulti.xml -->
-    <!-- include includes/shapes/old/AssociationVerticalMulti.xml -->
-    <!-- include includes/shapes/old/SpecializationHorizontalMulti.xml -->
-    <!-- include includes/shapes/old/SpecializationVerticalMulti.xml -->
-    <!-- include includes/shapes/old/Legend.xml -->
-    <!-- include includes/shapes/old/CDClass_V001.xml -->
-    <!-- include includes/shapes/old/CDClassSimple_V001.xml -->
-    <!-- include includes/shapes/old/CDAssociationVertical_V001.xml -->
-    <!-- include includes/shapes/old/CDAssociationHorizontal_V001.xml -->
-    <!-- include includes/shapes/old/CDAssociationHorizontalMulti_V001.xml -->
-    <!-- include includes/shapes/old/CDAssociationVerticalMulti_V001.xml -->
-    <!-- include includes/shapes/old/CDSpecializationHorizontalMulti_V001.xml -->
-    <!-- include includes/shapes/old/CDSpecializationVerticalMulti_V001.xml -->
-
 </Shapes>

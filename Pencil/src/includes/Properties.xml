@@ -1,6 +1,6 @@
 <Properties>
     <PropertyGroup name="Text">
-        <Property name="defaultTextFont" type="Font" displayName="Default Font">Arial,Helvetica,sans-serif|normal|normal|13px</Property>
+        <Property name="defaultTextFont" type="Font" displayName="Default Font">sans-serif|normal|normal|13px</Property>
         <Property name="defaultTextColor" type="Color" displayName="Default Text Color">#000000ff</Property>
         <Property name="defaultStrokeColor" type="Color" displayName="Default Stroke Color">#000000ff</Property>
         <Property name="defaultNodeStrokeStyle" type="StrokeStyle" displayName="Default Node Stroke Style">2|</Property>

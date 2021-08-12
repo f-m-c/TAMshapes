@@ -7,17 +7,15 @@
     displayName="TAM Use Case Diagram"
     description="TAM Stencils for Use Case Diagrams"
     author="Savio Dimatteo, Bernhard Groene"
-    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+    url="https://github.wdf.sap.corp/TAMusers/pencil-tam-stencils">
 
     <!-- include includes/Properties.xml -->
-
+    
     <Script>
         <![CDATA[
         // Old Versions
 
         // Common
-        collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
-        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
@@ -27,7 +25,6 @@
     </Script>
 
     <!-- System ( invisible ) -->
-      <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
       <!-- include includes/shapes/AllDRoundedRectangle_V002.xml -->
       <!-- include includes/shapes/AllDDirectLine_V002.xml -->
 
@@ -41,5 +38,4 @@
       <!-- include includes/shapes/UDSpecialization_V001.xml -->
 
     <!-- old versions to keep compatibility ( invisible ) -->
-
 </Shapes>

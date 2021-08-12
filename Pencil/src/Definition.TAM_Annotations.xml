@@ -7,20 +7,19 @@
     displayName="TAM Annotations"
     description="TAM Stencils for Annotations"
     author="Savio Dimatteo, Bernhard Groene"
-    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+    url="https://github.wdf.sap.corp/TAMusers/pencil-tam-stencils">
 
     <!-- include includes/Properties.xml -->
 
     <Script>
         <![CDATA[
         // Old Versions
-        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
         collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
         
         // Common
         collection.calculateHorVertLineAndConstraints  = /* includeJS includes/functions/calculateHorVertLineAndConstraints.js */;
-        collection.calculateHorVertControlConstraints3 = /* includeJS includes/functions/calculateHorVertControlConstraints3.js */;        
+        collection.calculateHorVertControlConstraints2108  = /* includeJS includes/functions/calculateHorVertControlConstraints2108.js */;
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
@@ -65,27 +64,4 @@
       <!-- include includes/shapes/AnnLegend_V002.xml -->
 
     <!-- old versions to keep compatibility ( invisible ) -->
-      <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
-      <!-- include includes/shapes/old/AllDHorVertLine_V001.xml -->
-      <!-- include includes/shapes/old/AllDRoundedRectangle_V001.xml -->
-      <!-- include includes/shapes/old/AllDDirectLine_V001.xml -->
-      <!-- include includes/shapes/old/AnnPlainText_V001.xml -->
-      <!-- include includes/shapes/old/AnnRectangle_V001.xml -->
-      <!-- include includes/shapes/old/AnnRectangleRounded_V001.xml -->
-      <!-- include includes/shapes/old/AnnLineDirect_V001.xml -->
-      <!-- include includes/shapes/old/AnnLineVerticalMulti_V001.xml -->
-      <!-- include includes/shapes/old/AnnLineHorizontalMulti_V001.xml -->
-      <!-- include includes/shapes/old/AnnArrowDirectDashed_V001.xml -->
-      <!-- include includes/shapes/old/AnnNote_V001.xml -->
-      <!-- include includes/shapes/old/AnnGroupCFA_V001.xml -->
-      <!-- include includes/shapes/old/AnnDots_V001.xml -->
-      <!-- include includes/shapes/old/AnnLane_V001.xml -->
-      <!-- include includes/shapes/old/AnnLaneHorizontal_V001.xml -->
-      <!-- include includes/shapes/old/AnnLegend_V001.xml -->
-
-      <!-- include includes/shapes/old/PlainText.xml -->
-      <!-- include includes/shapes/old/Group_CFA.xml -->
-      <!-- include includes/shapes/old/Lane.xml -->
-      <!-- include includes/shapes/old/LaneHorizontal.xml -->
-      <!-- include includes/shapes/old/Legend.xml -->
 </Shapes>

@@ -7,20 +7,19 @@
     displayName="TAM Activity Diagram"
     description="TAM Stencils for Activity Diagrams"
     author="Savio Dimatteo, Bernhard Groene"
-    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+    url="https://github.wdf.sap.corp/TAMusers/pencil-tam-stencils">
 
     <!-- include includes/Properties.xml -->
 
     <Script>
         <![CDATA[
         // Old Versions
-        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
         collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
 
         // Common
         collection.calculateHorVertLineAndConstraints  = /* includeJS includes/functions/calculateHorVertLineAndConstraints.js */;
-        collection.calculateHorVertControlConstraints3 = /* includeJS includes/functions/calculateHorVertControlConstraints3.js */;
+        collection.calculateHorVertControlConstraints2108  = /* includeJS includes/functions/calculateHorVertControlConstraints2108.js */;
         collection.arrowheadCreateSVG = /* includeJS includes/functions/arrowheadCreateSVG.js */;
         collection.arrowheadDetermineFill = /* includeJS includes/functions/arrowheadDetermineFill.js */;
         collection.createSVGLineThroughPoints = /* includeJS includes/functions/createSVGLineThroughPoints.js */;
@@ -59,36 +58,4 @@
     <!-- include includes/shapes/ADEndOfFlow_V002.xml -->
 
 <!-- old versions to keep compatibility -->
-    <!-- include includes/shapes/AllDHorVertLine_V002.xml -->
-    <!-- include includes/shapes/old/ADAction_V001.xml -->
-    <!-- include includes/shapes/old/ADStartOfActivity_V001.xml -->
-    <!-- include includes/shapes/old/ADEndOfActivity_V001.xml -->
-    <!-- include includes/shapes/old/ADFlowVertical_V001.xml -->
-    <!-- include includes/shapes/old/ADFlowHorizontalMulti_V001.xml -->
-    <!-- include includes/shapes/old/ADFlowVerticalMulti_V001.xml -->
-    <!-- include includes/shapes/old/ADFlowHorizontalLoopT_V001.xml -->
-    <!-- include includes/shapes/old/ADFlowHorizontalLoopB_V001.xml -->
-    <!-- include includes/shapes/old/ADDecision_V001.xml -->
-    <!-- include includes/shapes/old/AnnLane_V001.xml -->
-    <!-- include includes/shapes/old/ADLaneMultiVertical_V001.xml -->
-    <!-- include includes/shapes/old/AnnLaneHorizontal_V001.xml -->
-    <!-- include includes/shapes/old/ADForkJoin_V001.xml -->
-    <!-- include includes/shapes/old/ADEndOfFlow_V001.xml -->
-
-    <!-- include includes/shapes/old/Action.xml -->
-    <!-- include includes/shapes/old/StartOfActivity.xml -->
-    <!-- include includes/shapes/old/EndOfActivity.xml -->
-    <!-- include includes/shapes/old/FlowVertical.xml -->
-    <!-- include includes/shapes/old/FlowHorizontalMulti.xml -->
-    <!-- include includes/shapes/old/FlowVerticalMulti.xml -->
-    <!-- include includes/shapes/old/FlowHorizontalLoopT.xml -->
-    <!-- include includes/shapes/old/FlowHorizontalLoopB.xml -->
-    <!-- include includes/shapes/old/Decision.xml -->
-    <!-- include includes/shapes/old/Dots.xml -->
-    <!-- include includes/shapes/old/Legend.xml -->
-    <!-- include includes/shapes/old/Lane.xml -->
-    <!-- include includes/shapes/old/LaneMultiVertical.xml -->
-    <!-- include includes/shapes/old/LaneHorizontal.xml -->
-    <!-- include includes/shapes/old/ForkJoin.xml -->
-    <!-- include includes/shapes/old/EndOfFlow.xml -->
 </Shapes>

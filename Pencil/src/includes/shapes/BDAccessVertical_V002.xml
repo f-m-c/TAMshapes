@@ -1,10 +1,14 @@
-<Shortcut displayName="vert. Access R/W" icon="icons/arrowVu.png" to="AllDHorVertLine_V002">
-    <PropertyValue name="BOOLisHorizontal">false</PropertyValue>
+<Shortcut displayName="vert. Access R/W" icon="icons/arrowVu.png" to="AllDHorVertLine_V2107">
+    <PropertyValue name="BOOLstartsHorizontal">false</PropertyValue>
+    <PropertyValue name="BOOLAllowDiagonalEnd">false</PropertyValue>
+    <PropertyValue name="BOOLDiagonalEnd">false</PropertyValue>
     <PropertyValue name="ENUMarrowStyleStart">full</PropertyValue>
     <PropertyValue name="ENUMarrowStyleEnd">none</PropertyValue>
-    <PropertyValue name="BOOLhasExtensionA">false</PropertyValue>
-    <PropertyValue name="BOOLhasExtensionB">false</PropertyValue>
+    <PropertyValue name="ENUMcontrolPoints">0</PropertyValue>
+    <PropertyValue name="BOOLstraight">true</PropertyValue>
+    <PropertyValue name="ENUMalignType">control</PropertyValue>
     <PropertyValue name="HNDLp1">0,0</PropertyValue>
     <PropertyValue name="HNDLp2">0,50</PropertyValue>
-    <PropertyValue name="HNDLc3">0,25</PropertyValue>
+    <PropertyValue name="HNDLc1">0,25</PropertyValue>
+    <PropertyValue name="HNDLtextPos">5,25</PropertyValue>
 </Shortcut>

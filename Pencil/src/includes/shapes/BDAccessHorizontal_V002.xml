@@ -1,12 +1,15 @@
-<Shortcut displayName="hor. Access R/W" icon="icons/arrowHl.png" to="AllDHorVertLine_V002">
-    <PropertyValue name="BOOLisHorizontal">true</PropertyValue>
-    <PropertyValue name="HNDLp1">0,0</PropertyValue>
-    <PropertyValue name="HNDLp2">50,0</PropertyValue>
-    <PropertyValue name="HNDLc3">25,0</PropertyValue>
-    <PropertyValue name="BOOLhasExtensionA">false</PropertyValue>
-    <PropertyValue name="BOOLhasExtensionB">false</PropertyValue>
+<Shortcut displayName="hor. Access R/W" icon="icons/arrowHl.png" to="AllDHorVertLine_V2107">
+    <PropertyValue name="BOOLstartsHorizontal">true</PropertyValue>
+    <PropertyValue name="BOOLAllowDiagonalEnd">false</PropertyValue>
+    <PropertyValue name="BOOLDiagonalEnd">false</PropertyValue>
     <PropertyValue name="ENUMarrowStyleStart">full</PropertyValue>
     <PropertyValue name="ENUMarrowStyleEnd">none</PropertyValue>
+    <PropertyValue name="ENUMcontrolPoints">0</PropertyValue>
+    <PropertyValue name="BOOLstraight">true</PropertyValue>
+    <PropertyValue name="ENUMalignType">control</PropertyValue>
+    <PropertyValue name="HNDLp1">0,0</PropertyValue>
+    <PropertyValue name="HNDLp2">50,0</PropertyValue>
+    <PropertyValue name="HNDLc1">25,0</PropertyValue>
     <PropertyValue name="HNDLtextPos">25,-5</PropertyValue>
     <PropertyValue name="ALGNtextAlignment">1,1</PropertyValue>
 </Shortcut>

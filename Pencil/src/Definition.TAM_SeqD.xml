@@ -7,7 +7,7 @@
     displayName="TAM Sequence Diagram"
     description="TAM Stencils for Sequence Diagrams"
     author="Savio Dimatteo, Bernhard Groene"
-    url="https://github.wdf.sap.corp/D063756/pencil-tam-stencils">
+    url="https://github.wdf.sap.corp/TAMusers/pencil-tam-stencils">
 
     <!-- include includes/Properties.xml -->
 
@@ -18,7 +18,6 @@
         <!-- include lib/sequence-diagram.js -->
 
         // Old Versions
-        collection.calculateHorVertLinePoints_V001  = /* includeJS includes/functions/old/calculateHorVertLinePoints_V001.js */;
 
         // Common
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
@@ -66,19 +65,4 @@
         <!-- include includes/shapes/SeqDSequenceDiagram_V002.xml -->
 
     <!-- old versions to keep compatibility ( invisible ) -->
-        <!-- include includes/shapes/old/SeqDAgentLifeline_V001.xml -->
-        <!-- include includes/shapes/old/SeqDSyncMessageExchange_V001.xml --> 
-        <!-- include includes/shapes/old/SeqDAsyncMessageExchange_V001.xml -->     
-        <!-- include includes/shapes/old/SeqDCreateInstance_V001.xml --> 
-        <!-- include includes/shapes/old/SeqDSyncSelfMessageExchange_V001.xml --> 
-        <!-- include includes/shapes/old/SeqDCombinedFragment_V001.xml --> 
-        <!-- include includes/shapes/old/SeqDSequenceDiagram_V001.xml -->
-        <!-- include includes/shapes/old/SeqDAgentLifeline.xml -->
-        <!-- include includes/shapes/old/SeqDSyncMessageExchange.xml --> 
-        <!-- include includes/shapes/old/SeqDAsyncMessageExchange.xml -->     
-        <!-- include includes/shapes/old/SeqDCreateInstance.xml --> 
-        <!-- include includes/shapes/old/SeqDSyncSelfMessageExchange.xml --> 
-        <!-- include includes/shapes/old/SeqDCombinedFragment.xml --> 
-        <!-- include includes/shapes/old/SequenceDiagram.xml -->
-        <!-- include includes/shapes/old/Legend.xml -->
 </Shapes>
