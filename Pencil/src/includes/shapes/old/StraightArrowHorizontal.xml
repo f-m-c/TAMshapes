@@ -1,7 +1,0 @@
-<Shortcut displayName="hor. Line" icon="icons/lineH.png" to="StraightArrow" system="true">
-    <PropertyValue name="isHorizontal">true</PropertyValue>
-    <PropertyValue name="p1">0,0</PropertyValue>
-    <PropertyValue name="p2">50,0</PropertyValue>
-    <PropertyValue name="c3">25,0</PropertyValue>
-    <PropertyValue name="lockArrowStyle">false</PropertyValue>
-</Shortcut>

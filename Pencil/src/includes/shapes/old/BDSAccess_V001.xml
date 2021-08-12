@@ -1,6 +1,0 @@
-<Shortcut displayName="S Access" icon="icons/s-access.png" to="BDAccessRW_V001" system="true">
-    <PropertyValue name="hasExtensionA">true</PropertyValue>
-    <PropertyValue name="hasExtensionB">true</PropertyValue>
-    <PropertyValue p:readonly="false" p:disabled="false" name="p1">25,0</PropertyValue>
-    <PropertyValue p:readonly="false" p:disabled="false" name="p4">-25,100</PropertyValue>
-</Shortcut>

@@ -1,5 +1,0 @@
-<Shortcut displayName="State" icon="icons/rectangle.png" to="AllDRoundedRectangle_V001" system="true">
-  <PropertyValue name="box">100,50</PropertyValue>
-  <PropertyValue name="allowRoundedCorners">false</PropertyValue>
-  <PropertyValue name="hasRoundedCorners">false</PropertyValue>
-</Shortcut>

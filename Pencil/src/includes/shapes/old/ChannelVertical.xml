@@ -1,6 +1,0 @@
-<Shortcut displayName="vert. Channel" icon="icons/channelV.png" to="StraightArrow" system="true">
-    <PropertyValue name="isChannel">true</PropertyValue>
-    <PropertyValue name="isHorizontal">false</PropertyValue>
-    <PropertyValue name="arrowStyleStart">none</PropertyValue>
-    <PropertyValue name="arrowStyleEnd">none</PropertyValue>
-</Shortcut>

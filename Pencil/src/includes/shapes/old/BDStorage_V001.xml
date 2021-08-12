@@ -1,4 +1,0 @@
-<Shortcut displayName="Storage" icon="icons/storage.png" to="BDAgent_V001" system="true">
-  <PropertyValue name="hasRoundedCorners">true</PropertyValue>
-  <PropertyValue name="allowHuman">false</PropertyValue>
-</Shortcut>

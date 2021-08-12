@@ -1,6 +1,0 @@
-<Shortcut displayName="hor. mod. Access" icon="icons/mod-access-H.png" to="ModAccessVertical" system="true">
-    <PropertyValue name="isHorizontal">true</PropertyValue>
-    <PropertyValue name="p1">0,0</PropertyValue>
-    <PropertyValue name="p2">50,0</PropertyValue>
-    <PropertyValue name="c3">25,0</PropertyValue>
-</Shortcut>

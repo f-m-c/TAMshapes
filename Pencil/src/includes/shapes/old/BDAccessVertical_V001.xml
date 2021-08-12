@@ -1,5 +1,0 @@
-<Shortcut displayName="vert. Read Access" icon="icons/arrowVu.png" to="BDStraightArrow_V001" system="true">
-    <PropertyValue name="isHorizontal">false</PropertyValue>
-    <PropertyValue name="arrowStyleStart">full</PropertyValue>
-    <PropertyValue name="arrowStyleEnd">none</PropertyValue>
-</Shortcut>

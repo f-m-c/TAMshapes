@@ -1,3 +1,0 @@
-<Shortcut displayName="Async. Message Exchange" icon="icons/aSyncMessageExch.png" to="SyncMessageExchange" system="true">
-    <PropertyValue name="isSync">false</PropertyValue>
-</Shortcut>

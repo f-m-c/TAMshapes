@@ -1,3 +1,0 @@
-<Shortcut displayName="Class w/o compartments" icon="icons/rectangle.png" to="CDClass_V002" system="true">
-    <PropertyValue name="showCompartments">none</PropertyValue>
-</Shortcut>
