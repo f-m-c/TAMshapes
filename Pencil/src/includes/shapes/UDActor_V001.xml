@@ -1,10 +1,10 @@
 <Shape id="UDActor_V001" displayName="Actor" icon="icons/actor.png">
     <Properties>
         <PropertyGroup name="Agent Properties">
-            <Property name="box" type="Dimension">80,80</Property>
-            <Property name="HNDLhumanPos" p:disabled="$BOOLshowHuman.value === false" displayName="Position of Human"
-              type="Handle" p:minX="0" p:minY="0" p:maxX="$box.w" p:maxY="$box.h">40,30</Property>
-            <Property name="ENUMhumanSize" p:disabled="$BOOLshowHuman.value === false" displayName="Size of Human" 
+            <Property name="box" type="Dimension">50,80</Property>
+            <Property name="HNDLhumanPos" displayName="Position of Human"
+              type="Handle" p:minX="0" p:minY="0" p:maxX="$box.w" p:maxY="$box.h">25,30</Property>
+            <Property name="ENUMhumanSize" displayName="Size of Human" 
                 p:enumValues="['1.5|Small', '2.0|Medium', '2.5|Large']"
                 type="Enum">2.0</Property>
             <Property name="ENUMmood"   displayName="Mood" 
@@ -67,6 +67,9 @@
                 line;
             ]]></D>
         </For>
+        <For ref="rectGrip">
+            <Box>$box</Box>
+        </For>
 
     </Behaviors>
     <Actions>
@@ -95,6 +98,9 @@
     <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
                xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
                xmlns="http://www.w3.org/2000/svg">
+               
+        <rect id="rectGrip" x="0" y="0" fill-opacity="0.0" style="fill: rgba(255, 255, 255, 0); stroke: none;"/>
+
         <text id="text" text-anchor="start" xml:space="preserve" />
 
             <g id="stickman">
