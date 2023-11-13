@@ -1,0 +1,6 @@
+shapes/SeqD-Lifeline.shape
+shapes/SeqD-Activation.shape
+shapes/SeqD-SyncMessageExchange.shape
+shapes/SeqD-AsyncMessageExchange.shape
+shapes/SeqD-SyncMessageExchangeR2L.shape
+shapes/SeqD-AsyncMessageExchangeR2L.shape
