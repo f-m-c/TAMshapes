@@ -14,7 +14,6 @@
     <Script>
         <![CDATA[
         // Old Versions
-        collection.calculateHorVertControlConstraints  = /* includeJS includes/functions/calculateHorVertControlConstraints.js */;
 
         // Common
         collection.calculateHorVertLinePoints  = /* includeJS includes/functions/calculateHorVertLinePoints.js */;
@@ -119,9 +118,14 @@
     <!-- include includes/shapes/BDUStorage_V002.xml -->
     <!-- include includes/shapes/BDQueue_V002.xml -->
     <!-- include includes/shapes/BDStructureVariance_V002.xml -->
+    <!-- include includes/shapes/BDChannelOnlyHor_V2306.xml -->
+    <!-- include includes/shapes/BDChannelOnlyVert_V2306.xml -->
+    <!-- include includes/shapes/AnnLineVerticalMulti_V002.xml -->
+    <!-- include includes/shapes/AnnLineHorizontalMulti_V002.xml -->
     <!-- include includes/shapes/BDAccessDirect_V002.xml -->
     <!-- include includes/shapes/BDModAccessDirect_V002.xml -->
     <!-- include includes/shapes/BDChannelDirect_V002.xml -->
 
 <!-- old versions to keep compatibility -->
+
 </Shapes>

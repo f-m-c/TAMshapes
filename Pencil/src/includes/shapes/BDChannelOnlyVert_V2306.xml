@@ -1,0 +1,6 @@
+<Shortcut displayName="Channel symbol vert." icon="icons/channelSoloV.png" to="BDChannelOnlyHor_V2306">
+    <PropertyValue name="ENUMorientation">vert</PropertyValue>
+    <PropertyValue name="HNDLrPos">26,8</PropertyValue>
+    <PropertyValue name="HNDLtextPos">-5,8</PropertyValue>
+    <PropertyValue name="ALGNtextAlignment">2,0</PropertyValue>
+</Shortcut>

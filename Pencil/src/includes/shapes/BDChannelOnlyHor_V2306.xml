@@ -1,0 +1,191 @@
+<Shape id="BDChannelOnlyHor_V2306" displayName="Channel symbol hor." icon="icons/channelSoloH.png" system="false">
+    <Properties>
+        <PropertyGroup name="Line">
+           <Property name="ENUMdirectionType" 
+                     displayName="Request Direction Type"
+                     p:enumValues="['none|None', 
+                        'single|Single Direction', 
+                        'other|Other Direction', 
+                        'bidirectional|Bidirectional']"
+                    type="Enum">single</Property>
+           <Property name="ENUMorientation"  displayName="Request Orientation"
+                  p:enumValues="['hor|Horizontal', 'vert|Vertical']" p:disabled="$ENUMdirectionType.value == 'none'"
+                  type="Enum">hor</Property>
+           <Property name="ENUMcircleRadius"
+                     displayName="Channel Circle Radius"
+                     p:enumValues="['6|6', '8|8', '10|10']"
+                     type="Enum">8</Property>
+           <Property name="HNDLrPos" p:disabled="$ENUMdirectionType.value == 'none'" displayName="Request Symbol Position" 
+                     type="Handle" 
+                     p:minX="$ENUMorientation.value == 'hor' ? $ENUMcircleRadius.value : -25" 
+                     p:maxX="$ENUMorientation.value == 'hor' ? $ENUMcircleRadius.value : $ENUMcircleRadius.value * 2 + 25"
+                     p:minY="$ENUMorientation.value == 'hor' ? -25 : $ENUMcircleRadius.value" 
+                     p:maxY="$ENUMorientation.value == 'hor' ? $ENUMcircleRadius.value * 2 + 25: $ENUMcircleRadius.value">8,-10</Property>
+           <Property name="strokeColor" displayName="Line Color" type="Color"><E>$$defaultStrokeColor</E></Property>
+           <Property name="strokeStyle" displayName="Line Style" p:disabled="true" type="StrokeStyle"><E>$$defaultEdgeStrokeStyle</E></Property>
+           <Property name="COLRnodeFillColor" displayName="Circle Fill Color" type="Color"><E>$$defaultBackgroundColor</E></Property>
+           <Property name="STYLnodeStrokeStyle" displayName="Circle Line Style"  type="StrokeStyle"><E>$$defaultNodeStrokeStyle</E></Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="HNDLtextPos" p:disabled="$TTXTtextContent.value.length == 0" displayName="Text Position" type="Handle">8,30</Property>
+            <Property name="TTXTtextContent" displayName="Content"
+              p:editInfo="var targetBox = F.getObjectBoundingBox('text'); var sizeBox = F.textSize('text'); var newBox = new Bound(targetBox.x, targetBox.y + ((sizeBox.h / 2) - 10), Math.sqrt((sizeBox.w * sizeBox.w) + (sizeBox.h * sizeBox.h)) + 10 , 20); ({targetName: 'text', bound: newBox , font: $textFont, align: $ALGNtextAlignment, multi: true})"
+              type="PlainText" />
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$defaultTextColor</E></Property>
+            <Property name="textFont" displayName="Font" type="Font"><E>$$defaultTextFont</E></Property>
+            <Property name="ALGNtextAlignment" displayName="Text Alignment" type="Alignment">1,0</Property>
+        </PropertyGroup>
+    </Properties>
+    <Behaviors>
+      <For ref="ChannelAnnotation">
+          
+      </For>
+      <For ref="R">
+          <Visibility>$ENUMdirectionType.value !== "none"</Visibility>
+          <Attr>
+            <Arg>"x"</Arg>
+            <Arg><![CDATA[
+                  if ($ENUMorientation.value == "hor") { $HNDLrPos.x - 4.5 - ($ENUMdirectionType.value == "single" ? 5 : 0) + ($ENUMdirectionType.value == "other" ? 5 : 0) } else { $HNDLrPos.x - 4.5 }
+               ]]></Arg>
+          </Attr>
+          <Attr>
+            <Arg>"y"</Arg>
+            <Arg><![CDATA[
+                  if ($ENUMorientation.value == "hor") { $HNDLrPos.y + 4 } else { $HNDLrPos.y + 4 - ($ENUMdirectionType.value == "single" ? 5 : 0) + ($ENUMdirectionType.value == "other" ? 5 : 0) } 
+               ]]></Arg>
+          </Attr>
+          <Color>$strokeColor</Color>
+      </For>
+      <For ref="Rline1">
+          <D><![CDATA[
+                    var draw = [];
+                    if ($ENUMorientation.value == "hor") { 
+                        draw.push(M($HNDLrPos.x - 11 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0)), $HNDLrPos.y));
+                        draw.push(L($HNDLrPos.x - 17 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0)), $HNDLrPos.y));
+                    } else {
+                        draw.push(M($HNDLrPos.x, $HNDLrPos.y - 12 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0))));
+                        draw.push(L($HNDLrPos.x, $HNDLrPos.y - 18 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0))));
+                    }
+                    draw;
+                ]]></D>
+
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>StrokeStyle.fromString("1|[1]")</StrokeStyle>
+          <Visibility>$ENUMdirectionType.value == 'bidirectional' || $ENUMdirectionType.value == 'other'</Visibility>
+      </For>
+
+      <For ref="Rline2">
+          <D><![CDATA[
+                    var draw = [];
+                    if ($ENUMorientation.value == "hor") { 
+                        draw.push(M($HNDLrPos.x + 11 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0)), $HNDLrPos.y));
+                        draw.push(L($HNDLrPos.x + 17 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0)), $HNDLrPos.y));
+                    } else {
+                        draw.push(M($HNDLrPos.x, $HNDLrPos.y + 12 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0))));
+                        draw.push(L($HNDLrPos.x, $HNDLrPos.y + 18 + ($ENUMdirectionType.value == "single" ?  -4.0 : ($ENUMdirectionType.value == "other" ?  4 : 0))));
+                    }
+                    draw;
+                ]]></D>
+
+          <StrokeColor>$strokeColor</StrokeColor>
+          <StrokeStyle>StrokeStyle.fromString("1|[1]")</StrokeStyle>
+          <Visibility>$ENUMdirectionType.value == 'bidirectional' || $ENUMdirectionType.value == 'single'</Visibility>
+      </For>
+      <For ref="RArrowPath">
+          <Fill>$strokeColor</Fill>
+          <StrokeColor>$strokeColor</StrokeColor>
+          <D><![CDATA[
+            var arrowHead = collection.arrowheadCreateSVG("full");
+            arrowHead;
+          ]]></D>          
+      </For>
+
+      <For ref="circle">
+         <StrokeColor>$strokeColor</StrokeColor>
+         <StrokeStyle>$STYLnodeStrokeStyle</StrokeStyle>
+         <Fill>$COLRnodeFillColor</Fill>
+         <Radius>
+           <Arg>$ENUMcircleRadius.value</Arg>
+           <Arg>$ENUMcircleRadius.value</Arg>
+         </Radius>
+         <Attr>
+                <Arg>"cx"</Arg>
+                <Arg>$ENUMcircleRadius.value</Arg>
+         </Attr>
+         <Attr>
+                <Arg>"cy"</Arg>
+                <Arg>$ENUMcircleRadius.value</Arg>
+         </Attr>
+      </For>
+
+      <For ref="text">
+          <DomContent>F.buildTextWrapDomContent(F._target, $TTXTtextContent.value, 300, $ALGNtextAlignment)</DomContent>
+          <Font>$textFont</Font>
+          <Color>$textColor</Color>
+          <Transform>[translate(parseFloat($HNDLtextPos.x) - $ALGNtextAlignment.h * 150, $HNDLtextPos.y)]</Transform>
+      </For>
+    </Behaviors>
+    <Actions>
+        <Action id="getConnectorOutlets">
+            <Impl>
+                <![CDATA[
+                  var radius = this.getProperty("ENUMcircleRadius");
+                  return [
+                    new Outlet("top-center", "Bounding", radius.value, 0),
+                    new Outlet("left-center", "Bounding", 0, radius.value),
+                    new Outlet("bottom-center", "Bounding", radius.value, 2.0 * radius.value),
+                    new Outlet("right-center", "Bounding", 2.0 * radius.value, radius.value),
+                ]
+                ]]>
+            </Impl>
+        </Action>
+    </Actions>
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+               xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+               xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker
+               id="RArrow"
+               orient="auto"
+               refY="0.0"
+               refX="0.0"
+               style="overflow:visible;"
+               markerUnits="userSpaceOnUse">
+
+               <path
+                  id="RArrowPath"
+                  transform="rotate(180) translate(1,0)"
+                  style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+                  />
+            </marker>
+         </defs>
+
+        <ellipse
+               id="circle"
+                />
+
+      <g id="ChannelAnnotation">
+        <text style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:13px;line-height:125%;font-family:Arial;-inkscape-font-specification:'Arial';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+              id="R">
+          <tspan id="Rspan">R</tspan>
+        </text>
+
+        <path
+           id="Rline1"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-end   = "url(#RArrow)"
+            />
+
+        <path
+           id="Rline2"
+           style="stroke-linejoin: round; "
+           fill="none"
+           marker-end   = "url(#RArrow)"
+            />
+      </g>
+
+        <text id="text" xml:space="preserve"  />        
+
+    </p:Content>
+</Shape>
