@@ -1,7 +1,9 @@
 shapes/BD-Agent.shape
 shapes/BD-Storage.shape
 shapes/BD-Channel-Rect-N.shape
+shapes/BD-Channel-Rect-N-left.shape
 shapes/BD-Channel-Rect-Z.shape
+shapes/BD-Channel-Rect-Z-up.shape
 shapes/BD-HumanAgent.shape
 shapes/BD-modAccessHor.shape
 shapes/BD-modAccessVert.shape
@@ -17,3 +19,5 @@ shapes/BD-ReqResUp.shape
 shapes/BD-ReqResDown.shape
 shapes/BD-StructureVariance.shape
 shapes/BD-Queue.shape
+shapes/BD-LContainer.shape
+shapes/BD-MultipleDots.shape
